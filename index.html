@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>候选人分析（脱敏版）</title>
+<title>候选人分析</title>
 <style>
 :root{
   --bg:#F7F7F5; --card:#FFFFFF; --line:#E4E3DD; --line-strong:#CFCEC6;
@@ -32,6 +32,8 @@ a:hover{text-decoration:underline}
 .brand{font-size:16px;font-weight:600;letter-spacing:.2px}
 .brand .sub{font-weight:400;color:var(--ink3);font-size:12.5px;margin-left:9px}
 .topbar-spacer{flex:1}
+.topbar-tools{display:flex;gap:8px;align-items:center}
+.topbar-tools .btn{flex-shrink:0}
 .hint{font-size:12px;color:var(--ink3)}
 
 /* ---------- 三栏 ---------- */
@@ -238,6 +240,32 @@ a:hover{text-decoration:underline}
 .prole .pn{font-size:12.5px;font-weight:600;margin-bottom:3px}
 .prole .pd{font-size:11.5px;color:var(--ink2);line-height:1.6}
 
+/* 决策情况视图 */
+.rail-gap{padding-top:14px}
+.dsec{margin-bottom:16px}
+.dsec-h{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;margin-bottom:8px}
+.dcount{font-size:10.5px;font-weight:600;padding:1px 8px;border-radius:10px;background:var(--bg);border:1px solid var(--line);color:var(--ink3)}
+.dcount.green{background:var(--green-bg);color:var(--green);border-color:var(--green-line)}
+.dcount.amber{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-line)}
+.dcount.red{background:var(--red-bg);color:var(--red);border-color:var(--red-line)}
+.dgroups{display:flex;flex-direction:column;gap:14px}
+.drow{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-s);padding:11px 14px;flex-wrap:wrap}
+.drow-main{flex:1;min-width:170px}
+.dname{font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dmeta{font-size:11.5px;color:var(--ink3);margin-top:2px}
+.dtime{font-size:11.5px;color:var(--ink3);white-space:nowrap}
+.dempty{font-size:12px;color:var(--ink3);background:var(--card);border:1px dashed var(--line);border-radius:var(--radius-s);padding:12px 14px}
+.logbox{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-s);padding:4px 14px}
+.logline{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:12px;flex-wrap:wrap}
+.logline:last-child{border-bottom:none}
+.logline .lt{color:var(--ink3);font-size:11px;white-space:nowrap;min-width:92px}
+.logline .ln{font-weight:600}
+.logline .lo{color:var(--ink2)}
+.logline .lo.g{color:var(--green);font-weight:500}
+.logline .lo.a{color:var(--amber);font-weight:500}
+.logline .lo.r{color:var(--red);font-weight:500}
+.logline .lp{color:var(--ink3);font-size:11px;margin-left:auto;text-align:right}
+
 .empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;color:var(--ink3)}
 .empty h3{font-size:14px;font-weight:600;color:var(--ink2);margin-bottom:8px}
 .empty p{font-size:12.5px;line-height:1.7;max-width:320px}
@@ -258,7 +286,12 @@ a:hover{text-decoration:underline}
 <div class="app">
 
   <div class="topbar">
-    <div class="brand">候选人分析<span class="sub">Joincom · V1.4 六维融合分析 · 联系方式已脱敏</span></div>
+    <div class="brand">候选人分析<span class="sub">Joincom · V1.4 六维融合分析</span></div>
+    <div class="topbar-tools">
+      <button class="btn" id="btnExport" title="导出全部数据（决策、操作流水、简历截图）为 JSON 备份文件">导出数据</button>
+      <button class="btn" id="btnImport" title="从 JSON 备份文件导入，覆盖当前全部数据">导入数据</button>
+      <input type="file" id="importFile" accept=".json,application/json" style="display:none">
+    </div>
     <div class="topbar-spacer"></div>
     <div class="hint" id="barHint"></div>
   </div>
@@ -290,7 +323,6 @@ a:hover{text-decoration:underline}
 </div>
 
 <script>
-/* ===== data.js（内联） ===== */
 /* ============================================================
    候选人分析 — 数据层
    数据来源：
@@ -461,9 +493,9 @@ const CANDIDATES = [
       '观察他是否理解 AI 产出的代码、出 bug 时能否定位。若不通过，可考虑转产品 / 运营方向。',
     resume: {
       type: 'text',
-      note: '以下内容由 PDF 简历原文提取（联系方式已按个人信息保护要求脱敏）',
+      note: '以下内容由 PDF 简历原文提取',
       raw: `黄懋晟
-联系方式：已脱敏（完整联系方式以招聘系统为准）
+电话：17813028892　邮箱：huangmmax@outlook.com
 作品集：https://maxi-max-dev.github.io
 
 【教育经历】
@@ -540,9 +572,9 @@ const CANDIDATES = [
       '不进入本岗位面试流程。婉拒，并转推行政 / 客服主管 / 人事助理方向 —— 她在这些岗位上是可靠人选，值得留在人才池。',
     resume: {
       type: 'text',
-      note: '以下内容由 PDF 简历原文提取（联系方式已按个人信息保护要求脱敏）',
+      note: '以下内容由 PDF 简历原文提取',
       raw: `钟莹玉　物业客服文员 / 部门经理助理
-电话：联系方式：已脱敏
+电话：13265046904
 户籍：广西梧州
 政治面貌：群众
 民族：汉族
@@ -669,11 +701,14 @@ const POSITIONS = [
 
 </script>
 <script>
-/* ===== app.js（内联） ===== */
 /* ============================================================
-   候选人分析 — 交互逻辑
-   结构：左侧在招岗位列表 → 中间候选人列表 → 右侧详情面板
-   决策状态（推进面试 / 人才池 / 不使用）持久化在本机 localStorage
+   候选人分析 — 交互逻辑（V2）
+   结构：左侧（在招岗位 + 决策情况入口）→ 中间列表 → 右侧详情面板
+   V2 新增：
+     1) 决策数据升级：{cid: {dec, at, pos}}（带时间与岗位），旧 v1 自动迁移
+     2) 操作流水：标记 / 取消 / 清除全部记录在案，决策情况页可查最近 30 条
+     3) 决策情况总览：推进面试 / 人才池 / 不使用 三组分类 + 历史记录 + 跨岗位查看详情
+     4) 导出 / 导入数据：JSON 备份（含决策、流水、简历截图），可迁移到其他电脑
    ============================================================ */
 (function () {
   'use strict';
@@ -690,9 +725,17 @@ const POSITIONS = [
   const pAvatar = $('#pAvatar');
   const barHint = $('#barHint');
 
-  const LS_DECISION = 'aijd_decisions_v1';
+  const LS_DECISION = 'aijd_decisions_v2'; // v2：{cid: {dec, at, pos}}
+  const LS_DECISION_V1 = 'aijd_decisions_v1'; // 旧版：{cid: 'interview'}，首次加载自动迁移
+  const LS_LOG = 'aijd_decisions_log_v1'; // 操作流水（按时间正序的数组）
   const LS_RESUME = 'aijd_resume_minwei';
 
+  const LOG_MAX = 200; // 本机最多保留 200 条流水
+  const LOG_SHOW = 30; // 决策情况页展示最近 30 条
+
+  const DOT = { green: 'g', amber: 'a', red: 'r' };
+
+  let currentView = 'pos'; // 'pos' = 岗位视图 | 'decisions' = 决策情况
   let currentPosId = POSITIONS[0].id;
   let openCandidateId = null;
 
@@ -703,6 +746,36 @@ const POSITIONS = [
   const simCls = (v) => (v >= 60 ? (v >= 80 ? 'green' : 'amber') : 'red');
   const posOf = (id) => POSITIONS.find((p) => p.id === id) || POSITIONS[0];
   const decOf = (id) => DECISIONS.find((d) => d.id === id);
+  const dotOf = (decId) => {
+    const d = decOf(decId);
+    return d ? DOT[d.cls] : 'n';
+  };
+  const pad2 = (n) => String(n).padStart(2, '0');
+  function fmtTs(ts) {
+    if (!ts) return '时间未记录';
+    const d = new Date(ts);
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()) + ' ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+  }
+  function fmtTsShort(ts) {
+    if (!ts) return '较早';
+    const d = new Date(ts);
+    return d.getMonth() + 1 + '月' + d.getDate() + '日 ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+  }
+  function findCandidate(cid) {
+    for (const p of POSITIONS) {
+      const c = (p.candidates || []).find((x) => x.id === cid);
+      if (c) return { c, pos: p };
+    }
+    return null;
+  }
+  function candName(cid) {
+    const f = findCandidate(cid);
+    return f && f.c ? f.c.name : cid;
+  }
+  function posNameOf(posId) {
+    const p = POSITIONS.find((x) => x.id === posId);
+    return p ? p.name : '—';
+  }
 
   /* ---------- 存储兼容层 ----------
      浏览器在 file:// 协议下通常禁用 localStorage。
@@ -744,34 +817,169 @@ const POSITIONS = [
     };
   })();
 
-  /* ---------- 决策状态读写 ---------- */
-  function loadDecisions() {
-    try {
-      return JSON.parse(Store.get(LS_DECISION) || '{}') || {};
-    } catch (e) {
-      return {};
-    }
+  /* ---------- 决策读写（V2：{cid:{dec,at,pos}} + 操作流水） ---------- */
+  function migrateDecisions(raw) {
+    const out = {};
+    Object.keys(raw || {}).forEach((cid) => {
+      const v = raw[cid];
+      if (typeof v === 'string' && decOf(v)) {
+        out[cid] = { dec: v, at: null, pos: 'aijd' };
+      } else if (v && typeof v === 'object' && decOf(v.dec)) {
+        out[cid] = { dec: v.dec, at: v.at || null, pos: v.pos || 'aijd' };
+      }
+    });
+    return out;
   }
-  function saveDecision(cid, did) {
-    const m = loadDecisions();
-    if (m[cid] === did) delete m[cid];
-    else m[cid] = did;
-    Store.set(LS_DECISION, JSON.stringify(m));
+
+  function loadDecisions() {
+    let cur = {};
+    try {
+      const raw = JSON.parse(Store.get(LS_DECISION) || 'null');
+      if (raw && typeof raw === 'object') cur = raw;
+    } catch (e) {
+      cur = {};
+    }
+    const m = migrateDecisions(cur);
+
+    // 旧版 v1 数据迁移（在线链接升级后，已有标记自动保留）
+    try {
+      const v1raw = Store.get(LS_DECISION_V1);
+      if (v1raw) {
+        const v1 = JSON.parse(v1raw);
+        if (v1 && typeof v1 === 'object') {
+          const m1 = migrateDecisions(v1);
+          Object.keys(m1).forEach((cid) => {
+            if (!m[cid]) m[cid] = m1[cid];
+          });
+          Store.set(LS_DECISION, JSON.stringify(m));
+          Store.del(LS_DECISION_V1);
+        }
+      }
+    } catch (e) {}
     return m;
   }
+
+  function saveDecision(cid, did, posId) {
+    const m = loadDecisions();
+    const log = loadLog();
+    const t = Date.now();
+    if (m[cid] && m[cid].dec === did) {
+      const old = m[cid];
+      delete m[cid];
+      log.push({
+        t, action: 'clear', cid, name: candName(cid), pos: posNameOf(old.pos),
+        dec: old.dec, decLabel: (decOf(old.dec) || {}).label || old.dec,
+      });
+    } else {
+      m[cid] = { dec: did, at: t, pos: posId || 'aijd' };
+      log.push({
+        t, action: 'set', cid, name: candName(cid), pos: posNameOf(posId || 'aijd'),
+        dec: did, decLabel: (decOf(did) || {}).label || did,
+      });
+    }
+    Store.set(LS_DECISION, JSON.stringify(m));
+    Store.set(LS_LOG, JSON.stringify(log.slice(-LOG_MAX)));
+    return m;
+  }
+
   function decisionOf(cid) {
     return loadDecisions()[cid] || null;
   }
+
+  function loadLog() {
+    try {
+      const raw = JSON.parse(Store.get(LS_LOG) || '[]');
+      return Array.isArray(raw) ? raw : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
   function clearAllDecisions() {
+    const m = loadDecisions();
+    const log = loadLog();
+    const t = Date.now();
+    Object.keys(m).forEach((cid) => {
+      log.push({
+        t, action: 'clear', cid, name: candName(cid), pos: posNameOf(m[cid].pos),
+        dec: m[cid].dec, decLabel: (decOf(m[cid].dec) || {}).label || '—',
+      });
+    });
+    Store.set(LS_LOG, JSON.stringify(log.slice(-LOG_MAX)));
     Store.del(LS_DECISION);
   }
 
-  /* ---------- 左侧岗位列表 ---------- */
+  /* ---------- 导出 / 导入数据 ---------- */
+  function doExport() {
+    const payload = {
+      version: 2,
+      exportedAt: new Date().toISOString(),
+      persistent: Store.persistent,
+      decisions: loadDecisions(),
+      log: loadLog(),
+      resumeImage: Store.get(LS_RESUME) || null,
+    };
+    try {
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const d = new Date();
+      a.href = url;
+      a.download = '候选人分析数据_' + d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate()) + '.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => { try { URL.revokeObjectURL(url); } catch (e) {} }, 800);
+      return true;
+    } catch (e) {
+      alert('导出失败：' + (e && e.message ? e.message : e));
+      return false;
+    }
+  }
+
+  function doImport(file) {
+    if (!file) return;
+    const r = new FileReader();
+    r.onload = (ev) => {
+      let obj = null;
+      try {
+        obj = JSON.parse(ev.target.result);
+      } catch (e) {
+        alert('导入失败：文件不是有效的 JSON 数据。\n请使用本工具「导出数据」生成的文件。');
+        return;
+      }
+      if (!obj || typeof obj !== 'object' || !obj.decisions || typeof obj.decisions !== 'object' || Array.isArray(obj.decisions)) {
+        alert('导入失败：文件中缺少决策数据（decisions 字段）。\n请使用本工具「导出数据」生成的文件。');
+        return;
+      }
+      const incoming = Object.keys(obj.decisions).length;
+      const current = Object.keys(loadDecisions()).length;
+      const logN = Array.isArray(obj.log) ? obj.log.length : 0;
+      const ok = window.confirm(
+        '将导入 ' + incoming + ' 条决策记录' + (logN ? '（含操作流水 ' + logN + ' 条）' : '') +
+        '。\n\n注意：导入会【覆盖】当前已有的 ' + current + ' 条标记。\n是否继续？'
+      );
+      if (!ok) return;
+      const migrated = migrateDecisions(obj.decisions);
+      Store.set(LS_DECISION, JSON.stringify(migrated));
+      Store.set(LS_LOG, JSON.stringify(Array.isArray(obj.log) ? obj.log.filter((x) => x && typeof x === 'object').slice(-LOG_MAX) : []));
+      if (typeof obj.resumeImage === 'string' && obj.resumeImage.indexOf('data:image') === 0) {
+        Store.set(LS_RESUME, obj.resumeImage);
+      }
+      renderRail();
+      renderList();
+      alert('导入完成 ✓ 共 ' + Object.keys(migrated).length + ' 条决策记录。');
+    };
+    r.readAsText(file);
+  }
+
+  /* ---------- 左侧列表（在招岗位 + 决策情况入口） ---------- */
   function renderRail() {
+    const decCount = Object.keys(loadDecisions()).length;
     rail.innerHTML =
       '<div class="rail-h">在招岗位</div>' +
       POSITIONS.map((p) => {
-        const on = p.id === currentPosId;
+        const on = currentView === 'pos' && p.id === currentPosId;
         const n = p.candidates ? p.candidates.length : 0;
         return `<button class="pos ${on ? 'on' : ''}" data-pos="${p.id}">
           <div class="pos-top">
@@ -781,24 +989,156 @@ const POSITIONS = [
           <div class="pos-sub">${esc(p.subtitle)}</div>
           <span class="pos-badge">${p.status === 'pending' ? esc(p.statusLabel) : n + ' 位候选人'}</span>
         </button>`;
-      }).join('');
+      }).join('') +
+      '<div class="rail-h rail-gap">决策情况</div>' +
+      `<button class="pos ${currentView === 'decisions' ? 'on' : ''}" data-view="decisions">
+        <div class="pos-top">
+          <span class="pos-dot ${decCount ? 'active' : 'pending'}"></span>
+          <span class="pos-name">决策总览</span>
+        </div>
+        <div class="pos-sub">推进面试 · 人才池 · 不使用</div>
+        <span class="pos-badge">${decCount} 条标记</span>
+      </button>`;
 
     $$('.pos', rail).forEach((el) =>
       el.addEventListener('click', () => {
-        if (el.dataset.pos === currentPosId) return;
-        currentPosId = el.dataset.pos;
-        closePanel();
-        renderRail();
-        renderList();
+        if (el.dataset.view === 'decisions') {
+          if (currentView === 'decisions') return;
+          currentView = 'decisions';
+          closePanel();
+          renderRail();
+          renderList();
+          return;
+        }
+        if (currentView === 'pos' && el.dataset.pos === currentPosId) return;
+        goPos(el.dataset.pos);
       })
     );
   }
 
-  /* ---------- 中间区域 ---------- */
+  function goPos(pid) {
+    currentView = 'pos';
+    currentPosId = pid;
+    closePanel();
+    renderRail();
+    renderList();
+  }
+
+  /* ---------- 中间区域分发 ---------- */
   function renderList() {
+    if (currentView === 'decisions') return renderDecisions();
     const p = posOf(currentPosId);
     if (p.status === 'pending') return renderPending(p);
     renderCandidates(p);
+  }
+
+  /* ---------- 决策情况总览 ---------- */
+  function renderDecisions() {
+    const decs = loadDecisions();
+    const allLog = loadLog();
+    const entries = Object.keys(decs).map((cid) => Object.assign({ cid }, decs[cid]));
+    const total = entries.length;
+    const recent = allLog.slice().reverse().slice(0, LOG_SHOW);
+    const latest = allLog.length ? allLog[allLog.length - 1].t : null;
+
+    const groupsHTML = DECISIONS.map((d) => {
+      const items = entries.filter((e) => e.dec === d.id);
+      const rows = items.map((e) => {
+        const f = findCandidate(e.cid);
+        const alive = !!(f && f.c);
+        const name = alive ? f.c.name : e.cid;
+        const meta = alive && f.c.listMeta ? f.c.listMeta : '';
+        const posName = alive ? f.pos.name : posNameOf(e.pos);
+        return `<div class="drow">
+          <div class="drow-main">
+            <div class="dname">${esc(name)}<span class="tag ${d.cls}">${esc(d.short)}</span></div>
+            <div class="dmeta">${esc(posName)}${meta ? ' · ' + esc(meta) : ''}${alive ? '' : ' · 该候选人已不在当前数据中'}</div>
+          </div>
+          <div class="dtime">${esc(fmtTs(e.at))}</div>
+          ${alive ? `<button class="viewbtn" data-goto="${esc(e.cid)}">查看详情 →</button>` : ''}
+        </div>`;
+      }).join('');
+      return `<section class="dsec">
+        <div class="dsec-h"><span class="ldot ${DOT[d.cls]}"></span>${esc(d.label)}<span class="dcount ${d.cls}">${items.length}</span></div>
+        ${rows || '<div class="dempty">暂无该类决策记录</div>'}
+      </section>`;
+    }).join('');
+
+    const logHTML = recent.map((e) => {
+      const who = esc(e.name || e.cid || '—');
+      const where = esc(e.pos || '—');
+      if (e.action === 'clear') {
+        return `<div class="logline"><span class="lt">${esc(fmtTsShort(e.t))}</span><span class="ln">${who}</span><span class="lo">取消标记（原：${esc(e.decLabel || '—')}）</span><span class="lp">${where}</span></div>`;
+      }
+      return `<div class="logline"><span class="lt">${esc(fmtTsShort(e.t))}</span><span class="ln">${who}</span><span class="lo ${dotOf(e.dec)}">→ ${esc(e.decLabel || '—')}</span><span class="lp">${where}</span></div>`;
+    }).join('');
+
+    list.innerHTML = `
+      <div class="list-h">
+        <div class="list-title">决策情况</div>
+        <div class="list-sub">共 ${total} 条决策记录${latest ? ' · 最近操作 ' + esc(fmtTsShort(latest)) : ''}</div>
+      </div>
+      <div class="list-desc">汇总所有岗位的决策标记（推进面试 / 进入人才池 / 不使用）。数据保存在本机浏览器；换电脑或备份时，用下方「导出 / 导入数据」即可整体迁移。</div>
+      <div class="list-bar">
+        <span style="font-size:11.5px;color:#8A8A83">导出 / 导入在页面右上角「候选人分析」旁，对应整个工具的数据</span>
+        <div style="flex:1"></div>
+        <button class="viewbtn" id="backToPos" style="margin-left:0">返回在招岗位 →</button>
+        ${total ? '<button class="resetbtn" id="btnWipe" style="margin-left:10px">清除全部决策</button>' : ''}
+      </div>
+      ${
+        total
+          ? '<div class="dgroups">' + groupsHTML + '</div>'
+          : `<div class="pendingBox">
+              <div class="pi">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <path d="M11 6v6M11 15.5v.5"/>
+                  <circle cx="11" cy="11" r="8.5"/>
+                </svg>
+              </div>
+              <h3>还没有任何决策记录</h3>
+              <p>进入「在招岗位」，在候选人卡片上点击「推进面试 / 进入人才池 / 不使用」后，<br>决策会自动汇总到这里，并生成可回溯的操作流水。</p>
+            </div>`
+      }
+      ${
+        allLog.length
+          ? `<section class="dsec" style="margin-top:18px">
+              <div class="dsec-h">操作流水<span class="dcount gray">最近 ${Math.min(allLog.length, LOG_SHOW)} 条 / 共 ${allLog.length} 条</span></div>
+              <div class="logbox">${logHTML}</div>
+            </section>`
+          : total
+            ? '<div style="font-size:11.5px;color:#8A8A83;margin-top:12px">以下标记产生于旧版本，暂无操作流水；之后每次标记或取消都会自动记录。</div>'
+            : ''
+      }`;
+
+    const btnBack = $('#backToPos');
+    if (btnBack) btnBack.addEventListener('click', () => goPos(POSITIONS[0].id));
+
+    const btnWipe = $('#btnWipe');
+    if (btnWipe)
+      btnWipe.addEventListener('click', () => {
+        if (!window.confirm('确定清除全部 ' + total + ' 条决策标记吗？\n（操作流水会保留记录，可追溯）')) return;
+        clearAllDecisions();
+        renderRail();
+        renderList();
+      });
+
+    $$('.viewbtn[data-goto]', list).forEach((b) =>
+      b.addEventListener('click', () => gotoCandidate(b.dataset.goto))
+    );
+  }
+
+  function gotoCandidate(cid) {
+    const f = findCandidate(cid);
+    if (!f || f.pos.status !== 'active') {
+      alert('该候选人所属岗位暂未开放详情视图。');
+      return;
+    }
+    currentView = 'pos';
+    currentPosId = f.pos.id;
+    openCandidateId = null;
+    renderRail();
+    renderList();
+    openPanel(cid);
   }
 
   /* 待更新岗位 */
@@ -843,10 +1183,11 @@ const POSITIONS = [
   /* 候选人列表 */
   function renderCandidates(p) {
     const decs = loadDecisions();
-    const doneCount = p.candidates.filter((c) => decs[c.id]).length;
+    const doneCount = p.candidates.filter((c) => decs[c.id] && decs[c.id].dec).length;
 
     const rows = p.candidates.map((c) => {
-      const dec = decs[c.id];
+      const dObj = decs[c.id];
+      const dec = dObj ? dObj.dec : null;
       const decDef = dec ? decOf(dec) : null;
       const on = openCandidateId === c.id;
 
@@ -912,6 +1253,7 @@ const POSITIONS = [
         <span style="font-size:11.5px;color:#8A8A83">已标记 ${doneCount} / ${p.candidates.length}</span>
         ${doneCount ? '<button class="resetbtn" id="resetDec">清除全部标记</button>' : ''}
         <button class="viewbtn" id="viewJD" style="margin-left:8px">查看岗位 JD →</button>
+        <button class="viewbtn" id="viewDec" style="margin-left:8px">决策情况 →</button>
       </div>
       <div class="rows">${rows}</div>`;
 
@@ -922,7 +1264,7 @@ const POSITIONS = [
         const cid = b.dataset.cid;
         const did = b.dataset.dec;
         const keep = openCandidateId;
-        saveDecision(cid, did);
+        saveDecision(cid, did, p.id);
         renderCandidates(p);
         openCandidateId = keep;
         $$('.row', list).forEach((r) => r.classList.toggle('on', r.dataset.cid === keep));
@@ -945,6 +1287,15 @@ const POSITIONS = [
 
     const btnJD = $('#viewJD');
     if (btnJD) btnJD.addEventListener('click', () => openJD(p));
+
+    const btnDec = $('#viewDec');
+    if (btnDec)
+      btnDec.addEventListener('click', () => {
+        currentView = 'decisions';
+        closePanel();
+        renderRail();
+        renderList();
+      });
 
     const btnReset = $('#resetDec');
     if (btnReset)
@@ -990,7 +1341,8 @@ const POSITIONS = [
   function syncPanelDecision(cid) {
     const host = $('#panelDecision');
     if (!host) return;
-    const dec = decisionOf(cid);
+    const dObj = decisionOf(cid);
+    const dec = dObj ? dObj.dec : null;
     const def = dec ? decOf(dec) : null;
     host.innerHTML = decisionButtonsHTML(cid, dec) +
       `<span class="status-note ${def ? def.cls : ''}">${def ? '当前：' + def.label : '尚未标记'}</span>`;
@@ -1007,7 +1359,7 @@ const POSITIONS = [
   function bindDecisionBtns(host, cid) {
     $$('.dbtn', host).forEach((b) =>
       b.addEventListener('click', () => {
-        saveDecision(cid, b.dataset.dec);
+        saveDecision(cid, b.dataset.dec, posOf(currentPosId).id);
         syncPanelDecision(cid);
         const keep = openCandidateId;
         renderCandidates(posOf(currentPosId));
@@ -1024,7 +1376,8 @@ const POSITIONS = [
   }
 
   function buildCandidateDetail(c) {
-    const dec = decisionOf(c.id);
+    const dObj = decisionOf(c.id);
+    const dec = dObj ? dObj.dec : null;
     const def = dec ? decOf(dec) : null;
     const rec = decOf(c.recommend);
 
@@ -1255,6 +1608,19 @@ const POSITIONS = [
   }
 
   /* ---------- 事件 ---------- */
+  // 顶栏：导出 / 导入 —— 对应整个工具的数据（决策 + 流水 + 简历截图），任何页面都可用
+  const topExport = $('#btnExport');
+  if (topExport) topExport.addEventListener('click', doExport);
+  const topImport = $('#btnImport');
+  const topFile = $('#importFile');
+  if (topImport && topFile) {
+    topImport.addEventListener('click', () => topFile.click());
+    topFile.addEventListener('change', (e) => {
+      const f = e.target.files && e.target.files[0];
+      doImport(f);
+      topFile.value = '';
+    });
+  }
   $('#pClose').addEventListener('click', () => {
     closePanel();
     renderList();
@@ -1272,12 +1638,5 @@ const POSITIONS = [
 })();
 
 </script>
-
-<noscript>
-  <div style="padding:40px;text-align:center;font-family:system-ui,sans-serif;color:#5A5A55">
-    <h2 style="font-size:16px;margin-bottom:10px">浏览器已禁用 JavaScript</h2>
-    <p style="font-size:13px">本工具需要 JavaScript 才能运行，请在浏览器设置中开启后刷新页面。</p>
-  </div>
-</noscript>
 </body>
 </html>
