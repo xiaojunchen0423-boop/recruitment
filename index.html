@@ -1,568 +1,1935 @@
 <!DOCTYPE html>
-<html lang="zh-CN" data-theme="light">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>人事行政工作日报 · 周会小工具 V3.2</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<title>候选人分析</title>
 <style>
-:root {
-  --primary: #2563eb;
-  --primary-soft: #eef2ff;
-  --ink: #1f2937;
-  --sub: #6b7280;
-  --line: #e5e7eb;
-  --bg: #f5f7fb;
-  --card: #fff;
-  --radius: 12px;
-  --shadow: 0 2px 8px rgba(0,0,0,.08);
-  --shadow-hover: 0 6px 20px rgba(0,0,0,.14);
+:root{
+  --bg:#F7F7F5; --card:#FFFFFF; --line:#E4E3DD; --line-strong:#CFCEC6;
+  --ink:#1F1F1D; --ink2:#5A5A55; --ink3:#8A8A83;
+  --green:#0F6E56; --green-bg:#E4F5EF; --green-line:#9FDCC7;
+  --amber:#8A5309; --amber-bg:#FBF0DC; --amber-line:#F0CE8E;
+  --red:#9E2B2B; --red-bg:#FBEAEA; --red-line:#F2BFBF;
+  --blue:#185FA5; --blue-bg:#EAF2FB; --blue-line:#B5D4F4;
+  --radius:12px; --radius-s:8px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
 }
-[data-theme="dark"] {
-  --primary: #818cf8;
-  --primary-soft: #1e1b4b;
-  --ink: #e5e7eb;
-  --sub: #9ca3af;
-  --line: #374151;
-  --bg: #111827;
-  --card: #1f2937;
-  --shadow: 0 2px 8px rgba(0,0,0,.3);
-  --shadow-hover: 0 6px 20px rgba(0,0,0,.5);
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--font);background:var(--bg);color:var(--ink);font-size:14px;line-height:1.65;-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+/* ---------- 抬头 ---------- */
+.topbar{
+  display:flex;align-items:center;gap:14px;padding:15px 24px;
+  background:var(--card);border-bottom:1px solid var(--line);flex-shrink:0;
 }
-* { box-sizing: border-box; }
-body {
-  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
-  background: linear-gradient(135deg, var(--bg) 0%, var(--primary-soft) 100%);
-  color: var(--ink); line-height: 1.7; margin: 0; padding: 0;
+.brand{font-size:16px;font-weight:600;letter-spacing:.2px}
+.brand .sub{font-weight:400;color:var(--ink3);font-size:12.5px;margin-left:9px}
+.topbar-spacer{flex:1}
+.topbar-tools{display:flex;gap:8px;align-items:center}
+.topbar-tools .btn{flex-shrink:0}
+.hint{font-size:12px;color:var(--ink3)}
+
+/* ---------- 三栏 ---------- */
+.main{display:flex;flex:1;overflow:hidden}
+
+/* 左：岗位列表 */
+.rail{
+  width:240px;flex-shrink:0;background:var(--card);border-right:1px solid var(--line);
+  overflow-y:auto;padding:16px 12px;
 }
-.container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
-
-/* ===== 顶部导航 ===== */
-.top-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(255,255,255,.75); backdrop-filter: blur(12px);
-  border-radius: var(--radius); padding: 10px 20px; margin-bottom: 20px;
-  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
-  box-shadow: var(--shadow);
+.rail-h{
+  font-size:11.5px;font-weight:600;color:var(--ink3);letter-spacing:.4px;
+  padding:0 10px 10px;
 }
-[data-theme="dark"] .top-nav { background: rgba(31,41,55,.85); }
-.top-nav a {
-  color: var(--primary); text-decoration: none;
-  padding: 4px 12px; border-radius: 6px; font-size: .9rem; transition: background .2s;
+.pos{
+  display:block;width:100%;text-align:left;padding:11px 12px;border-radius:var(--radius-s);
+  margin-bottom:5px;transition:background .15s;border:1px solid transparent;
 }
-.top-nav a:hover { background: var(--primary-soft); }
-.top-nav .spacer { flex: 1; }
-.icon-btn {
-  background: none; border: 1px solid var(--line); border-radius: 6px;
-  padding: 4px 10px; cursor: pointer; font-size: .9rem; color: var(--ink);
-  transition: background .2s, opacity .2s;
+.pos:hover{background:var(--bg)}
+.pos.on{background:var(--blue-bg);border-color:var(--blue-line)}
+.pos-top{display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.pos-name{font-size:13.5px;font-weight:600;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pos.on .pos-name{color:var(--blue)}
+.pos-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.pos-dot.active{background:var(--green)}
+.pos-dot.pending{background:var(--line-strong)}
+.pos-sub{font-size:11.5px;color:var(--ink3);line-height:1.5}
+.pos-badge{
+  display:inline-block;font-size:10.5px;padding:1px 7px;border-radius:10px;
+  background:var(--bg);color:var(--ink3);border:1px solid var(--line);margin-top:5px;
 }
-.icon-btn:hover { background: var(--primary-soft); }
-.icon-btn:active { opacity: .7; }
+.pos.on .pos-badge{background:rgba(255,255,255,.7);border-color:var(--blue-line);color:var(--blue)}
 
-/* 编辑模式 */
-body.edit-mode .editable { outline: 2px dashed var(--primary); outline-offset: 4px; cursor: text; border-radius: 4px; padding: 2px 6px; margin: -2px -6px; }
-body.edit-mode .editable:hover { background: var(--primary-soft); }
-body.edit-mode .top-nav { border-bottom: 2px solid var(--primary); }
+/* 中：候选人列表 */
+.list{flex:1;overflow-y:auto;padding:20px 24px;min-width:0}
+.list-h{display:flex;align-items:flex-end;gap:14px;margin-bottom:6px;flex-wrap:wrap}
+.list-title{font-size:18px;font-weight:600}
+.list-sub{font-size:12.5px;color:var(--ink3)}
+.list-desc{font-size:12.5px;color:var(--ink3);margin-bottom:16px;line-height:1.6}
+.list-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.legend{font-size:11.5px;color:var(--ink3);display:flex;align-items:center;gap:5px}
+.ldot{width:8px;height:8px;border-radius:50%}
+.ldot.g{background:var(--green)}.ldot.a{background:var(--amber)}.ldot.r{background:var(--red)}.ldot.n{background:var(--line-strong);border:1px solid var(--line-strong)}
 
-/* ===== KPI ===== */
-.kpi-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 20px; }
-.kpi-card { background: var(--card); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); }
-.kpi-card .label { font-size: .82rem; color: var(--sub); }
-.kpi-card .value { font-size: 1.6rem; font-weight: 700; color: var(--primary); }
-
-/* ===== 进度环 ===== */
-.progress-ring-wrap { display: flex; align-items: center; gap: 12px; margin-top: 8px; }
-.progress-ring { transform: rotate(-90deg); }
-.progress-ring-circle-bg { fill: none; stroke: var(--line); stroke-width: 8; }
-.progress-ring-circle { fill: none; stroke: var(--primary); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 1s ease; }
-.progress-ring-label { font-size: .85rem; font-weight: 700; fill: var(--primary); text-anchor: middle; }
-
-/* ===== 8卡片 ===== */
-.card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; margin-bottom: 20px; }
-.module-card {
-  background: var(--card); border-radius: var(--radius); padding: 14px 16px;
-  box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
-  text-decoration: none; color: var(--ink); display: block;
+.rows{display:flex;flex-direction:column;gap:10px}
+.row{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 16px;transition:border-color .15s,box-shadow .15s;
 }
-.module-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
-.module-card h3 { margin: 0 0 4px; font-size: .95rem; color: var(--primary); }
-.module-card p { margin: 0; font-size: .8rem; color: var(--sub); }
+.row:hover{border-color:var(--line-strong);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.row.on{border-color:var(--blue);box-shadow:0 2px 12px rgba(24,95,165,.1)}
+.row-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.avatar{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:600}
+.avatar.green{background:var(--green-bg);color:var(--green)}
+.avatar.amber{background:var(--amber-bg);color:var(--amber)}
+.avatar.red{background:var(--red-bg);color:var(--red)}
+.row-id{flex:1;min-width:150px}
+.row-name{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.row-meta{font-size:12px;color:var(--ink3);margin-top:2px}
+.tag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:500;border:1px solid}
+.tag.green{background:var(--green-bg);color:var(--green);border-color:var(--green-line)}
+.tag.amber{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-line)}
+.tag.red{background:var(--red-bg);color:var(--red);border-color:var(--red-line)}
+.tag.blue{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-line)}
+.tag.gray{background:var(--bg);color:var(--ink3);border-color:var(--line)}
 
-/* ===== 三栏核心区 ===== */
-.three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 22px; }
-@media (max-width: 1024px) { .three-col { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 640px) { .three-col { grid-template-columns: 1fr; } }
-.panel { background: var(--card); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); }
-.panel h2 { font-size: 1rem; margin: 0 0 10px; color: var(--primary); border-bottom: 2px solid var(--primary-soft); padding-bottom: 6px; }
-.panel h2:not(:first-child) { margin-top: 14px; }
+.scores{display:flex;gap:16px;flex-shrink:0}
+.sc{text-align:right;min-width:60px}
+.sc .lbl{font-size:10.5px;color:var(--ink3);white-space:nowrap}
+.sc .val{font-size:16px;font-weight:600;letter-spacing:-.3px}
+.sc .val.green{color:var(--green)}.sc .val.amber{color:var(--amber)}.sc .val.red{color:var(--red)}
 
-/* 甘特图 */
-.gantt-bar { height: 20px; background: var(--line); border-radius: 10px; margin: 5px 0 8px; overflow: hidden; }
-.gantt-fill { height: 100%; border-radius: 10px; transition: width 1.2s ease; display: flex; align-items: center; padding-left: 8px; font-size: .68rem; color: #fff; font-weight: 600; }
+.row-mid{display:flex;align-items:center;gap:10px;margin-top:11px;flex-wrap:wrap}
+.mini{display:flex;gap:6px;align-items:center}
+.mini-c{width:30px;height:26px;border-radius:5px;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--line)}
+.mini-c .k{font-size:9.5px;color:var(--ink3);line-height:1}
+.mini-c .v{font-size:11.5px;font-weight:600;line-height:1.15}
+.mini-c .v.green{color:var(--green)}.mini-c .v.amber{color:var(--amber)}.mini-c .v.red{color:var(--red)}
 
-/* 柱状图 */
-.bar-chart .bar-row { display: flex; align-items: center; margin: 6px 0; }
-.bar-chart .bar-label { width: 52px; font-size: .82rem; flex-shrink: 0; }
-.bar-chart .bar-track { flex: 1; height: 18px; background: var(--line); border-radius: 9px; overflow: hidden; margin: 0 8px; }
-.bar-chart .bar-fill { height: 100%; border-radius: 9px; transition: width 1s ease; }
+.row-why{font-size:12px;color:var(--ink2);flex:1;min-width:180px}
+.row-why b{font-weight:600;color:var(--ink)}
+.row-act{display:flex;gap:7px;align-items:center;margin-top:11px;padding-top:11px;border-top:1px dashed var(--line);flex-wrap:wrap}
+.row-act .lb{font-size:11.5px;color:var(--ink3);margin-right:2px}
 
-/* ===== 年假计算器 ===== */
-.calc-form { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
-.calc-form label { font-size: .8rem; font-weight: 600; color: var(--sub); }
-.calc-form input, .calc-form select { padding: 5px 9px; border: 1px solid var(--line); border-radius: 6px; font-size: .85rem; background: var(--card); color: var(--ink); }
-.calc-form button { padding: 7px 14px; background: var(--primary); color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: .85rem; font-weight: 600; transition: opacity .2s; }
-.calc-form button:hover { opacity: .85; }
-.calc-result { background: var(--primary-soft); border-radius: 8px; padding: 10px 12px; font-size: .85rem; line-height: 1.9; }
-.calc-result .res-item { display: flex; justify-content: space-between; }
-.calc-result .res-item strong { color: var(--primary); }
-.calc-result .res-highlight { border-top: 1px solid var(--line); margin-top: 6px; padding-top: 6px; font-size: .95rem; font-weight: 700; color: #dc2626; }
-[data-theme="dark"] .calc-result .res-highlight { color: #f87171; }
-
-/* ===== 各主体人事数据 ===== */
-.subject-table { width: 100%; border-collapse: collapse; font-size: .82rem; }
-.subject-table th, .subject-table td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--line); }
-.subject-table th { background: var(--primary-soft); font-weight: 600; color: var(--primary); }
-.subject-table td.num { text-align: right; font-weight: 600; }
-.subject-table .sub-detail { color: var(--sub); font-size: .74rem; }
-.subject-table tr.total-row td { font-weight: 700; color: var(--primary); border-top: 2px solid var(--primary); border-bottom: none; background: var(--primary-soft); }
-.subject-note { font-size: .72rem; color: var(--sub); margin-top: 6px; background: var(--primary-soft); padding: 5px 8px; border-radius: 6px; }
-
-/* 人员明细 */
-.detail-list { margin: 0; padding: 0; list-style: none; }
-.detail-list li { display: flex; justify-content: space-between; align-items: center; padding: 6px 4px; border-bottom: 1px solid var(--line); font-size: .84rem; }
-.detail-list li:last-child { border-bottom: none; }
-.detail-list .tag { display: inline-block; padding: 1px 7px; border-radius: 4px; font-size: .72rem; font-weight: 600; margin-right: 6px; }
-.tag-out { background: #fee2e2; color: #dc2626; }
-.tag-in  { background: #d1fae5; color: #059669; }
-.tag-absent { background: #fef3c7; color: #d97706; }
-
-/* ===== 四模块 ===== */
-.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
-@media (max-width: 1024px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 640px) { .grid-4 { grid-template-columns: 1fr; } }
-.module-box { background: var(--card); border-radius: var(--radius); padding: 12px 14px; box-shadow: var(--shadow); }
-.module-box h3 { font-size: .9rem; margin: 0 0 6px; color: var(--primary); }
-.module-box ul { margin: 0; padding-left: 1.15em; font-size: .82rem; }
-.module-box li { margin: 3px 0; }
-.progress-wrap { margin-top: 6px; }
-.progress-bar { height: 7px; background: var(--line); border-radius: 4px; overflow: hidden; }
-.progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #60a5fa); border-radius: 4px; transition: width .8s ease; }
-.progress-text { font-size: .74rem; color: var(--sub); margin-top: 2px; }
-
-/* ===== 风险 ===== */
-.risk-item { padding: 8px 0; border-bottom: 1px solid var(--line); }
-.risk-item:last-child { border-bottom: none; }
-.risk-tag { display: inline-block; padding: 2px 7px; border-radius: 4px; font-size: .74rem; font-weight: 600; margin-right: 5px; }
-.risk-high { background: #fee2e2; color: #dc2626; }
-.risk-mid { background: #fef3c7; color: #d97706; }
-.risk-impact { font-size: .78rem; color: var(--sub); margin-top: 3px; }
-.risk-action { font-size: .78rem; margin-top: 3px; }
-
-/* AI建议 */
-.ai-tip { background: var(--primary-soft); border-left: 4px solid var(--primary); padding: 8px 12px; border-radius: 6px; margin: 6px 0; font-size: .85rem; }
-
-/* 保存提示 */
-.save-tip { font-size: .75rem; color: #16a34a; opacity: 0; transition: opacity .3s; margin-left: 8px; }
-.save-tip.show { opacity: 1; }
-
-/* 打印 */
-@media print {
-  .top-nav, .icon-btn, .save-tip { display: none !important; }
-  body { background: #fff; }
-  .container { padding: 0; }
-  .module-card, .panel, .kpi-card, .module-box { box-shadow: none; break-inside: avoid; }
+.dbtn{
+  padding:5px 13px;border-radius:7px;font-size:12.5px;border:1px solid var(--line-strong);
+  background:var(--card);color:var(--ink2);transition:all .15s;
 }
-.fade-in { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
-.fade-in.visible { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .fade-in, .gantt-fill, .bar-fill, .progress-fill, .progress-ring-circle { transition: none; }
+.dbtn:hover{border-color:var(--ink3);color:var(--ink)}
+.dbtn.sel{font-weight:500}
+.dbtn.sel.green{background:var(--green-bg);border-color:var(--green-line);color:var(--green)}
+.dbtn.sel.amber{background:var(--amber-bg);border-color:var(--amber-line);color:var(--amber)}
+.dbtn.sel.red{background:var(--red-bg);border-color:var(--red-line);color:var(--red)}
+.viewbtn{
+  margin-left:auto;padding:5px 13px;border-radius:7px;font-size:12.5px;font-weight:500;
+  background:var(--blue-bg);border:1px solid var(--blue-line);color:var(--blue);transition:all .15s;
+}
+.viewbtn:hover{background:#DCEAF9}
+.status-note{font-size:11.5px;color:var(--ink3);margin-left:4px}
+.status-note.green{color:var(--green);font-weight:500}
+.status-note.amber{color:var(--amber);font-weight:500}
+.status-note.red{color:var(--red);font-weight:500}
+
+.resetbtn{
+  font-size:11.5px;color:var(--ink3);text-decoration:underline;
+  text-underline-offset:2px;
+}
+.resetbtn:hover{color:var(--ink)}
+
+/* 待更新空态 */
+.pendingBox{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:32px;text-align:center;max-width:620px;margin:24px auto;
+}
+.pendingBox .pi{
+  width:48px;height:48px;border-radius:50%;background:var(--bg);border:1px solid var(--line);
+  margin:0 auto 16px;display:flex;align-items:center;justify-content:center;color:var(--ink3);
+}
+.pendingBox h3{font-size:16px;font-weight:600;margin-bottom:7px}
+.pendingBox p{font-size:13px;color:var(--ink2);margin-bottom:18px}
+.todoList{text-align:left;background:var(--bg);border-radius:var(--radius-s);padding:15px 18px;margin-bottom:16px}
+.todoList .tl{font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:9px}
+.todoList li{font-size:12.5px;color:var(--ink2);list-style:none;padding-left:16px;position:relative;margin-bottom:7px;line-height:1.55}
+.todoList li:last-child{margin-bottom:0}
+.todoList li:before{content:"○";position:absolute;left:0;color:var(--line-strong);font-size:11px}
+
+.fwgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;text-align:left}
+.fwgrid .fw{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:7px 0;border-bottom:1px dashed var(--line)}
+.fwgrid .fw .fk{color:var(--ink3);flex-shrink:0}
+.fwgrid .fw .fv{color:var(--ink2);text-align:right}
+
+/* 岗位详情抽屉按钮区 */
+.jdbar{display:flex;gap:9px;margin-bottom:16px;flex-wrap:wrap}
+
+/* ---------- 右：详情面板 ---------- */
+.panel{
+  width:0;flex-shrink:0;background:var(--card);border-left:1px solid var(--line);
+  overflow:hidden;transition:width .28s cubic-bezier(.3,.7,.3,1);display:flex;flex-direction:column;
+}
+.panel.open{width:min(50%,680px)}
+.panel-head{padding:15px 20px;border-bottom:1px solid var(--line);flex-shrink:0;display:flex;align-items:center;gap:13px}
+.panel-head .ph-txt{flex:1;min-width:0}
+.panel-head h2{font-size:15.5px;font-weight:600}
+.panel-head .ph-meta{font-size:12px;color:var(--ink3);margin-top:2px}
+.iconbtn{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;color:var(--ink3);flex-shrink:0;transition:background .15s}
+.iconbtn:hover{background:var(--bg);color:var(--ink)}
+.panel-body{flex:1;overflow-y:auto;padding:18px 20px 40px}
+
+.sec{margin-bottom:22px}
+.sec:last-child{margin-bottom:0}
+.sec h3{font-size:12.5px;font-weight:600;color:var(--ink2);margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+.sec h3 .badge{font-size:10.5px;font-weight:500;padding:1px 7px;border-radius:4px;background:var(--bg);color:var(--ink3);border:1px solid var(--line)}
+.sec p{font-size:12.5px;color:var(--ink2);line-height:1.7}
+
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:12.5px}
+.kv dt{color:var(--ink3);white-space:nowrap}
+.kv dd{color:var(--ink)}
+
+.item{padding:10px 0;border-bottom:1px dashed var(--line)}
+.item:last-child{border-bottom:none;padding-bottom:0}
+.item .it{font-size:12.5px;font-weight:600;margin-bottom:3px;display:flex;gap:8px;align-items:baseline}
+.item .id{font-size:12px;color:var(--ink2);line-height:1.65}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:7px}
+.dot.g{background:var(--green)}.dot.a{background:var(--amber)}.dot.r{background:var(--red)}
+
+.callout{padding:11px 13px;border-radius:var(--radius-s);font-size:12px;line-height:1.65;border:1px solid}
+.callout.blue{background:var(--blue-bg);border-color:var(--blue-line);color:var(--blue)}
+.callout.amber{background:var(--amber-bg);border-color:var(--amber-line);color:var(--amber)}
+.callout.green{background:var(--green-bg);border-color:var(--green-line);color:var(--green)}
+
+.resume-raw{
+  background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-s);
+  padding:15px 17px;font-size:12px;line-height:1.8;color:var(--ink2);
+  white-space:pre-wrap;word-break:break-word;
+  font-family:"SF Mono",Consolas,"Courier New",monospace;
+}
+
+.drop{border:1.5px dashed var(--line-strong);border-radius:var(--radius);padding:30px 18px;text-align:center;background:var(--bg);transition:border-color .15s,background .15s;cursor:pointer}
+.drop.over{border-color:var(--blue);background:var(--blue-bg)}
+.drop .dt{font-size:13px;font-weight:500;margin-bottom:5px}
+.drop .dd{font-size:11.5px;color:var(--ink3);line-height:1.6}
+.drop-img{margin-top:13px;border:1px solid var(--line);border-radius:var(--radius-s);overflow:hidden;background:var(--card)}
+.drop-img img{width:100%;display:block}
+.drop-tools{display:flex;gap:8px;margin-top:11px;justify-content:center;flex-wrap:wrap}
+.btn{padding:6px 14px;border-radius:7px;font-size:12px;background:var(--card);border:1px solid var(--line-strong);color:var(--ink2);transition:background .15s,border-color .15s}
+.btn:hover{background:var(--bg);border-color:var(--ink3);color:var(--ink)}
+
+/* JD 详情面板内 */
+.jdsec{margin-bottom:18px}
+.jdsec h4{font-size:12.5px;font-weight:600;color:var(--ink2);margin-bottom:9px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.req{display:flex;gap:9px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:12.5px}
+.req:last-child{border-bottom:none;padding-bottom:0}
+.req .rt{flex-shrink:0;font-size:10.5px;font-weight:500;padding:2px 7px;border-radius:4px;height:fit-content;margin-top:1px}
+.req .rt.hot{background:var(--red-bg);color:var(--red);border:1px solid var(--red-line)}
+.req .rt.norm{background:var(--bg);color:var(--ink3);border:1px solid var(--line)}
+.req .rx{flex:1;color:var(--ink2);line-height:1.6}
+.simple-list{font-size:12.5px;color:var(--ink2);line-height:1.7}
+.simple-list li{margin-bottom:6px;list-style:none;padding-left:14px;position:relative}
+.simple-list li:before{content:"";position:absolute;left:2px;top:9px;width:4px;height:4px;border-radius:50%;background:var(--line-strong)}
+.metaphor{background:var(--blue-bg);border:1px solid var(--blue-line);border-radius:var(--radius-s);padding:13px 15px;font-size:12.5px;color:var(--blue);line-height:1.7}
+.metaphor .mn{font-size:11.5px;color:#378ADD;margin-top:7px;padding-top:7px;border-top:1px dashed var(--blue-line)}
+.proles{display:grid;grid-template-columns:1fr;gap:8px;margin-bottom:13px}
+.prole{background:var(--bg);border-radius:var(--radius-s);padding:11px 13px;border:1px solid var(--line)}
+.prole .pn{font-size:12.5px;font-weight:600;margin-bottom:3px}
+.prole .pd{font-size:11.5px;color:var(--ink2);line-height:1.6}
+
+/* 决策情况视图 */
+.rail-gap{padding-top:14px}
+.dsec{margin-bottom:16px}
+.dsec-h{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;margin-bottom:8px}
+.dcount{font-size:10.5px;font-weight:600;padding:1px 8px;border-radius:10px;background:var(--bg);border:1px solid var(--line);color:var(--ink3)}
+.dcount.green{background:var(--green-bg);color:var(--green);border-color:var(--green-line)}
+.dcount.amber{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-line)}
+.dcount.red{background:var(--red-bg);color:var(--red);border-color:var(--red-line)}
+.dgroups{display:flex;flex-direction:column;gap:14px}
+.drow{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-s);padding:11px 14px;flex-wrap:wrap}
+.drow-main{flex:1;min-width:170px}
+.dname{font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dmeta{font-size:11.5px;color:var(--ink3);margin-top:2px}
+.dtime{font-size:11.5px;color:var(--ink3);white-space:nowrap}
+.dempty{font-size:12px;color:var(--ink3);background:var(--card);border:1px dashed var(--line);border-radius:var(--radius-s);padding:12px 14px}
+.logbox{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-s);padding:4px 14px}
+.logline{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:12px;flex-wrap:wrap}
+.logline:last-child{border-bottom:none}
+.logline .lt{color:var(--ink3);font-size:11px;white-space:nowrap;min-width:92px}
+.logline .ln{font-weight:600}
+.logline .lo{color:var(--ink2)}
+.logline .lo.g{color:var(--green);font-weight:500}
+.logline .lo.a{color:var(--amber);font-weight:500}
+.logline .lo.r{color:var(--red);font-weight:500}
+.logline .lp{color:var(--ink3);font-size:11px;margin-left:auto;text-align:right}
+
+.empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;color:var(--ink3)}
+.empty h3{font-size:14px;font-weight:600;color:var(--ink2);margin-bottom:8px}
+.empty p{font-size:12.5px;line-height:1.7;max-width:320px}
+
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:#D6D5CE;border-radius:5px;border:2px solid transparent;background-clip:content-box}
+::-webkit-scrollbar-thumb:hover{background:#BAB9B1;background-clip:content-box}
+::-webkit-scrollbar-track{background:transparent}
+
+@media (max-width:1080px){
+  .rail{width:190px}
+  .panel.open{width:100%;position:absolute;right:0;top:0;bottom:0;z-index:20}
+  .scores{gap:10px}
 }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="app">
 
-  <!-- 顶部导航 -->
-  <nav class="top-nav fade-in">
-    <strong style="color:var(--primary)">📊 人事行政周会</strong>
-    <span style="color:var(--sub);font-size:.82rem;">切换周次：</span>
-    <select id="weekSel" onchange="switchWeek(this.value)" class="editable" title="选择周次">
-      <option value="current">当前周</option>
-      <option value="w35">第 35 周</option>
-      <option value="w36">第 36 周</option>
-    </select>
-    <button class="icon-btn" onclick="saveWeek()" title="保存当前数据到本地">💾 保存本周</button>
-    <button class="icon-btn" id="editBtn" onclick="toggleEdit()" title="编辑模式：开启后可点击文字直接修改">✏️ 编辑</button>
-    <div class="spacer"></div>
-    <a href="#sec-thisweek">📋 本周工作推进</a>
-    <a href="#sec-risk">⚠️ 风险预警</a>
-    <a href="#sec-ai">🤖 AI 建议</a>
-    <button class="icon-btn" onclick="exportImage()" title="导出当前页面为图片">📸 截图</button>
-    <button class="icon-btn" onclick="toggleTheme()" title="切换深色模式">🌙</button>
-    <button class="icon-btn" onclick="window.print()" title="打印 / 导出 PDF">🖨️</button>
-    <span class="save-tip" id="saveTip">✓ 已保存</span>
-  </nav>
-
-  <!-- KPI -->
-  <div class="kpi-row fade-in">
-    <div class="kpi-card"><div class="label">汇报人</div><div class="value editable">陈晓筠</div></div>
-    <div class="kpi-card"><div class="label">承接完成率</div><div class="value">100%</div></div>
-    <div class="kpi-card"><div class="label">风险数量</div><div class="value">5</div></div>
-    <div class="kpi-card">
-      <div class="label">本周整体进度</div>
-      <div class="progress-ring-wrap">
-        <svg class="progress-ring" width="44" height="44">
-          <circle class="progress-ring-circle-bg" cx="22" cy="22" r="18"></circle>
-          <circle class="progress-ring-circle" id="ringCircle" cx="22" cy="22" r="18" stroke-dasharray="113.1" stroke-dashoffset="45.2"></circle>
-          <text class="progress-ring-label" x="22" y="26">60%</text>
-        </svg>
-        <span style="font-size:.85rem;color:var(--sub);">本周四模块加权进度</span>
-      </div>
+  <div class="topbar">
+    <div class="brand">候选人分析<span class="sub">Joincom · V1.4 六维融合分析</span></div>
+    <div class="topbar-tools">
+      <button class="btn" id="btnExport" title="导出全部数据（决策、操作流水、简历截图）为 JSON 备份文件">导出数据</button>
+      <button class="btn" id="btnImport" title="从 JSON 备份文件导入，覆盖当前全部数据">导入数据</button>
+      <input type="file" id="importFile" accept=".json,application/json" style="display:none">
     </div>
-    <div class="kpi-card"><div class="label">在职总计</div><div class="value" id="kpiTotal">53 人</div></div>
+    <div class="topbar-spacer"></div>
+    <div class="hint" id="barHint"></div>
   </div>
 
-  <!-- 8卡片 -->
-  <div class="card-grid fade-in">
-    <a class="module-card" href="https://xiaojunchen0423-boop.github.io/hr-notice-tool/" target="_blank"><h3>📢 人事行政通知工坊</h3><p>通知生成与发布工具</p></a>
-    <a class="module-card" href="https://xiaojunchen0423-boop.github.io/KOL-meeting/" target="_blank"><h3>📝 KOL 项目组会议纪要对比工具</h3><p>会议纪要对比</p></a>
-    <a class="module-card" href="https://xiaojunchen0423-boop.github.io/HR-Dashboard/" target="_blank"><h3>📈 HR 数据面板</h3><p>HR 数据可视化面板</p></a>
-    <a class="module-card" href="https://xiaojunchen0423-boop.github.io/AIA-2026-2027/" target="_blank"><h3>🏥 友邦团险续保方案最终版</h3><p>团险续保方案查看</p></a>
-    <a class="module-card" href="https://xiaojunchen0423-boop.github.io/SOP-For-Housing-Provident-Fund/" target="_blank"><h3>🏦 住房公积金月度缴存操作 SOP</h3><p>公积金缴存操作指引</p></a>
-    <a class="module-card" href="https://xiaojunchen0423-boop.github.io/SOP-For-Social-Security/" target="_blank"><h3>🛡️ 社会保险月度申报及异动操作 SOP</h3><p>社保申报操作指引</p></a>
-    <a class="module-card" href="https://xiaojunchen0423-boop.github.io/Employee-training/" target="_blank"><h3>🎓 员工培训方案及入口</h3><p>培训方案与入口</p></a>
-    <a class="module-card" href="https://xiaojunchen0423-boop.github.io/Employee-Points-System/" target="_blank"><h3>🏆 员工积分制</h3><p>积分管理 V2.1</p></a>
-    <a class="module-card" href="https://xiaojunchen0423-boop.github.io/Employee-Physical-Examination/" target="_blank"><h3>🩺 2026年度员工体检方案对比分析</h3><p>瑞慈 · 广医二院 · 珠江医院 三方案对比</p></a>
-    <a class="module-card" href="https://xiaojunchen0423-boop.github.io/recruitment/" target="_blank"><h3>🕵️ 招聘候选人分析</h3><p>六维融合 · 决策标记 · 人才池</p></a>
-  </div>
+  <div class="main">
+    <!-- 左：在招岗位列表 -->
+    <nav class="rail" id="rail"></nav>
 
-  <!-- 三栏核心区 -->
-  <div class="three-col fade-in">
-    <!-- 甘特图 -->
-    <div class="panel">
-      <h2>📅 本周关键节点 Timeline</h2>
-      <div style="font-size:.78rem;margin-bottom:2px;">工资核算与考勤</div>
-      <div class="gantt-bar"><div class="gantt-fill" style="width:0%;background:linear-gradient(90deg,#2563eb,#60a5fa);" data-w="80%">80%</div></div>
-      <div style="font-size:.78rem;margin-bottom:2px;">社保公积金购买</div>
-      <div class="gantt-bar"><div class="gantt-fill" style="width:0%;background:linear-gradient(90deg,#10b981,#34d399);" data-w="65%">65%</div></div>
-      <div style="font-size:.78rem;margin-bottom:2px;">招聘推进与简历筛选</div>
-      <div class="gantt-bar"><div class="gantt-fill" style="width:0%;background:linear-gradient(90deg,#f59e0b,#fbbf24);" data-w="50%">50%</div></div>
-      <div style="font-size:.78rem;margin-bottom:2px;">月度报销与费用提交</div>
-      <div class="gantt-bar"><div class="gantt-fill" style="width:0%;background:linear-gradient(90deg,#8b5cf6,#a78bfa);" data-w="55%">55%</div></div>
-      <div style="font-size:.78rem;margin-bottom:2px;">聚客软著新增提交</div>
-      <div class="gantt-bar"><div class="gantt-fill" style="width:0%;background:linear-gradient(90deg,#06b6d4,#22d3ee);" data-w="30%">30%</div></div>
-      <div style="font-size:.78rem;margin-bottom:2px;">培训小工具优化</div>
-      <div class="gantt-bar"><div class="gantt-fill" style="width:0%;background:linear-gradient(90deg,#ef4444,#f87171);" data-w="45%">45%</div></div>
-    </div>
-    <!-- 各主体人事数据 + 每周人员明细 -->
-    <div class="panel">
-      <h2>👥 各主体人事数据概览</h2>
-      <table class="subject-table">
-        <thead><tr><th>主体</th><th style="text-align:right;">人数</th></tr></thead>
-        <tbody id="subjectBody"></tbody>
-      </table>
-      <div class="subject-note">人数来源：社保购买记录（员工 + 挂靠 + 老板）</div>
+    <!-- 中：候选人列表 / 岗位详情 -->
+    <section class="list" id="list"></section>
 
-      <h2>📋 每周人员明细</h2>
-      <ul class="detail-list" id="detailList"></ul>
-    </div>
-    <!-- 年假计算器 -->
-    <div class="panel">
-      <h2>🗓️ 年假计算器（离职折算版）</h2>
-      <div class="calc-form">
-        <div><label>选择年度</label>
-          <select id="leaveYear"><option value="2025">2025</option><option value="2026" selected>2026</option></select>
+    <!-- 右：详情面板 -->
+    <aside class="panel" id="panel">
+      <div class="panel-head">
+        <div class="avatar green" id="pAvatar">—</div>
+        <div class="ph-txt">
+          <h2 id="pName">选择候选人</h2>
+          <div class="ph-meta" id="pMeta"></div>
         </div>
-        <div><label>全年年假天数</label><input type="number" id="totalLeave" value="10" min="0" max="30"></div>
-        <div><label>离职日期</label><input type="date" id="leaveDate" value="2026-09-08"></div>
-        <div><label>已休天数（可选）</label><input type="number" id="usedLeave" value="0" min="0" max="30"></div>
-        <div><label>日薪（元，用于补偿计算）</label><input type="number" id="dailyWage" value="0" min="0"></div>
-        <button onclick="calcLeave()">计算折算</button>
+        <button class="iconbtn" id="pClose" title="收起">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <path d="M3 3l9 9M12 3l-9 9"/>
+          </svg>
+        </button>
       </div>
-      <div class="calc-result" id="calcResult"><div style="color:var(--sub);font-size:.82rem;">填写上方信息后点击"计算折算"</div></div>
-    </div>
+      <div class="panel-body" id="pBody"></div>
+    </aside>
   </div>
-
-  <!-- 上周工作完成情况 -->
-  <section class="fade-in" id="sec-lastweek" style="margin-bottom:20px;">
-    <h2 style="color:var(--primary);border-bottom:2px solid var(--primary-soft);padding-bottom:6px;">✅ 上周工作完成情况</h2>
-    <div class="grid-4" id="lastWeekGrid"></div>
-  </section>
-
-  <!-- 本周工作推进 -->
-  <section class="fade-in" id="sec-thisweek" style="margin-bottom:20px;">
-    <h2 style="color:var(--primary);border-bottom:2px solid var(--primary-soft);padding-bottom:6px;">📋 本周工作推进</h2>
-    <div class="grid-4" id="thisWeekGrid"></div>
-  </section>
-
-  <!-- 风险管理 -->
-  <section class="fade-in" id="sec-risk" style="margin-bottom:20px;">
-    <h2 style="color:var(--primary);border-bottom:2px solid var(--primary-soft);padding-bottom:6px;">⚠️ 风险管理</h2>
-    <div class="panel" id="riskPanel"></div>
-  </section>
-
-  <!-- AI 管理总结 -->
-  <section class="fade-in" id="sec-ai" style="margin-bottom:20px;">
-    <h2 style="color:var(--primary);border-bottom:2px solid var(--primary-soft);padding-bottom:6px;">🤖 AI 管理总结</h2>
-    <div id="aiPanel"></div>
-  </section>
-
-  <!-- 留存资料 -->
-  <section class="fade-in" style="margin-bottom:20px;">
-    <h2 style="color:var(--primary);border-bottom:2px solid var(--primary-soft);padding-bottom:6px;">📂 留存资料</h2>
-    <div class="card-grid">
-      <a class="module-card" href="https://xiaojunchen0423-boop.github.io/SOP-For-Housing-Provident-Fund/" target="_blank"><h3>🏦 住房公积金月度缴存操作 SOP</h3><p>7 家主体、月度四步闭环操作指引</p></a>
-      <a class="module-card" href="https://xiaojunchen0423-boop.github.io/SOP-For-Social-Security/" target="_blank"><h3>🛡️ 社会保险月度申报及异动操作 SOP</h3><p>社保申报操作指引</p></a>
-    </div>
-  </section>
-
 </div>
 
 <script>
-/* ========== 数据模型（维护入口） ========== */
-const DEFAULT_DATA = {
-  week: "current",
-  subjects: [
-    { name: "聚客",   employees: 24, boss: 0, attached: 4,  note: "员工24 + 挂靠4" },
-    { name: "云算力",  employees: 4,  boss: 2, attached: 2,  note: "员工4 + 老板2 + 挂靠2" },
-    { name: "晓麻雀",  employees: 1,  boss: 0, attached: 0,  note: "1 人" },
-    { name: "玉枕",    employees: 13, boss: 0, attached: 0,  note: "13 名员工" },
-    { name: "儒商",    employees: 2,  boss: 0, attached: 1,  note: "员工2 + 挂靠1" },
+/* ============================================================
+   候选人分析 — 数据层
+   数据来源：
+     1) 桌面《AI交付工程师.docx》（岗位 JD）
+     2) 黄懋晟个人简历.pdf / 钟莹玉(简历)_9(1).pdf（简历原文）
+     3) output/20260921-aijd-v14-analysis（V1.4 六维分析结论）
+     4) 敏炜：官网投递截图解析（原图未在本机，工具内支持拖入查看）
+   ============================================================ */
+
+/* ---------- 决策状态定义（顺序即按钮顺序） ---------- */
+const DECISIONS = [
+  { id: 'interview', label: '推进面试', short: '推进面试', cls: 'green',
+    desc: '进入面试流程' },
+  { id: 'pool', label: '进入人才池', short: '人才池', cls: 'amber',
+    desc: '本岗位暂不合适，留档备选' },
+  { id: 'reject', label: '不使用', short: '不使用', cls: 'red',
+    desc: '本次不推进' },
+];
+
+/* ---------- 岗位 JD ---------- */
+const JD = {
+  title: 'AI 交付工程师',
+  subtitle: '应届 8K-15K ／ 实习 4K-6K',
+  company: '广州聚客网络科技有限公司（Joincom）',
+  location: '广州',
+  reportsTo: 'AI 交付负责人',
+  positioning: '不自己写代码，指挥 AI 完成交付 —— AI-0 调度模式',
+  intro:
+    '公司 80% 以上的代码由 AI（Claude Code、Cursor 等）生成，人的工作是设计、调度、Review、判断。' +
+    'AI-0 调度模式中：CEO 是最高指挥者，多个 Claude Project 是专业角色，多个 Claude Code 实例是技术执行者，' +
+    '而这个岗位是把业务意图翻译成可执行指令、并把控质量的那个人。',
+  mustHave: [
+    { text: '2025/2026 届应届生 · 1-2 年早期工程师 · 在校大三大四（实习）', tag: '身份' },
+    { text: 'AI 工具端到端项目经验 —— 用过 Claude / ChatGPT / Cursor / Copilot 之一，真实做过完整小项目', tag: '最重要' },
+    { text: '至少一种编程语言基础（Python / JavaScript / PHP / Java），不要求精通', tag: '基础' },
+    { text: '良好的中文写作能力（需要写大量 Prompt 与文档）', tag: '软性' },
+    { text: '强烈的学习欲望与好奇心 —— 比 GPA 重要 10 倍', tag: '特质' },
   ],
-  details: [
-    { type: "out",    text: "本周离职：0 人",    who: "" },
-    { type: "in",     text: "本周入职：0 人",    who: "" },
-    { type: "absent", text: "考勤异常：0 人",    who: "" },
+  niceToHave: [
+    '有 GitHub 账号且有自己的项目作品',
+    '在 B 站 / 即刻 / 小红书 / 知乎分享过 AI 实践经验',
+    '参加过 hackathon、AI 比赛、开源项目',
+    '熟悉 Laravel / React / Node.js / 微信小程序 / Python 数据处理任一',
+    '用 AI 解决过学习或生活中的真实问题',
+    '英语阅读能力 —— 能看懂英文技术文档',
   ],
-  lastWeek: [
-    { title: "一、人事板块 (5项)", items: [
-      "社保公积金购买（还需处理：聚客、星青年）",
-      "员工体检：广医二院已报价，还缺珠江医院",
-      "新增招聘需求：海外达人合作经理，现已在 BOSS 发布岗位",
-      "完成中秋福利品派发",
-      "云算力社保已按规定递交资料并新增非全日制人员" ] },
-    { title: "二、行政板块 (1项)", items: [
-      "软著：聚客新增 1 份，目前待受理" ] },
-    { title: "三、工商板块 (2项)", items: [
-      "佛山通联达：已完成，《简易注销通知书》已领取",
-      "惠州溪云：已完成，《简易注销通知书》未领取" ] },
-    { title: "四、AI 工具模块 (1项)", items: [
-      "KOL 周会会议纪要已更新" ] },
+  veto: ['诚信', '学习心态', '协作精神', '对 AI 的开放态度'],
+  products: [
+    '云算力 AI-OPS（YunForce 运营平台）',
+    '领功小程序（LingGong）',
+    '赏点网（PlanPoint）',
+    '聚客 CRM（PHP → Laravel 11 + React 18）',
+    '内部 PMS 项目管理系统',
+    '聚客 AI 学院',
   ],
-  thisWeek: [
-    { title: "一、人事板块 (4项)", items: [
-      "完成社保公积金购买（还需处理：聚客、星青年公积金需预约线下处理）",
-      "跟进招聘情况，收取并筛选相关候选人简历",
-      "完成月度考勤",
-      "完成工资表基础信息更新" ] },
-    { title: "二、行政板块 (4项)", items: [
-      "提交月度报销",
-      "提交同福西租金支付",
-      "提交 IFC 10 月相关费用",
-      "软著：新增聚客软著 2 份，待提交" ] },
-    { title: "三、工商板块 (暂无)", items: [
-      "暂无" ] },
-    { title: "四、AI 工具模块 (1项)", items: [
-      "根据反馈优化培训小工具" ] },
+  benefits: [
+    '报销 AI 工具订阅（Claude Pro / Cursor Pro / ChatGPT Plus）',
+    '每年 8,000 元学习预算',
+    '入职前 3 个月 AI 学院系统培训，CEO 与负责人亲授',
+    '入职第一周即参与真实项目',
+    '完成培训获聚客「AI 协作工程师」认证',
+    '五险一金按广州市规定足额缴纳 · 13 薪',
   ],
-  risks: [
-    { level: "high", title: "社保公积金线下处理待闭环", impact: "聚客、星青年公积金需预约线下处理，若未及时办理将影响员工社保公积金权益与用工合规", action: "尽快预约并完成聚客、星青年公积金线下办理，确认到账后归档凭证" },
-    { level: "high", title: "软著新增提交进度滞后", impact: "聚客软著新增 2 份及上周 1 份均处于待提交/待受理状态，若不及时推进将影响软著资质储备", action: "本周提交聚客软著 2 份，并跟进上周 1 份受理进度" },
-    { level: "mid", title: "员工年度体检报价未整合", impact: "广医二院已报价，仍缺珠江医院报价，若整合滞后将影响年度体检方案落地", action: "跟进珠江医院报价，完成方案比价后报审" },
-    { level: "mid", title: "招聘岗位简历量待补充", impact: "海外达人合作经理已在 BOSS 发布，但仍需收取并筛选足够候选人简历，进度偏慢", action: "跟进招聘情况，收取并筛选相关候选人简历" },
-    { level: "mid", title: "惠州溪云注销通知书待领取", impact: "已完成注销但《简易注销通知书》尚未领取，未闭环存在流程悬空", action: "跟进惠州溪云注销情况，领取《简易注销通知书》完成闭环" },
+  growth: [
+    { period: '0-6 个月', role: 'AI 交付实习生 / 初级工程师', note: '完成基础项目模块' },
+    { period: '6-18 个月', role: 'AI 交付工程师', note: '独立负责单一模块，开始 review 实习生' },
+    { period: '18-36 个月', role: '高级工程师 / 项目负责人', note: '选择技术深度或广度方向' },
+    { period: '3 年后', role: '交付负责人 / 技术专家 / 产品技术负责人', note: '' },
   ],
-  aiTips: [
-    "<strong>保社保</strong>：完成社保公积金购买，预约线下处理聚客、星青年公积金，确认到账归档。",
-    "<strong>促招聘</strong>：跟进海外达人合作经理招聘，收取并筛选候选人简历，推进面试安排。",
-    "<strong>办软著</strong>：提交聚客软著新增 2 份，跟进月度报销与同福西租金、IFC 费用提交。",
-    "<strong>闭环</strong>：跟进珠江医院体检报价与惠州溪云通知书领取，完成月度考勤与工资表更新。",
-  ],
+  plainIntro: {
+    analogy: '像「包工头 + 质检员 + 翻译官」三合一',
+    roles: [
+      { name: '包工头', desc: '把老板一句模糊需求，拆成 AI 能听懂的活' },
+      { name: '质检员', desc: '检查 AI 写出来的东西对不对，坏了要能修' },
+      { name: '翻译官', desc: '把业务的话翻成技术语言，再把结果讲回业务' },
+    ],
+    metaphor: 'AI 是施工队，他是拿图纸的那个人 —— 要能看懂图纸、验收工程，不必自己会砌砖。',
+    metaphorNote: '但他得懂「砖」是什么，这就是「编程语言基础」被列为硬门槛的原因。',
+  },
 };
 
-let currentData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+/* ---------- 三候选人 ---------- */
+const CANDIDATES = [
+  {
+    id: 'minwei',
+    name: '敏炜',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '敏',
+    meta: '2026 届 · 食品科学与工程 · 福州 → 广州 · 官网投递',
+    listMeta: '2026 届 · 食品科学与工程',
+    source: '官网投递',
+    recommend: 'interview',
+    recommendWhy: '唯一通过全部硬门槛，建议直接约面',
+    headline: '三人中唯一能「明天就上手交付」的候选人',
+    score: '★★★★☆',
+    ksa: { K: 4, S: 5, A: 4.5, O: 3.5, total: 4.3 },
+    star: 4.5,
+    similarity: 78,
+    similarityBand: '较相似（逼近 80% 高度相似阈值）',
+    consistency: { level: 'high', label: '高', note: 'GitHub 开源仓库 + 在线 demo + README + 117 次自动化检查记录，自评有可外部验证的实物证据' },
+    mbti: '偏 I / N / T / P（行为推断）',
+    belbin: '创新者（Plant）+ 专家（Specialist）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '教练型 / 授权型领导适配最高',
+    summary:
+      '完全命中 JD「非相关专业但有大量 AI 项目实践」通道。Cat Is Here 项目是「端到端小项目」的理想样本：' +
+      '个人独立完成需求拆解 → AI 辅助研发（Codex 等）→ 接入多家 OpenAI 格式模型 API → JSON 输出校验、' +
+      '请求限流、输入限制、词条过滤 → 117 次自动化检查全部通过 → 开源 GitHub + 在线 demo + README / 设计说明 / 演示脚本。',
+    highlights: [
+      { t: '端到端闭环最完整', d: '不仅「做过」，还带部署运维与安全意识，直接对应 JD 中「Review AI 代码、调试修复、维护知识库」的潜质。' },
+      { t: '编程基础达标', d: 'JavaScript / Node.js / HTTP-JSON API / 自动化测试。虽自评「正在学习工程基础」，但 JD 明确不要求精通，门槛已过。' },
+      { t: '软素质有支撑', d: '多次竞赛团长 / 队长（省级一等奖、国家级二等奖）；主动投递公司官网，明确表示可赴广州。' },
+    ],
+    risks: [
+      { t: '工程深度待验证', d: '项目为个人作品，无企业级团队协作与正式 Code Review 经验，「能看懂 AI 写的代码」需现场验证。' },
+      { t: '异地稳定性', d: '福州 → 广州，需确认到岗时间、住宿安排与长期留存意愿。' },
+      { t: '材料形态', d: '简历为投递系统截图，姓名全名与联系方式以官网系统信息为准。' },
+    ],
+    interview:
+      '核心验证一条 —— 让她现场讲 Cat Is Here：整体架构怎么定的？哪些代码是 AI 生成、哪些自己改的？' +
+      '出过什么 bug、怎么定位修复的？若能讲清楚，就是「能判断 AI 代码正确性」的直接证据。',
+    resume: {
+      type: 'image',
+      note: '原件为官网投递截图，原图不在本机。可将截图直接拖入下方区域查看，图片仅在本机浏览器中读取，不会上传。',
+      raw: null,
+    },
+  },
 
-/* ========== 渲染 ========== */
-function renderSubjects() {
-  const tbody = document.getElementById('subjectBody');
-  let html = '', total = 0;
-  currentData.subjects.forEach(s => {
-    const count = s.employees + s.boss + s.attached;
-    total += count;
-    html += `<tr><td>${s.name}<div class="sub-detail">${s.note}</div></td><td class="num">${count} 人</td></tr>`;
-  });
-  html += `<tr class="total-row"><td>在职总计</td><td class="num">${total} 人</td></tr>`;
-  tbody.innerHTML = html;
-  const kpi = document.getElementById('kpiTotal');
-  if (kpi) kpi.textContent = total + ' 人';
-}
+  {
+    id: 'huang',
+    name: '黄懋晟',
+    tag: '有条件推荐',
+    tier: 'amber',
+    initial: '黄',
+    meta: '2026 届 · 昆士兰大学（QS40）商务管理（人力资源）· 本科 GPA 6/7',
+    listMeta: '2026 届 · 昆士兰大学 商务管理',
+    source: '招聘系统投递',
+    recommend: 'interview',
+    recommendWhy: '建议加 15 分钟技术摸底后再定',
+    headline: '技术门槛未过，但学习速度与产品思维是三人中最突出的',
+    score: '★★★☆☆',
+    ksa: { K: 2, S: 4, A: 4.5, O: 3.5, total: 3.6 },
+    star: 4.0,
+    similarity: 62,
+    similarityBand: '较相似',
+    consistency: { level: 'mid', label: '中', note: '有 GitHub 作品集可验证，但「独立搭建」的具体技术栈未说明，需现场核验' },
+    mbti: '偏 E / N / F / J（行为推断）',
+    belbin: '协调者（Co-ordinator）+ 资源调查者',
+    fit: { level: 'amber', label: '部分匹配' },
+    style: '需教练型领导补技术短板',
+    summary:
+      'AI 工具硬门槛初步达标：Claude Code / Codex 重度用户，自述零代码起步、半年内独立搭建多个自动化系统。' +
+      '快速交付有实证（黑客松 72 小时出可运行原型并获奖），产品思维与需求翻译能力明显强于同龄应届生；' +
+      '但简历全文未出现任何编程语言，K 知识仅 2 分，这是最大短板。',
+    highlights: [
+      { t: '快速交付有实证', d: 'AdventureX 2026 黑客松 72 小时内完成可运行原型，获百度秒哒赛道「最佳交互奖」。' },
+      { t: '产品思维突出', d: 'MoSCoW 框架把需求收敛到 4 个核心功能；拆解 Trip.com 与奥运官方 App 做竞品定位；AKA Studio 项目完成 180-900 万澳元市场规模测算。' },
+      { t: '附加协同价值', d: '人力资源专业背景 + AI 工具能力，与公司在推的 AI 简历分析、培训体系、积分工具有潜在协同。' },
+    ],
+    risks: [
+      { t: '技术门槛未过（决定性）', d: '简历全文无任何编程语言证据，K 知识评分仅 2 分。JD 要求「能看懂 AI 写的代码、能定位修复」，这是硬缺口。' },
+      { t: '言行一致性待验证', d: '自述「零代码起步却独立搭建自动化系统」，与偏 F/J 的协调者倾向之间存在张力 —— 究竟是自己动手做，还是组织别人做？' },
+      { t: '回国意愿与薪酬预期', d: '海外求学多年，长期发展意愿与薪酬预期待确认。' },
+    ],
+    interview:
+      '加 15 分钟技术摸底，这是决定性的 15 分钟。直接给一个真实小任务让他现场用 AI 工具完成，' +
+      '观察他是否理解 AI 产出的代码、出 bug 时能否定位。若不通过，可考虑转产品 / 运营方向。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取',
+      raw: `黄懋晟
+电话：17813028892　邮箱：huangmmax@outlook.com
+作品集：https://maxi-max-dev.github.io
 
-function renderDetails() {
-  const ul = document.getElementById('detailList');
-  if (!ul) return;
-  const tagMap = { out: ['tag tag-out','本周离职'], in: ['tag tag-in','本周入职'], absent: ['tag tag-absent','考勤异常'] };
-  ul.innerHTML = currentData.details.map(d => {
-    const [cls, label] = tagMap[d.type] || tagMap.out;
-    return `<li><span><span class="tag ${cls}">${label}</span><span class="editable" contenteditable="false">${d.text}</span></span><span class="editable" contenteditable="false" style="color:var(--sub);font-size:.76rem;">${d.who}</span></li>`;
-  }).join('');
-}
+【教育经历】
+2022.07-2026.07　昆士兰大学（QS40）
+商务管理（人力资源）｜本科　GPA: 6/7
 
-function renderModuleGrid(hostId, arr, progresses) {
-  const host = document.getElementById(hostId);
-  if (!host) return;
-  host.innerHTML = arr.map((m, i) => {
-    const p = progresses ? progresses[i] : 100;
-    const pTxt = p === 0 ? '待启动' : (p === 100 ? '100%' : '进行中 ' + p + '%');
-    return `<div class="module-box"><h3>${m.title}</h3><ul>${m.items.map(it => '<li>' + it + '</li>').join('')}</ul><div class="progress-wrap"><div class="progress-bar"><div class="progress-fill" style="width:${p}%"></div></div><div class="progress-text">${pTxt}</div></div></div>`;
-  }).join('');
-}
+【实习经历】
+2025.2-2025.5　Food and Beverage Accelerator　行政部实习生
+· 活动统筹：负责 60+ 人内部及 800+ 人外部活动的名单、分组、签到，统一三环节数据口径，多场活动按计划交付。
+· 供应商管理：对接 20+ 供应商，以场地档期为关键路径倒排排期，变更即时重排，活动未因衔接延期。
+· 数据台账：从 0 建立 100+ 条合作方信息台账，制定录入核对规则，后续活动直接复用。
 
-function renderRisks() {
-  const host = document.getElementById('riskPanel');
-  if (!host) return;
-  let html = '';
-  currentData.risks.forEach(r => {
-    const cls = r.level === 'high' ? 'risk-high' : 'risk-mid';
-    const tag = r.level === 'high' ? '🔴 高' : '🟡 中';
-    html += `<div class="risk-item"><span class="risk-tag ${cls}">${tag}</span><strong>${r.title}</strong><div class="risk-impact">影响：${r.impact}</div><div class="risk-action">应对：${r.action}</div></div>`;
-  });
-  host.innerHTML = html;
-}
+【项目经历】
+2026.7　AdventureX2026 黑客松｜百度秒哒赛道「最佳交互奖」　项目负责人
+主导 UNSEEN（基于 360° 全景与视觉 AI 的多人共享记忆空间）的产品设计与开发。
+· 产品定义：将多人手机中分散的照片与视频重组，形成可共同贡献、探索与重温的共享记忆空间。
+· 交互设计：设计空间归位、沉浸式浏览及缺失视角补全机制，打造「素材贡献 — 空间补全 — 互动回顾」体验闭环。
+· 项目落地：承担策划、视觉交互等主要工作，72 小时内完成可运行原型，获百度秒哒赛道「最佳交互奖」。
 
-function renderAI() {
-  const host = document.getElementById('aiPanel');
-  if (!host) return;
-  host.innerHTML = currentData.aiTips.map(t => `<div class="ai-tip">${t}</div>`).join('');
-}
+2025.7-2025.11　AKA Studio 校企合作项目　项目负责人｜3-5 人跨学科团队
+为客户评估旅游应用 Konnect（面向 2032 布里斯班奥运的一站式出行与活动平台）的商业可行性。
+· 需求收敛：收集 50+ 份问卷与访谈样本归纳四类核心需求，MoSCoW 框架收敛 MVP 至 4 个核心功能。
+· 市场测算：按 202 亿澳元奥运旅游消费预测与 9% App 渗透基准，推算 180 万-900 万澳元潜在交易规模。
+· 竞品定位：拆解 Trip.com 与奥运官方 App，提出「本地优先 + 奥运后留存」差异化定位。
 
-function renderAll() {
-  renderSubjects();
-  renderDetails();
-  renderModuleGrid('lastWeekGrid', currentData.lastWeek, null);
-  renderModuleGrid('thisWeekGrid', currentData.thisWeek, [60, 0, 30, 45]);
-  renderRisks();
-  renderAI();
-}
+【自我评价】
+· AI 实践：零代码起步，半年内独立搭建多个自动化系统，覆盖求职、内容、财经等重复性事务。
+· 产品思维：从真实使用场景出发做工具，将人工逐条翻阅笔记的调研流程改造为自动搜索、截图、出报告的自动化工具。
+· 调研能力：毕业课题独立完成约 45 页用工调研报告，分析 864 条社媒内容与 37 份 JD。
 
-/* ========== 深色模式 ========== */
-function toggleTheme() {
-  const html = document.documentElement;
-  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  html.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-}
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+【相关技能】
+· AI 工具：Claude Code / Codex 重度用户，独立完成多个自动化小工具。
+· 调研方法：问卷与访谈设计、竞品分析、MoSCoW 需求优先级、Lean Canvas`,
+    },
+  },
 
-/* ========== 周次切换 + 数据存档 ========== */
-function switchWeek(v) {
-  if (v === 'current') { currentData = JSON.parse(JSON.stringify(DEFAULT_DATA)); renderAll(); return; }
-  const saved = localStorage.getItem('week_' + v);
-  if (saved) { currentData = JSON.parse(saved); }
-  else { currentData = JSON.parse(JSON.stringify(DEFAULT_DATA)); }
-  renderAll();
-  showTip('已加载' + (v==='w35'?'第 35 周':'第 36 周') + '存档（无存档则用默认模板）');
-}
+  {
+    id: 'zhong',
+    name: '钟莹玉',
+    tag: '不推荐本岗位',
+    tier: 'red',
+    initial: '钟',
+    meta: '2025 届 · 广东外语外贸大学 人力资源管理（大专）· 7 年物业客服 / 行政经验',
+    listMeta: '2025 届 · 广外 人力资源管理（大专）',
+    source: '招聘系统投递',
+    recommend: 'pool',
+    recommendWhy: '建议转推行政 / 客服主管方向，留档备用',
+    headline: '不是能力差，是能力轴与岗位完全不在一条线上',
+    score: '★☆☆☆☆',
+    ksa: { K: 1, S: 1, A: 4, O: 4, total: 1.9 },
+    star: 3.5,
+    similarity: 28,
+    similarityBand: '差异较大',
+    consistency: { level: 'gray', label: '高（但与本岗无关）', note: '500+ 件诉求闭环、满意度 100%、转化率 80% 等数据支撑，其岗位范围内陈述一致' },
+    mbti: '偏 S / J / F（行为推断）',
+    belbin: '完成者（Completer Finisher）+ 团队粘合剂',
+    fit: { level: 'red', label: '不符' },
+    style: '与本岗位团队风格不符',
+    summary:
+      'STAR 结构在三人中最规范 —— 说明表达与做事都很有条理，7 年客服 / 行政积累的沟通协调能力真实存在。' +
+      '但她的能力全在「服务与流程」这一轴，而本岗位要的是「技术与交付」那一轴。' +
+      '技术类三项（K 知识、AI 工具、编程基础）均不达标，属方向错位而非能力不足。',
+    highlights: [
+      { t: '文书与流程能力扎实', d: '会议纪要与宣传物料编制、300 家租户档案规范化管理、部门 15 人排班与绩效管理。' },
+      { t: '执行稳定性强', d: '7 年稳定从业；500+ 件客诉闭环、满意度 100%；任职期间面试到入职转化率 80%、所招人员留存 100%。' },
+      { t: '跨部门协调经验丰富', d: '日常巡查协调工程、保洁等条线；独立发起 OA 采购流程并督办审批。' },
+    ],
+    risks: [
+      { t: '技术类三项全不达标', d: '无技术背景、简历无任何 AI 工具使用记录、无编程语言基础，JD 硬门槛均不符合。' },
+      { t: '岗位驱动不符', d: '本岗位需探索创新（创新者 / 完成者角色），而非流程执行；其完成者 + 粘合剂角色与本岗位驱动方向相反。' },
+      { t: '学历与届别', d: '2025 届已毕业一年，且为大专学历，与 JD 的应届身份要求不符（若走社招另议）。' },
+    ],
+    interview:
+      '不进入本岗位面试流程。婉拒，并转推行政 / 客服主管 / 人事助理方向 —— 她在这些岗位上是可靠人选，值得留在人才池。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取',
+      raw: `钟莹玉　物业客服文员 / 部门经理助理
+电话：13265046904
+户籍：广西梧州
+政治面貌：群众
+民族：汉族
 
-function saveWeek() {
-  const key = currentData.week === 'current' ? 'current' : currentData.week;
-  localStorage.setItem('week_' + key, JSON.stringify(currentData));
-  showTip('✓ 已保存到本地（刷新不丢失）');
-}
-function showTip(msg) {
-  const el = document.getElementById('saveTip');
-  if (!el) return;
-  el.textContent = msg; el.classList.add('show');
-  setTimeout(() => el.classList.remove('show'), 2000);
-}
+【教育经历】
+2022.2-2025.3　广东外语外贸大学　人力资源管理｜大专
+2012.9-2015.6　广州市交通运输职业学校　物流管理｜中专
 
-/* ========== 编辑模式 ========== */
-function toggleEdit() {
-  const body = document.body;
-  const editing = body.classList.toggle('edit-mode');
-  const btn = document.getElementById('editBtn');
-  btn.textContent = editing ? '💾 完成' : '✏️ 编辑';
-  btn.title = editing ? '点击完成编辑并保存' : '编辑模式：开启后可点击文字直接修改';
-  if (editing) {
-    document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'true'));
-  } else {
-    document.querySelectorAll('.editable').forEach(el => el.setAttribute('contenteditable', 'false'));
-    showTip('✓ 编辑已保存');
+【工作经历】
+2022.6-2025.6　广州智汇集团（西城智汇 PARK）
+· 行政文书与档案管理：负责部门会议安排及会议纪要撰写、通知及宣传物料编制；负责部门（15 人）排班管理、部门员工绩效考核，规范化管理 300 家租户档案及基本信息、部门文件，确保资料完整调阅高效。
+· 数据统计分析与报表支持：运用 Excel 进行客服运营基础数据统计分析、催缴明细、诉求处理进度等报表，为部门决策提供数据支撑。
+· 采购与流程督办：独立发起部门采购需求 OA 流程，跟进审批进度，保障部门办公物资及时供应；协助上级完成内部流程提报与督办。
+· 上传下达与综合协调：各类通知、制度文件分发与签收确认，确保信息传达零遗漏；将工作任务分解传达至部门每个主管，定期跟进执行进度并反馈异常情况；同时汇总部门工作简报呈报领导，为决策层提供准确的一线运营数据，保障畅通与组织高效运转。
+· 客户诉求闭环处理：全流程跟进租户投诉、维修、咨询等诉求，同步整改进度并完成回访，累计处理 500+ 件，满意度达 100%，具备极强的沟通协调与问题解决能力。
+· 合规巡查与跨部门协作：办理租户进驻、入驻装修手续，每日巡查公共区域并及时协调工程、保洁等条线处理问题，积累了丰富的跨部门协作经验。
+
+2021.5-2022.6　广州市尚溪物业管理有限公司　办公室文员｜物业服务
+· 行政事务执行：处理日常行政类基础事务，统筹办公用品的采购、盘点与领用管理，保障办公物资供给稳定；协助完成会议筹备、现场支持，梳理会议纪要并跟进待办事项落地，提升会议决议执行效率。
+· 招聘流程落地：承接各部门岗位招聘需求，在前程无忧平台完成简历初筛、候选人邀约工作，协调总经理面试安排，任职期间实现面试到入职转化率达 80%，所招人员在职稳定性达 100%（均满足在职 1 年以上要求）。
+
+2018.4-2021.2　圆通快递　客服专员｜货运 / 物流仓储
+· 日常客诉处理：承接日均 5 万件跨区域快件的客户诉求响应，标准化处理丢件理赔、派送延误、催件等常规咨询及问题，保障前端服务响应效率。
+· 部门协同执行：配合团队负责人落实客服部门的工作调度与分工协调，联动同事共同达成服务 KPI，前置化解客户不满情绪，有效降低升级投诉发生率。
+· 复杂问题处置：专职处理快件异常类疑难工单、升级投诉及仲裁理赔类诉求，推动问题闭环，提高客户满意度。
+
+【自我评价】
+本人性格开朗亲和，拥有 7 年客户服务经验（含 4 年行政内勤及物业运营），具备扎实的文书写作、档案管理、数据统计及 OA 流程操作能力。熟悉企业日常行政事务运转，擅长跨部门协调与事务跟进，细致耐心。
+
+【相关技能】
+Word；Excel；PPT 等办公软件；数据分析；客户服务；`,
+    },
+  },
+];
+
+/* ---------- 六维分析说明 ---------- */
+const DIMENSIONS = [
+  {
+    key: 'ksao',
+    name: 'KSAO 胜任力',
+    desc: '对照「理想标尺（创业型组织 + JD 要求）」打分。K=知识，S=技能，A=能力，O=其他（动机与稳定性）。',
+    note: 'O 项在敏炜、黄懋晟身上标记为「待验证」—— 需面试确认到岗与留存意愿。',
+  },
+  {
+    key: 'star',
+    name: 'STAR 结构完整性',
+    desc: '识别 S 情境 / T 任务 / A 行动 / R 结果 四要素覆盖度与结果量化度，区分「参与」与「主导」。',
+    note: '关键洞察：STAR 分高 ≠ 岗位匹配高。钟莹玉 STAR 结构最规范，但项目性质与本岗位不同轨。',
+  },
+  {
+    key: 'similarity',
+    name: '对理想标尺相似度',
+    desc: '向量构成 = KSAO 各维度分 + MBTI 类型编码 + Belbin 角色 + STAR 量化分 + 言行一致性指数。',
+    note: '档位：≥80% 高度相似 ／ 60-79% 较相似 ／ 40-59% 部分相似 ／ <40% 差异较大。仅作提示参考，不替代硬门槛判断。',
+  },
+  {
+    key: 'mbti',
+    name: 'MBTI × Belbin 交叉',
+    desc: '岗位驱动特征：高自主性、强逻辑拆解、能承受快速迭代、乐于被 Review、把 AI 视为伙伴。',
+    note: '⚠ 数据缺口：三名候选人的 MBTI 实测结果均未提供，当前为行为推断，需以实际测试结果复核。',
+  },
+  {
+    key: 'consistency',
+    name: '言行一致性指数',
+    desc: '交叉核验自评、面试表现与性格特征差异，识别夸大 / 伪装，建立诚信信号。',
+    note: '⚠ 当前无面试录音，以下为简历内部一致性初筛。建议面试前先实测访问 GitHub / 在线 demo。',
+  },
+  {
+    key: 'style',
+    name: '领导风格适配',
+    desc: '按管理者建档字段轻量落地。本岗位直属领导为 AI 交付负责人（技术型），需先完成其风格建档。',
+    note: '行动项：请 AI 交付负责人用 5 分钟勾选风格标签（指令型 / 教练型 / 支持型 / 授权型 / 变革型）。',
+  },
+];
+
+/* ============================================================
+   海外达人合作经理 — 岗位 JD
+   来源：桌面《海外达人合作经理_招聘信息图.png》（2026-09-22 用户提供）
+   注：图内小字分辨率有限，职责明细按可读主干与业务语义整理
+   ============================================================ */
+const JD_OVERSEAS = {
+  title: '海外达人合作经理',
+  subtitle: '广州 8-12K/月 + 项目奖金 + 商业化激励',
+  company: '广州聚客网络科技有限公司（Joincom）',
+  location: '广州',
+  reportsTo: '管理层（业务负责人储备岗）',
+  positioning: '帮达人出海搭桥牵线 —— 星探 + 经纪人 + 项目管家三合一',
+  duties: [
+    { pct: '40%', name: '达人 & MCN 拓展', text: '独立完成达人挖掘、初筛与建联，维护重点达人与核心合作伙伴关系' },
+    { pct: '30%', name: '商业化与项目管理', text: '参与商业化合作方案设计与调研项目，整合资源并评估投入，明确节点与风险' },
+    { pct: '15%', name: '达人出海项目跟进', text: '对接海外合作资源与合规报价，推进 YouTube / TikTok / Instagram 等平台达人出海项目' },
+    { pct: '15%', name: '达人筛选与判断', text: '从内容、数据、性价比评估达人价值，建立筛选标准，关注粉丝贡献与转化' },
+  ],
+  mustHave: [
+    { text: '本科及以上学历', tag: '身份' },
+    { text: 'CET-4 及以上，能应对日常英文交流', tag: '最重要' },
+    { text: '2 年以上海外拓展经验（达人商务 / MCN / 广告营销 / 品牌合作等方向）', tag: '最重要' },
+    { text: '熟练商务谈判、项目管理与常用办公软件，英语可作为工作工具', tag: '基础' },
+    { text: '会用 AI 辅助数据分析、报告撰写与项目复盘（加分项，也是公司看重的底色）', tag: 'AI 加分' },
+  ],
+  niceToHave: [
+    '有达人商务 / MCN / 内容营销 / 品牌合作经验',
+    '有海外生活、留学或跨境行业资源，能独立建立关系',
+    '熟悉 YouTube / TikTok / Instagram 等海外平台内容生态',
+  ],
+  veto: ['诚信', '学习心态', '协作精神', '对出海业务的真实兴趣与长期投入'],
+  products: [
+    '海外达人出海项目（YouTube / TikTok / Instagram）',
+    '达人商业化合作与品牌联动',
+    '公司出海业务的达人资源网络',
+  ],
+  benefits: [
+    '8-12K/月 + 项目奖金 + 商业化激励（能力强者有向上空间）',
+    '海外业务探索项目，业务拓展链路完整',
+    '业务负责人储备岗，晋升路径清晰',
+    'AI 工具订阅与数字化工作方式支持',
+  ],
+  growth: [
+    { period: '0-6 个月', role: '海外达人合作经理', note: '跑通达人挖掘-建联-合作闭环' },
+    { period: '6-18 个月', role: '高级达人合作经理 / 达人合作负责人', note: '带达人合作盘子' },
+    { period: '18-36 个月', role: '达人商业化负责人', note: '对达人业务收入负责' },
+    { period: '3 年后', role: 'Creator / 内容商业化负责人', note: '业务负责人方向' },
+  ],
+  plainIntro: {
+    analogy: '像「星探 + 经纪人 + 项目管家」三合一',
+    roles: [
+      { name: '星探', desc: '在海外平台里找到有潜力的达人，判断谁值得签' },
+      { name: '经纪人', desc: '跟达人谈合作条件，把关系谈成、维护住' },
+      { name: '项目管家', desc: '把每个合作项目排期、盯进度、算清投入产出' },
+    ],
+    metaphor: '达人是海外的「带货网点」，你是把货铺进这些网点的人 —— 要会找人、谈价、管售后。',
+    metaphorNote: '英语是你出海的「船票」，AI 是你的「加速器」—— 两者都不要求顶尖，但不能没有。',
+  },
+};
+
+/* ---------- 海外达人合作经理 · 三候选人 ---------- */
+const CANDIDATES_OVERSEAS = [
+  {
+    id: 'oujy',
+    name: '欧泾宇',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '欧',
+    meta: '湖北工业大学 汉语国际教育 · 雅思 6.0 · 美区/日区/东南亚社媒运营',
+    listMeta: '雅思 6.0 · 美日/东南亚社媒运营',
+    source: '招聘系统投递',
+    recommend: 'interview',
+    recommendWhy: '四要素全中，建议优先约面并深挖稳定性',
+    headline: '三人中唯一同时覆盖「海外 + 英语 + 达人拓展 + AI」四张牌的候选人',
+    score: '★★★★☆',
+    ksa: { K: 4.5, S: 4.5, A: 4, O: 3, total: 4.0 },
+    star: 4.0,
+    similarity: 85,
+    similarityBand: '高度相似（越过 80% 阈值）',
+    consistency: { level: 'high', label: '高', note: '账号名与粉丝数公开可核验（Stock Trader Elena、Seeed 官号、越声系列账号）；雅思 6.0 可验证；「KOL/KOC 商务拓展」的实际签约闭环需现场核验' },
+    mbti: '偏 E / N / F / P（行为推断）',
+    belbin: '资源调查者（Resource Investigator）+ 外交家',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '授权型 / 变革型领导适配最高',
+    summary:
+      '对本岗 40% 权重的「达人 & MCN 拓展」与 15% 的「出海项目跟进」都有直接对应经验：' +
+      'TikTok / YouTube / Instagram 全平台实操，覆盖美区、日区、港台及东南亚；KOC 种草与资源置换获客有成体系方法。' +
+      '雅思 6.0 是三人中唯一英语硬证据；同时是深度 AI 用户（Codex、Heygen、MiniMax，能搭 workflow 批量产出视频/数字人/图文），' +
+      '正对 JD「AI 能力半径加速」的期待。主要悬念在稳定性 —— 2023.10 以来三份工作任期 8 / 20 / 3 个月。',
+    highlights: [
+      { t: '海外平台全覆盖 + 多地区经验', d: 'TikTok、YouTube、Instagram、X、LinkedIn 均有实操，覆盖美区、日区、港台及东南亚，直接对齐「达人出海项目跟进」的平台与地区要求。' },
+      { t: '英语硬证据 + 内容本地化', d: '雅思 6.0（三人唯一），在矽递科技做 AI 硬件的英文文案与内容本地化，日常英文商务交流可直接上手。' },
+      { t: 'AI 工作流深度用户 + 增长实证', d: '熟练 Codex、Heygen、MiniMax 并能搭建批量内容 workflow；运营富途证券海外账号矩阵实现单账号/矩阵增粉 5w-10w，冷启动养号方法成熟。' },
+    ],
+    risks: [
+      { t: '稳定性存疑（决定性）', d: '2023.10 起三份工作任期分别为 8 个月、20 个月、3 个月，最近一份仅 3 个月；需按时间线逐段确认离职原因与留存意愿。' },
+      { t: 'BD 闭环证据偏弱', d: '「KOL/KOC 商务拓展」多为资源置换与种草分发，缺少签约数量、合作金额等硬结果；40% 权重的主动拓展开荒能力待现场验证。' },
+      { t: '从运营转商务的角色跨越', d: '背景以内容运营为主，无团队管理经验；从「把内容做好」转「把商务谈成」的动机与方法论需评估。' },
+    ],
+    interview:
+      '重点验证两件事：① 稳定性 —— 按时间线逐段问离职原因，判断是行业动荡还是个人选择；' +
+      '② BD 闭环 —— 让他完整讲一个「从 0 认识一位达人到达成合作」的过程：怎么找、怎么开场、怎么谈条件、怎么落地。' +
+      '英语可现场 5 分钟英文对话直接验证。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取',
+      raw: `欧泾宇
+电话：15788589903
+
+【关于本人】
+海外社媒运营与 AI workflow 应用：熟悉 TikTok、YouTube、LinkedIn、Instagram、X（Twitter）等主流海外社媒运营方式，有美区、日区、东南亚等多地区社媒运营经验。熟悉各类主流 AI 工具的使用，Codex、Workbuddy、Heygen、MiniMax 等，能够结合业务制作 AI 工作流 workflow，批量生产视频、数字人、图文等内容。
+语言技能：雅思 IELTS 6.0，英语可作为工作语言，具备跨文化沟通与内容本地化能力。
+商务拓展与 to C / to B 经验：具备跨界 KOL、KOC 商务拓展经验，能够通过资源置换联动实现低成本获客。拥有金融、AI 智能硬件等行业的海外内容运营经验；善于跨部门合作，能够根据业务需要合理协调内外部资源。
+
+【工作经历】
+2026.04-2026.07　广州墨尔智慧科技有限公司　海外社媒运营（广州）
+· 社媒运营 IP 与 leads 获客：负责港台及东南亚市场 TikTok、Instagram、Threads 等海外社媒账号运营，包括品牌 IP 与引流矩阵账号；根据业务需求批量起号、内容生产与分发，结合海外本土化审美进行数字人内容策划与制作
+· KOC 运营：与垂直领域 KOC 约定推广内容及发布策略，通过博主人设背书，实现产品在海外社群的精准种草
+
+2024.05-2025.12　广州酷斯法科技有限公司　海外社媒运营（广州）
+· 社媒代运营：为甲方客户【富途证券国际（香港）有限公司】提供海外社媒代运营服务，围绕证券开户及私域转化目标，负责美区、日区 YouTube、TikTok 账号矩阵的搭建与运营
+· 运营【Stock Trader Elena】【Trader Zoey Office】【Trader Daniel】等垂直账号，通过自然流内容实现单账号/矩阵增粉 5w-10w；结合市场热点批量起号，帮助直播团队快速完成账号冷启动与养号
+· 主播培训：参照主播个人风格与市场目标策划创作视频脚本，进行主播专业度与技能培训
+
+2023.10-2024.05　深圳矽递科技股份有限公司　海外社媒运营（深圳）
+· 内容本地化与社媒运营：对 AI 智能硬件、开发板等素材筛选与二次加工，完成短视频剪辑、英文文案创作及社媒内容适配
+· 维护 YouTube、X（Twitter）、LinkedIn 等海外官方账号：X follower 78K+、LinkedIn 75K+、YouTube 27.5K+，持续提升海外开发者及科技用户群体曝光
+
+2016.11-2023.10　南方财经全媒体集团越声理财　运营经理（广州）
+· 社媒运营：抖音号【越声袁水洋聊财经】粉丝 50w+；【越声理财】40w+；【巴菲蛋】25w+；小红书【越声智投】15w+
+· 商务拓展与 KOC：与长江证券、广发证券合作开展线上资源联动实现低成本获客；负责 KOC 筛选、内容审核、分发及传播监测
+· 社群运营：联动社群 KOL 增加知识付费盈利模式，带来增量收入
+
+【教育背景】
+2012-2016　湖北工业大学　汉语国际教育专业｜统招本科`,
+    },
+  },
+
+  {
+    id: 'hcy',
+    name: '黄翠云',
+    tag: '有条件推荐',
+    tier: 'amber',
+    initial: '黄',
+    meta: '10 年广告营销 · 华南理工大学广州学院 工商管理 · 广州 · 离职状态',
+    listMeta: '10 年广告营销 · 前海外品牌经理',
+    source: '招聘系统投递',
+    recommend: 'interview',
+    recommendWhy: '达人实操最厚，加英文摸底与 BD 动机确认后再定',
+    headline: '10 年广告营销老兵，达人投放统筹是强项，短板在「拓展」与英语',
+    score: '★★★☆☆',
+    ksa: { K: 4, S: 4, A: 4, O: 3, total: 3.8 },
+    star: 4.5,
+    similarity: 72,
+    similarityBand: '较相似',
+    consistency: { level: 'mid', label: '中高', note: '有网盘作品集可核验，量化数据具体（100+ 达人、曝光 +30%）；「投放 ROI 5%」口径不明，需面试确认统计方式' },
+    mbti: '偏 E / S / F / J（行为推断）',
+    belbin: '协调者（Co-ordinator）+ 完成者（Completer Finisher）',
+    fit: { level: 'amber', label: '部分匹配' },
+    style: '教练型 / 支持型领导适配最高',
+    summary:
+      '职业主线是广告策划 → 客户经理 → 海外品牌经理，统筹与多方协调能力经过 10 年打磨。' +
+      '最近一段主导 TikTok 店铺投流与 KOL 排期发布，联动 100+ 位达人做内容测试与素材迭代（曝光 +30%），是三人中达人合作量级最大的一位。' +
+      '但她的达人是「投放执行」视角，JD 40% 权重的是「挖掘-建联-谈判-签约」的 BD 视角，加上简历通篇无英语能力证据，需要面试补两块短板。',
+    highlights: [
+      { t: '达人合作量级最大', d: '主导 TikTok KOL 排期发布，联动 100+ 位达人做内容测试与素材迭代，品牌曝光增长 30% —— 直接对齐「达人拓展与内容合作」的核心动作。' },
+      { t: '商业化项目管理成熟', d: '10 年广告全链路（策划 → 客户经理 → 品牌经理），预算管控、节点把控、跨部门推动、供应商管理都是熟手，对齐 30% 权重的项目管理职责。' },
+      { t: '品牌 0-1 与数据复盘', d: '独立完成品牌 0-1 全体系搭建并搭建品牌 AI 识别资料库；投放数据跟踪、舆情分析、竞品数据库等复盘方法体系化。' },
+    ],
+    risks: [
+      { t: '英语无任何证据', d: '简历未出现 CET、雅思或英文工作经历，而 JD 硬性要求「CET-4 及以上，能应对日常英文交流」，需现场摸底。' },
+      { t: 'BD 拓展视角偏弱', d: '达人经验集中在投放排期与内容测试（甲方/代理视角），「主动挖掘新达人、谈判签约」的开拓动作证据少，与 40% 权重的拓展职责有错位。' },
+      { t: '近期履历波动', d: '最近一份海外品牌经理仅 8 个月，且 2025.01-2026.01 存在约一年空窗，离职原因与职业规划需面谈澄清。' },
+    ],
+    interview:
+      '面试加两个摸底：① 英语 —— 用英文寒暄 + 读一段英文达人合作邮件并口头回复要点，判断能否应对日常海外沟通；' +
+      '② BD 动机 —— 问她从「投放统筹」转「达人商务拓展」的准备，现场模拟「怎么冷启动联系一位没合作过的达人」。' +
+      '另外追问 2025 年空窗与两段短期经历的离职原因。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取',
+      raw: `黄翠云
+女 | 95年 | 广州
+电话：18826245474　邮箱：1260303243@qq.com
+求职状态：离职
+
+【个人优势】
+负责品牌沟通，全程统筹各类项目，项目时间推进、成本预算管控、内外部工作对接协调。学习适应能力强，具备优秀跨部门协同沟通能力，待人处事耐心细致，擅长多方协调推进工作落地。
+
+【工作经历】
+2026.01-2026.08　广州东造西物电子商务有限公司　海外品牌经理
+· 负责品牌 0-1 全体系搭建，梳理品牌关键词、视觉、文案素材，搭建品牌 AI 识别资料库
+· 主导 TikTok 店铺投流与 KOL 排期发布，联动 100+ 位达人进行内容测试与素材迭代，实现品牌曝光增长 30%、投放 ROI 5%
+· 统筹品牌搭建、供应商合作等项目全流程，对内跨部门对接、对外协调合作方，把控项目进度并落地复盘
+
+2023.09-2025.01　广东省广告集团股份有限公司　广告高级客户经理
+· 项目统筹，对接客户需求，协调推动各部门完成项目落地；通过行业趋势研究、消费者画像分析及竞品动态监测提供解决方案
+· 创新性策划双微一抖+小红书内容生态，打造「社交种草」营销闭环，涵盖广告投放/线下快闪活动/跨界合作等 Campaign
+· 跟踪项目投放数据效果，通过舆情大数据分析，构建竞品案例数据库，持续优化品牌口碑
+
+2020.11-2023.02　广州同旭广告有限公司　策划经理
+· 策划部门下属 2 人，负责工作安排及把控出品
+· 依据市场分析、客户需求制定品牌全案、创意活动方案与项目执行计划，推进项目整体进度
+· 建立和维护与客户、供应商等合作方资源，全国出差辅助大型活动落地执行
+
+2018.12-2020.06　广州悠派振运整合营销策划有限公司　广告创意策划
+· 独立撰写项目策划案，主要撰写过网易游戏、美的冰箱等线上线下活动方案
+· 负责 TVC 等视频跟拍对接及推进项目；参与策略提案与投标案
+
+2016.06-2018.06　深圳市三度　编辑（实习）
+· 两人负责公众号「电影小密探」：撰写电影稿件、规划内容风格，一个月拿下原创号，粉丝阅读量从几千到十万+
+
+【项目经历】
+2021.03-2021.11　嘉华鲜花饼伴手礼产品全案策划：从产品定位、故事包装、视频脚本到营销推广的整合营销策划
+2020.07　腾讯游戏部落冲突 8 周年追星之夜：海南文昌粉丝见面会，联动中科院科普知识，见证火箭发射
+
+【教育经历】
+2014-2018　华南理工大学广州学院　工商管理｜本科
+
+【作品集】
+百度网盘：https://pan.baidu.com/s/1y7G3OjeiBxHwAnas7q0HEw?pwd=1cii`,
+    },
+  },
+
+  {
+    id: 'xjk',
+    name: '徐靖凇',
+    tag: '建议转人才池',
+    tier: 'amber',
+    initial: '徐',
+    meta: '2025 届 · 中国计量大学 广告学 · 约两年达人媒介经验',
+    listMeta: '2025 届 · 广告学 · 达人媒介经验',
+    source: '招聘系统投递',
+    recommend: 'pool',
+    recommendWhy: '达人实操真实，建议转推国内达人运营/媒介岗并留档备用',
+    headline: '国内达人建联全流程熟手，但海外与英语两张硬牌缺失',
+    score: '★★★☆☆',
+    ksa: { K: 3, S: 3.5, A: 3.5, O: 3.5, total: 3.4 },
+    star: 3.5,
+    similarity: 55,
+    similarityBand: '部分相似',
+    consistency: { level: 'mid', label: '中', note: '800 万播放个人作品可查证；「媒介主管」title 与约 2 年经验之间存在张力，实际带团队规模待核验' },
+    mbti: '偏 E / S / T / P（行为推断）',
+    belbin: '执行者（Implementer）+ 完成者（Completer Finisher）',
+    fit: { level: 'amber', label: '部分匹配' },
+    style: '指令型 / 教练型领导适配',
+    summary:
+      '应届 2025 届广告学本科，毕业一年内已做到媒介主管：达人建联、直播/挂车全流程、SOP 与新人培训、投流与数据复盘都有实操，' +
+      '达成阶段性 QMV 指标并把产品做到类目前三，网感与执行力是真实的。' +
+      '但对照本岗两大硬门槛 —— 「能应对日常英文交流」与「海外平台经验」—— 简历均无证据（TikTok 经验为国内生态），作为出海 BD 岗的储备尚早。',
+    highlights: [
+      { t: '达人建联全流程实操', d: '建联达人、跟进直播/挂车专场、监控数据、总结内容模型，达成阶段性 QMV 指标 —— 与 40% 权重的日常工作动作高度一致。' },
+      { t: '执行体系化', d: '会做 SOP、brief、手卡，面试培训新人，用数据反推建联话术与达人类型；自运营账号有 800 万播放作品，网感与学习能力在线。' },
+      { t: 'AI 与多平台工具熟练', d: 'TK 官号 AI 视频制作，运营 TikTok/小红书/抖音/视频号多平台并配合投流，对齐 JD 的 AI 加分项。' },
+    ],
+    risks: [
+      { t: '英语零证据（决定性）', d: '简历无任何英语等级或英文工作场景，JD 要求 CET-4+ 且日常英文交流，出海 BD 岗无法绕开。' },
+      { t: '海外平台经验缺失', d: 'TikTok 经验为国内生态，无 YouTube/Instagram 等海外平台运营或海外达人资源，出海项目跟进需从零带。' },
+      { t: '经验厚度与管理跨度', d: '约 2 年经验（含实习与转正），「媒介主管」实际管辖范围待核验；短期内难以承担独立开荒角色。' },
+    ],
+    interview:
+      '本岗暂不推进面试。若后续开国内达人运营 / 媒介岗可优先考虑；' +
+      '如坚持本岗需先验证英语（安排简单英文自我介绍测试）与出海意愿，两项都过关再进面。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取',
+      raw: `徐靖凇
+男 | 2002/12/30
+电话：19550162261　邮箱：1832258293@qq.com
+
+【教育背景】
+2021-2025　中国计量大学　广告学｜本科
+主修课程：广告文案写作、传播学、市场学、广告心理学、品牌形象设计、电脑图文设计等
+
+【实践经历】
+2025.9-至今　广州凡米医疗科技有限公司　媒介主管（母婴和宠物类目）
+· 制定 SOP、brief、手卡，面试培训新人，制定专员周/月计划，管理样品申请
+· 销售与投流情况报表制作与汇报（日报/周报/月报）
+· TK 官号 AI 视频制作；与各部门协作运营 TikTok、小红书、抖音、视频号官号及投流，申请更新广审资质
+· 建联达人，跟进小专场，全流程负责达人直播/挂车，监控分析达人数据表现，总结内容模型，达成阶段性 QMV 指标，提高达人直播销售转化率
+· 根据数据优化建联达人类型和机构，总结话术优化建联方式；分析竞品优质视频，优化种草视频文案，产品提升至类目前三
+
+2025.3-2025.7　杭州千星溯光文化传媒有限公司　品牌商务 BD（美妆和日用品类目）
+· 负责全流程达人直播、挂车事宜；熟练处理数据，制作数据表/任务表、手卡、SOP、brief
+· 数据分析、竞品优质视频研究、话术学习、热点跟踪，提高品牌知名度与销售额
+
+2024.9-2024.12　杭州宗权科技有限公司　AE
+· 参与负责追觅、美的、小度添添闺蜜机、美士等项目；更新统一执行表，脚本与视频内审，沟通客户需求并督促制作修改
+· 负责拍摄前期工作：规划内容、布置片场、准备道具、预约模特、跟拍摄带本、补拍素材
+· 小度添添闺蜜机与追觅项目后期由本人单独执行；追觅项目双十一内容种草小家电行业品牌榜单三榜均第一
+
+【专业技能与自我评价】
+个人账号有 800 万播放的作品，熟悉各平台特点，快速适应平台新规，有 0-1 经验。筛选、带人能力强，可帮助新人快速上手。有大局观，抗压能力强。熟练使用各种 AI 软件。对实时资讯、社会热点嗅觉敏感，有网感。具有较强的阅读写作能力，善于捕捉热点，能协调各部门完成任务。`,
+    },
+  },
+];
+
+/* ============================================================
+   在招岗位（左侧列表数据源）
+   ============================================================ */
+const POSITIONS = [
+  {
+    id: 'aijd',
+    name: 'AI 交付工程师',
+    subtitle: '应届 8K-15K ／ 实习 4K-6K',
+    dept: '技术 · AI 交付',
+    status: 'active',
+    statusLabel: '分析已完成',
+    updated: '2026-09-21',
+    candidateCount: 3,
+    jd: JD,
+    candidates: CANDIDATES,
+  },
+  {
+    id: 'overseas-kam',
+    name: '海外达人合作经理',
+    subtitle: '广州 8-12K/月 + 项目奖金',
+    dept: '商务拓展 · 海外',
+    status: 'active',
+    statusLabel: '分析已完成',
+    updated: '2026-09-22',
+    candidateCount: 3,
+    jd: JD_OVERSEAS,
+    candidates: CANDIDATES_OVERSEAS,
+  },
+];
+
+
+</script>
+<script>
+/* ============================================================
+   候选人分析 — 交互逻辑（V2）
+   结构：左侧（在招岗位 + 决策情况入口）→ 中间列表 → 右侧详情面板
+   V2 新增：
+     1) 决策数据升级：{cid: {dec, at, pos}}（带时间与岗位），旧 v1 自动迁移
+     2) 操作流水：标记 / 取消 / 清除全部记录在案，决策情况页可查最近 30 条
+     3) 决策情况总览：推进面试 / 人才池 / 不使用 三组分类 + 历史记录 + 跨岗位查看详情
+     4) 导出 / 导入数据：JSON 备份（含决策、流水、简历截图），可迁移到其他电脑
+   ============================================================ */
+(function () {
+  'use strict';
+
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => [...(r || document).querySelectorAll(s)];
+
+  const rail = $('#rail');
+  const list = $('#list');
+  const panel = $('#panel');
+  const pBody = $('#pBody');
+  const pName = $('#pName');
+  const pMeta = $('#pMeta');
+  const pAvatar = $('#pAvatar');
+  const barHint = $('#barHint');
+
+  const LS_DECISION = 'aijd_decisions_v2'; // v2：{cid: {dec, at, pos}}
+  const LS_DECISION_V1 = 'aijd_decisions_v1'; // 旧版：{cid: 'interview'}，首次加载自动迁移
+  const LS_LOG = 'aijd_decisions_log_v1'; // 操作流水（按时间正序的数组）
+  const LS_RESUME = 'aijd_resume_minwei';
+
+  const LOG_MAX = 200; // 本机最多保留 200 条流水
+  const LOG_SHOW = 30; // 决策情况页展示最近 30 条
+
+  const DOT = { green: 'g', amber: 'a', red: 'r' };
+
+  let currentView = 'pos'; // 'pos' = 岗位视图 | 'decisions' = 决策情况
+  let currentPosId = POSITIONS[0].id;
+  let openCandidateId = null;
+
+  /* ---------- 工具 ---------- */
+  const esc = (s) =>
+    String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const ksaCls = (v) => (v >= 4 ? 'green' : v >= 2.5 ? 'amber' : 'red');
+  const simCls = (v) => (v >= 60 ? (v >= 80 ? 'green' : 'amber') : 'red');
+  const posOf = (id) => POSITIONS.find((p) => p.id === id) || POSITIONS[0];
+  const decOf = (id) => DECISIONS.find((d) => d.id === id);
+  const dotOf = (decId) => {
+    const d = decOf(decId);
+    return d ? DOT[d.cls] : 'n';
+  };
+  const pad2 = (n) => String(n).padStart(2, '0');
+  function fmtTs(ts) {
+    if (!ts) return '时间未记录';
+    const d = new Date(ts);
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()) + ' ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
   }
-}
-
-/* ========== 年假计算 ========== */
-function calcLeave() {
-  const year = parseInt(document.getElementById('leaveYear').value);
-  const totalDays = parseFloat(document.getElementById('totalLeave').value) || 0;
-  const leaveDateStr = document.getElementById('leaveDate').value;
-  const usedDays = parseFloat(document.getElementById('usedLeave').value) || 0;
-  const dailyWage = parseFloat(document.getElementById('dailyWage').value) || 0;
-  if (!leaveDateStr) { alert('请选择离职日期'); return; }
-  const isLeap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-  const yearDays = isLeap ? 366 : 365;
-  const leaveDate = new Date(leaveDateStr);
-  const startOfYear = new Date(year, 0, 1);
-  const daysPassed = Math.floor((leaveDate - startOfYear) / (1000*60*60*24)) + 1;
-  const ratio = daysPassed / yearDays;
-  const entitledDays = Math.floor(totalDays * ratio * 100) / 100;
-  const remainingForComp = totalDays - usedDays - entitledDays;
-  const compDays = remainingForComp > 0 ? remainingForComp : 0;
-  const compMoney = compDays * dailyWage * 2;
-  document.getElementById('calcResult').innerHTML = `
-    <div class="res-item"><span>全年已过天数：</span><strong>${daysPassed} 天</strong></div>
-    <div class="res-item"><span>全年总天数：</span><strong>${yearDays} 天</strong></div>
-    <div class="res-item"><span>折算比例：</span><strong>${(ratio*100).toFixed(1)}%</strong></div>
-    <div class="res-item"><span>截至离职日应得年假：</span><strong>${entitledDays} 天</strong></div>
-    <div class="res-item"><span>已休天数：</span><strong>${usedDays} 天</strong></div>
-    ${compDays>0?`<div class="res-item"><span>剩余未休需补偿天数：</span><strong>${compDays.toFixed(2)} 天</strong></div>`:'<div class="res-item"><span>剩余未休需补偿：</span><strong>无需补偿</strong></div>'}
-    ${compDays>0&&dailyWage>0?`<div class="res-item res-highlight"><span>未休年假补偿金额：</span><strong>¥${compMoney.toFixed(2)}</strong></div>`:''}`;
-}
-
-/* ========== 导出为图片 ========== */
-function exportImage() {
-  const container = document.querySelector('.container');
-  const btn = document.activeElement;
-  if (btn) btn.textContent = '⏳ 生成中...';
-  html2canvas(container, {
-    backgroundColor: getComputedStyle(document.body).getPropertyValue('--bg').trim() || '#f5f7fb',
-    scale: 2, useCORS: true
-  }).then(canvas => {
-    const link = document.createElement('a');
-    const ts = new Date().toISOString().slice(0,10);
-    link.download = `人事行政周会_${ts}.png`;
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-    if (btn) btn.textContent = '📸 截图';
-    showTip('✓ 已导出 PNG 图片');
-  }).catch(err => {
-    console.error(err);
-    if (btn) btn.textContent = '📸 截图';
-    showTip('✗ 导出失败，请检查网络（需加载html2canvas）');
-  });
-}
-
-/* ========== 动画 ========== */
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
-
-function animateBars() {
-  document.querySelectorAll('.gantt-fill').forEach(el => {
-    setTimeout(() => { el.style.width = el.getAttribute('data-w'); }, 300);
-  });
-  const circle = document.getElementById('ringCircle');
-  if (circle) {
-    const r = 18, circ = 2 * Math.PI * r;
-    setTimeout(() => { circle.style.strokeDasharray = circ; circle.style.strokeDashoffset = circ * (1 - 0.6); }, 400);
+  function fmtTsShort(ts) {
+    if (!ts) return '较早';
+    const d = new Date(ts);
+    return d.getMonth() + 1 + '月' + d.getDate() + '日 ' + pad2(d.getHours()) + ':' + pad2(d.getMinutes());
   }
-}
-animateBars();
+  function findCandidate(cid) {
+    for (const p of POSITIONS) {
+      const c = (p.candidates || []).find((x) => x.id === cid);
+      if (c) return { c, pos: p };
+    }
+    return null;
+  }
+  function candName(cid) {
+    const f = findCandidate(cid);
+    return f && f.c ? f.c.name : cid;
+  }
+  function posNameOf(posId) {
+    const p = POSITIONS.find((x) => x.id === posId);
+    return p ? p.name : '—';
+  }
 
-// 初始化
-renderAll();
+  /* ---------- 存储兼容层 ----------
+     浏览器在 file:// 协议下通常禁用 localStorage。
+     此处自动降级为内存存储，保证双击打开也能正常标记（当次会话有效）。
+     通过 http 访问时自动使用 localStorage → 可长期保存。
+  ---------------------------------- */
+  const Store = (function () {
+    let useLS = false;
+    try {
+      const k = '__t__';
+      window.localStorage.setItem(k, '1');
+      window.localStorage.removeItem(k);
+      useLS = true;
+    } catch (e) {
+      useLS = false;
+    }
+    const mem = {};
+    return {
+      persistent: useLS,
+      get(k) {
+        if (useLS) {
+          try { return window.localStorage.getItem(k); } catch (e) { return mem[k] || null; }
+        }
+        return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null;
+      },
+      set(k, v) {
+        if (useLS) {
+          try { window.localStorage.setItem(k, v); return true; } catch (e) { mem[k] = v; return false; }
+        }
+        mem[k] = v;
+        return false;
+      },
+      del(k) {
+        if (useLS) {
+          try { window.localStorage.removeItem(k); } catch (e) { delete mem[k]; }
+        }
+        delete mem[k];
+      },
+    };
+  })();
+
+  /* ---------- 决策读写（V2：{cid:{dec,at,pos}} + 操作流水） ---------- */
+  function migrateDecisions(raw) {
+    const out = {};
+    Object.keys(raw || {}).forEach((cid) => {
+      const v = raw[cid];
+      if (typeof v === 'string' && decOf(v)) {
+        out[cid] = { dec: v, at: null, pos: 'aijd' };
+      } else if (v && typeof v === 'object' && decOf(v.dec)) {
+        out[cid] = { dec: v.dec, at: v.at || null, pos: v.pos || 'aijd' };
+      }
+    });
+    return out;
+  }
+
+  function loadDecisions() {
+    let cur = {};
+    try {
+      const raw = JSON.parse(Store.get(LS_DECISION) || 'null');
+      if (raw && typeof raw === 'object') cur = raw;
+    } catch (e) {
+      cur = {};
+    }
+    const m = migrateDecisions(cur);
+
+    // 旧版 v1 数据迁移（在线链接升级后，已有标记自动保留）
+    try {
+      const v1raw = Store.get(LS_DECISION_V1);
+      if (v1raw) {
+        const v1 = JSON.parse(v1raw);
+        if (v1 && typeof v1 === 'object') {
+          const m1 = migrateDecisions(v1);
+          Object.keys(m1).forEach((cid) => {
+            if (!m[cid]) m[cid] = m1[cid];
+          });
+          Store.set(LS_DECISION, JSON.stringify(m));
+          Store.del(LS_DECISION_V1);
+        }
+      }
+    } catch (e) {}
+    return m;
+  }
+
+  function saveDecision(cid, did, posId) {
+    const m = loadDecisions();
+    const log = loadLog();
+    const t = Date.now();
+    if (m[cid] && m[cid].dec === did) {
+      const old = m[cid];
+      delete m[cid];
+      log.push({
+        t, action: 'clear', cid, name: candName(cid), pos: posNameOf(old.pos),
+        dec: old.dec, decLabel: (decOf(old.dec) || {}).label || old.dec,
+      });
+    } else {
+      m[cid] = { dec: did, at: t, pos: posId || 'aijd' };
+      log.push({
+        t, action: 'set', cid, name: candName(cid), pos: posNameOf(posId || 'aijd'),
+        dec: did, decLabel: (decOf(did) || {}).label || did,
+      });
+    }
+    Store.set(LS_DECISION, JSON.stringify(m));
+    Store.set(LS_LOG, JSON.stringify(log.slice(-LOG_MAX)));
+    return m;
+  }
+
+  function decisionOf(cid) {
+    return loadDecisions()[cid] || null;
+  }
+
+  function loadLog() {
+    try {
+      const raw = JSON.parse(Store.get(LS_LOG) || '[]');
+      return Array.isArray(raw) ? raw : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function clearAllDecisions() {
+    const m = loadDecisions();
+    const log = loadLog();
+    const t = Date.now();
+    Object.keys(m).forEach((cid) => {
+      log.push({
+        t, action: 'clear', cid, name: candName(cid), pos: posNameOf(m[cid].pos),
+        dec: m[cid].dec, decLabel: (decOf(m[cid].dec) || {}).label || '—',
+      });
+    });
+    Store.set(LS_LOG, JSON.stringify(log.slice(-LOG_MAX)));
+    Store.del(LS_DECISION);
+  }
+
+  /* ---------- 导出 / 导入数据 ---------- */
+  function doExport() {
+    const payload = {
+      version: 2,
+      exportedAt: new Date().toISOString(),
+      persistent: Store.persistent,
+      decisions: loadDecisions(),
+      log: loadLog(),
+      resumeImage: Store.get(LS_RESUME) || null,
+    };
+    try {
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const d = new Date();
+      a.href = url;
+      a.download = '候选人分析数据_' + d.getFullYear() + pad2(d.getMonth() + 1) + pad2(d.getDate()) + '.json';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => { try { URL.revokeObjectURL(url); } catch (e) {} }, 800);
+      return true;
+    } catch (e) {
+      alert('导出失败：' + (e && e.message ? e.message : e));
+      return false;
+    }
+  }
+
+  function doImport(file) {
+    if (!file) return;
+    const r = new FileReader();
+    r.onload = (ev) => {
+      let obj = null;
+      try {
+        obj = JSON.parse(ev.target.result);
+      } catch (e) {
+        alert('导入失败：文件不是有效的 JSON 数据。\n请使用本工具「导出数据」生成的文件。');
+        return;
+      }
+      if (!obj || typeof obj !== 'object' || !obj.decisions || typeof obj.decisions !== 'object' || Array.isArray(obj.decisions)) {
+        alert('导入失败：文件中缺少决策数据（decisions 字段）。\n请使用本工具「导出数据」生成的文件。');
+        return;
+      }
+      const incoming = Object.keys(obj.decisions).length;
+      const current = Object.keys(loadDecisions()).length;
+      const logN = Array.isArray(obj.log) ? obj.log.length : 0;
+      const ok = window.confirm(
+        '将导入 ' + incoming + ' 条决策记录' + (logN ? '（含操作流水 ' + logN + ' 条）' : '') +
+        '。\n\n注意：导入会【覆盖】当前已有的 ' + current + ' 条标记。\n是否继续？'
+      );
+      if (!ok) return;
+      const migrated = migrateDecisions(obj.decisions);
+      Store.set(LS_DECISION, JSON.stringify(migrated));
+      Store.set(LS_LOG, JSON.stringify(Array.isArray(obj.log) ? obj.log.filter((x) => x && typeof x === 'object').slice(-LOG_MAX) : []));
+      if (typeof obj.resumeImage === 'string' && obj.resumeImage.indexOf('data:image') === 0) {
+        Store.set(LS_RESUME, obj.resumeImage);
+      }
+      renderRail();
+      renderList();
+      alert('导入完成 ✓ 共 ' + Object.keys(migrated).length + ' 条决策记录。');
+    };
+    r.readAsText(file);
+  }
+
+  /* ---------- 左侧列表（在招岗位 + 决策情况入口） ---------- */
+  function renderRail() {
+    const decCount = Object.keys(loadDecisions()).length;
+    rail.innerHTML =
+      '<div class="rail-h">在招岗位</div>' +
+      POSITIONS.map((p) => {
+        const on = currentView === 'pos' && p.id === currentPosId;
+        const n = p.candidates ? p.candidates.length : 0;
+        return `<button class="pos ${on ? 'on' : ''}" data-pos="${p.id}">
+          <div class="pos-top">
+            <span class="pos-dot ${p.status}"></span>
+            <span class="pos-name">${esc(p.name)}</span>
+          </div>
+          <div class="pos-sub">${esc(p.subtitle)}</div>
+          <span class="pos-badge">${p.status === 'pending' ? esc(p.statusLabel) : n + ' 位候选人'}</span>
+        </button>`;
+      }).join('') +
+      '<div class="rail-h rail-gap">决策情况</div>' +
+      `<button class="pos ${currentView === 'decisions' ? 'on' : ''}" data-view="decisions">
+        <div class="pos-top">
+          <span class="pos-dot ${decCount ? 'active' : 'pending'}"></span>
+          <span class="pos-name">决策总览</span>
+        </div>
+        <div class="pos-sub">推进面试 · 人才池 · 不使用</div>
+        <span class="pos-badge">${decCount} 条标记</span>
+      </button>`;
+
+    $$('.pos', rail).forEach((el) =>
+      el.addEventListener('click', () => {
+        if (el.dataset.view === 'decisions') {
+          if (currentView === 'decisions') return;
+          currentView = 'decisions';
+          closePanel();
+          renderRail();
+          renderList();
+          return;
+        }
+        if (currentView === 'pos' && el.dataset.pos === currentPosId) return;
+        goPos(el.dataset.pos);
+      })
+    );
+  }
+
+  function goPos(pid) {
+    currentView = 'pos';
+    currentPosId = pid;
+    closePanel();
+    renderRail();
+    renderList();
+  }
+
+  /* ---------- 中间区域分发 ---------- */
+  function renderList() {
+    if (currentView === 'decisions') return renderDecisions();
+    const p = posOf(currentPosId);
+    if (p.status === 'pending') return renderPending(p);
+    renderCandidates(p);
+  }
+
+  /* ---------- 决策情况总览 ---------- */
+  function renderDecisions() {
+    const decs = loadDecisions();
+    const allLog = loadLog();
+    const entries = Object.keys(decs).map((cid) => Object.assign({ cid }, decs[cid]));
+    const total = entries.length;
+    const recent = allLog.slice().reverse().slice(0, LOG_SHOW);
+    const latest = allLog.length ? allLog[allLog.length - 1].t : null;
+
+    const groupsHTML = DECISIONS.map((d) => {
+      const items = entries.filter((e) => e.dec === d.id);
+      const rows = items.map((e) => {
+        const f = findCandidate(e.cid);
+        const alive = !!(f && f.c);
+        const name = alive ? f.c.name : e.cid;
+        const meta = alive && f.c.listMeta ? f.c.listMeta : '';
+        const posName = alive ? f.pos.name : posNameOf(e.pos);
+        return `<div class="drow">
+          <div class="drow-main">
+            <div class="dname">${esc(name)}<span class="tag ${d.cls}">${esc(d.short)}</span></div>
+            <div class="dmeta">${esc(posName)}${meta ? ' · ' + esc(meta) : ''}${alive ? '' : ' · 该候选人已不在当前数据中'}</div>
+          </div>
+          <div class="dtime">${esc(fmtTs(e.at))}</div>
+          ${alive ? `<button class="viewbtn" data-goto="${esc(e.cid)}">查看详情 →</button>` : ''}
+        </div>`;
+      }).join('');
+      return `<section class="dsec">
+        <div class="dsec-h"><span class="ldot ${DOT[d.cls]}"></span>${esc(d.label)}<span class="dcount ${d.cls}">${items.length}</span></div>
+        ${rows || '<div class="dempty">暂无该类决策记录</div>'}
+      </section>`;
+    }).join('');
+
+    const logHTML = recent.map((e) => {
+      const who = esc(e.name || e.cid || '—');
+      const where = esc(e.pos || '—');
+      if (e.action === 'clear') {
+        return `<div class="logline"><span class="lt">${esc(fmtTsShort(e.t))}</span><span class="ln">${who}</span><span class="lo">取消标记（原：${esc(e.decLabel || '—')}）</span><span class="lp">${where}</span></div>`;
+      }
+      return `<div class="logline"><span class="lt">${esc(fmtTsShort(e.t))}</span><span class="ln">${who}</span><span class="lo ${dotOf(e.dec)}">→ ${esc(e.decLabel || '—')}</span><span class="lp">${where}</span></div>`;
+    }).join('');
+
+    list.innerHTML = `
+      <div class="list-h">
+        <div class="list-title">决策情况</div>
+        <div class="list-sub">共 ${total} 条决策记录${latest ? ' · 最近操作 ' + esc(fmtTsShort(latest)) : ''}</div>
+      </div>
+      <div class="list-desc">汇总所有岗位的决策标记（推进面试 / 进入人才池 / 不使用）。数据保存在本机浏览器；换电脑或备份时，用下方「导出 / 导入数据」即可整体迁移。</div>
+      <div class="list-bar">
+        <span style="font-size:11.5px;color:#8A8A83">导出 / 导入在页面右上角「候选人分析」旁，对应整个工具的数据</span>
+        <div style="flex:1"></div>
+        <button class="viewbtn" id="backToPos" style="margin-left:0">返回在招岗位 →</button>
+        ${total ? '<button class="resetbtn" id="btnWipe" style="margin-left:10px">清除全部决策</button>' : ''}
+      </div>
+      ${
+        total
+          ? '<div class="dgroups">' + groupsHTML + '</div>'
+          : `<div class="pendingBox">
+              <div class="pi">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <path d="M11 6v6M11 15.5v.5"/>
+                  <circle cx="11" cy="11" r="8.5"/>
+                </svg>
+              </div>
+              <h3>还没有任何决策记录</h3>
+              <p>进入「在招岗位」，在候选人卡片上点击「推进面试 / 进入人才池 / 不使用」后，<br>决策会自动汇总到这里，并生成可回溯的操作流水。</p>
+            </div>`
+      }
+      ${
+        allLog.length
+          ? `<section class="dsec" style="margin-top:18px">
+              <div class="dsec-h">操作流水<span class="dcount gray">最近 ${Math.min(allLog.length, LOG_SHOW)} 条 / 共 ${allLog.length} 条</span></div>
+              <div class="logbox">${logHTML}</div>
+            </section>`
+          : total
+            ? '<div style="font-size:11.5px;color:#8A8A83;margin-top:12px">以下标记产生于旧版本，暂无操作流水；之后每次标记或取消都会自动记录。</div>'
+            : ''
+      }`;
+
+    const btnBack = $('#backToPos');
+    if (btnBack) btnBack.addEventListener('click', () => goPos(POSITIONS[0].id));
+
+    const btnWipe = $('#btnWipe');
+    if (btnWipe)
+      btnWipe.addEventListener('click', () => {
+        if (!window.confirm('确定清除全部 ' + total + ' 条决策标记吗？\n（操作流水会保留记录，可追溯）')) return;
+        clearAllDecisions();
+        renderRail();
+        renderList();
+      });
+
+    $$('.viewbtn[data-goto]', list).forEach((b) =>
+      b.addEventListener('click', () => gotoCandidate(b.dataset.goto))
+    );
+  }
+
+  function gotoCandidate(cid) {
+    const f = findCandidate(cid);
+    if (!f || f.pos.status !== 'active') {
+      alert('该候选人所属岗位暂未开放详情视图。');
+      return;
+    }
+    currentView = 'pos';
+    currentPosId = f.pos.id;
+    openCandidateId = null;
+    renderRail();
+    renderList();
+    openPanel(cid);
+  }
+
+  /* 待更新岗位 */
+  function renderPending(p) {
+    const pd = p.pending;
+    list.innerHTML = `
+      <div class="list-h">
+        <div class="list-title">${esc(p.name)}</div>
+        <div class="list-sub">${esc(p.dept)} · 岗位编号 ${esc(p.id)}</div>
+      </div>
+      <div class="list-desc">该岗位尚未录入 JD 与候选人材料，当前为空态。</div>
+
+      <div class="pendingBox">
+        <div class="pi">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <path d="M11 6v6M11 15.5v.5"/>
+            <circle cx="11" cy="11" r="8.5"/>
+          </svg>
+        </div>
+        <h3>${esc(pd.title)}</h3>
+        <p>${esc(pd.desc)}</p>
+
+        <div class="todoList">
+          <div class="tl">待办事项</div>
+          <ul>${pd.todos.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+        </div>
+
+        <div class="fwgrid">
+          ${pd.framework
+            .map(
+              (f) => `<div class="fw"><span class="fk">${esc(f.k)}</span><span class="fv">${esc(f.v)}</span></div>`
+            )
+            .join('')}
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:12px;color:#8A8A83;margin-top:14px">
+        补齐 JD 与简历后，把文件发我即可一键填入并启动六维分析。
+      </div>`;
+  }
+
+  /* 候选人列表 */
+  function renderCandidates(p) {
+    const decs = loadDecisions();
+    const doneCount = p.candidates.filter((c) => decs[c.id] && decs[c.id].dec).length;
+
+    const rows = p.candidates.map((c) => {
+      const dObj = decs[c.id];
+      const dec = dObj ? dObj.dec : null;
+      const decDef = dec ? decOf(dec) : null;
+      const on = openCandidateId === c.id;
+
+      const mini = ['K', 'S', 'A', 'O']
+        .map((k) => {
+          const v = c.ksa[k];
+          const pend = k === 'O' && c.id !== 'zhong';
+          return `<div class="mini-c"><span class="k">${k}</span><span class="v ${ksaCls(v)}">${v}${pend ? '*' : ''}</span></div>`;
+        })
+        .join('');
+
+      const btns = DECISIONS.map(
+        (d) =>
+          `<button class="dbtn ${dec === d.id ? 'sel ' + d.cls : ''}" data-cid="${c.id}" data-dec="${d.id}" title="${esc(d.desc)}">${esc(d.label)}</button>`
+      ).join('');
+
+      return `
+      <article class="row ${on ? 'on' : ''}" data-cid="${c.id}">
+        <div class="row-top">
+          <div class="avatar ${c.tier}">${esc(c.initial)}</div>
+          <div class="row-id">
+            <div class="row-name">
+              ${esc(c.name)}
+              <span class="tag ${c.tier}">${esc(c.tag)}</span>
+              ${decDef ? `<span class="tag ${decDef.cls}">已标记 · ${esc(decDef.short)}</span>` : ''}
+            </div>
+            <div class="row-meta">${esc(c.listMeta)} · 来源：${esc(c.source)}</div>
+          </div>
+          <div class="scores">
+            <div class="sc"><div class="lbl">KSAO</div><div class="val ${c.tier}">${c.ksa.total}</div></div>
+            <div class="sc"><div class="lbl">相似度</div><div class="val ${simCls(c.similarity)}">${c.similarity}%</div></div>
+            <div class="sc"><div class="lbl">STAR</div><div class="val ${ksaCls(c.star)}">${c.star}</div></div>
+          </div>
+        </div>
+
+        <div class="row-mid">
+          <div class="mini">${mini}</div>
+          <div class="row-why">${esc(c.headline)}</div>
+        </div>
+
+        <div class="row-act">
+          <span class="lb">决策</span>
+          ${btns}
+          <span class="status-note ${decDef ? decDef.cls : ''}" data-note="${c.id}">${
+            decDef ? '当前：' + decDef.label : '建议：' + (decOf(c.recommend) ? decOf(c.recommend).label : '—')
+          }</span>
+          <button class="viewbtn" data-view="${c.id}">查看详情 →</button>
+        </div>
+      </article>`;
+    }).join('');
+
+    list.innerHTML = `
+      <div class="list-h">
+        <div class="list-title">${esc(p.name)}</div>
+        <div class="list-sub">${esc(p.dept)} · 共 ${p.candidates.length} 位候选人 · 数据更新 ${esc(p.updated)}</div>
+      </div>
+      <div class="list-desc">${esc(p.jd ? p.jd.positioning : '')} —— 分析基准：《公司智能招聘系统 AI 分析优化方案 V1.4》六维融合体系</div>
+      <div class="list-bar">
+        <div class="legend"><span class="ldot g"></span>优先推荐</div>
+        <div class="legend"><span class="ldot a"></span>有条件推荐</div>
+        <div class="legend"><span class="ldot r"></span>不推荐本岗</div>
+        <div style="flex:1"></div>
+        <span style="font-size:11.5px;color:#8A8A83">已标记 ${doneCount} / ${p.candidates.length}</span>
+        ${doneCount ? '<button class="resetbtn" id="resetDec">清除全部标记</button>' : ''}
+        <button class="viewbtn" id="viewJD" style="margin-left:8px">查看岗位 JD →</button>
+        <button class="viewbtn" id="viewDec" style="margin-left:8px">决策情况 →</button>
+      </div>
+      <div class="rows">${rows}</div>`;
+
+    // 决策按钮
+    $$('.dbtn', list).forEach((b) =>
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cid = b.dataset.cid;
+        const did = b.dataset.dec;
+        const keep = openCandidateId;
+        saveDecision(cid, did, p.id);
+        renderCandidates(p);
+        openCandidateId = keep;
+        $$('.row', list).forEach((r) => r.classList.toggle('on', r.dataset.cid === keep));
+        if (keep && keep === cid) syncPanelDecision(cid);
+      })
+    );
+
+    // 查看详情
+    $$('.viewbtn[data-view]', list).forEach((b) =>
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openPanel(b.dataset.view);
+      })
+    );
+
+    // 整行也可以点
+    $$('.row', list).forEach((r) =>
+      r.addEventListener('click', () => openPanel(r.dataset.cid))
+    );
+
+    const btnJD = $('#viewJD');
+    if (btnJD) btnJD.addEventListener('click', () => openJD(p));
+
+    const btnDec = $('#viewDec');
+    if (btnDec)
+      btnDec.addEventListener('click', () => {
+        currentView = 'decisions';
+        closePanel();
+        renderRail();
+        renderList();
+      });
+
+    const btnReset = $('#resetDec');
+    if (btnReset)
+      btnReset.addEventListener('click', () => {
+        const keep = openCandidateId;
+        clearAllDecisions();
+        renderCandidates(p);
+        openCandidateId = keep;
+        $$('.row', list).forEach((r) => r.classList.toggle('on', r.dataset.cid === keep));
+        if (keep) syncPanelDecision(keep);
+      });
+
+    barHint.innerHTML = Store.persistent
+      ? '决策标记保存在本机浏览器，关闭后仍保留'
+      : '<span style="color:#8A5309">当前为离线单文件模式，标记仅本次查看有效（关闭后不保留）</span>';
+  }
+
+  /* ---------- 详情面板：候选人 ---------- */
+  function openPanel(cid) {
+    const p = posOf(currentPosId);
+    const c = p.candidates.find((x) => x.id === cid);
+    if (!c) return;
+    openCandidateId = cid;
+
+    pName.textContent = c.name;
+    pMeta.textContent = c.meta;
+    pAvatar.className = 'avatar ' + c.tier;
+    pAvatar.textContent = c.initial;
+    pBody.innerHTML = buildCandidateDetail(c);
+    panel.classList.add('open');
+
+    $$('.row', list).forEach((r) => r.classList.toggle('on', r.dataset.cid === cid));
+    bindResume(c);
+    bindPanelDecision(c);
+  }
+
+  function closePanel() {
+    openCandidateId = null;
+    panel.classList.remove('open');
+    $$('.row', list).forEach((r) => r.classList.remove('on'));
+  }
+
+  function syncPanelDecision(cid) {
+    const host = $('#panelDecision');
+    if (!host) return;
+    const dObj = decisionOf(cid);
+    const dec = dObj ? dObj.dec : null;
+    const def = dec ? decOf(dec) : null;
+    host.innerHTML = decisionButtonsHTML(cid, dec) +
+      `<span class="status-note ${def ? def.cls : ''}">${def ? '当前：' + def.label : '尚未标记'}</span>`;
+    bindDecisionBtns(host, cid);
+  }
+
+  function decisionButtonsHTML(cid, dec) {
+    return DECISIONS.map(
+      (d) =>
+        `<button class="dbtn ${dec === d.id ? 'sel ' + d.cls : ''}" data-cid="${cid}" data-dec="${d.id}" title="${esc(d.desc)}">${esc(d.label)}</button>`
+    ).join('');
+  }
+
+  function bindDecisionBtns(host, cid) {
+    $$('.dbtn', host).forEach((b) =>
+      b.addEventListener('click', () => {
+        saveDecision(cid, b.dataset.dec, posOf(currentPosId).id);
+        syncPanelDecision(cid);
+        const keep = openCandidateId;
+        renderCandidates(posOf(currentPosId));
+        openCandidateId = keep;
+        $$('.row', list).forEach((r) => r.classList.toggle('on', r.dataset.cid === keep));
+      })
+    );
+  }
+
+  function bindPanelDecision(c) {
+    const host = $('#panelDecision');
+    if (!host) return;
+    syncPanelDecision(c.id);
+  }
+
+  function buildCandidateDetail(c) {
+    const dObj = decisionOf(c.id);
+    const dec = dObj ? dObj.dec : null;
+    const def = dec ? decOf(dec) : null;
+    const rec = decOf(c.recommend);
+
+    return `
+      <div class="sec" style="margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:11px;flex-wrap:wrap">
+          <span class="tag ${c.tier}">${esc(c.tag)}</span>
+          <span class="tag blue">推荐指数 ${esc(c.score)}</span>
+          <span class="tag gray">KSAO ${c.ksa.total} / 5</span>
+          <span class="tag gray">相似度 ${c.similarity}%</span>
+        </div>
+        <p style="font-size:13px;font-weight:500;line-height:1.6;color:#1F1F1D">${esc(c.headline)}</p>
+      </div>
+
+      <div class="sec">
+        <h3>决策标记 <span class="badge">本机保存</span></h3>
+        <div class="row-act" id="panelDecision" style="border-top:none;padding-top:0;margin-top:0"></div>
+        <div style="font-size:11.5px;color:#8A8A83;margin-top:9px">
+          系统建议：<b>${rec ? esc(rec.label) : '—'}</b> —— ${esc(c.recommendWhy)}
+        </div>
+      </div>
+
+      <div class="sec">
+        <h3>综合判断</h3>
+        <p>${esc(c.summary)}</p>
+      </div>
+
+      <div class="sec">
+        <h3>六维评估数据 <span class="badge">V1.4</span></h3>
+        <dl class="kv">
+          <dt>KSAO 各维度</dt>
+          <dd>K 知识 ${c.ksa.K} ／ S 技能 ${c.ksa.S} ／ A 能力 ${c.ksa.A} ／ O 其他 ${c.ksa.O}${c.id !== 'zhong' ? '（待验证）' : ''}</dd>
+          <dt>STAR 完整性</dt><dd>${c.star} / 5</dd>
+          <dt>对理想标尺相似度</dt><dd>${c.similarity}% · ${esc(c.similarityBand)}</dd>
+          <dt>言行一致性</dt><dd>${esc(c.consistency.label)}</dd>
+          <dt>MBTI 倾向</dt><dd>${esc(c.mbti)}</dd>
+          <dt>Belbin 角色</dt><dd>${esc(c.belbin)}</dd>
+          <dt>岗位驱动匹配</dt><dd>${esc(c.fit.label)}</dd>
+          <dt>领导风格适配</dt><dd>${esc(c.style)}</dd>
+        </dl>
+      </div>
+
+      <div class="sec">
+        <h3>匹配亮点</h3>
+        ${c.highlights
+          .map(
+            (h) => `<div class="item">
+              <div class="it"><span class="dot g"></span>${esc(h.t)}</div>
+              <div class="id" style="padding-left:14px">${esc(h.d)}</div>
+            </div>`
+          )
+          .join('')}
+      </div>
+
+      <div class="sec">
+        <h3>风险与存疑</h3>
+        ${c.risks
+          .map(
+            (r) => `<div class="item">
+              <div class="it"><span class="dot ${c.tier === 'green' ? 'a' : 'r'}"></span>${esc(r.t)}</div>
+              <div class="id" style="padding-left:14px">${esc(r.d)}</div>
+            </div>`
+          )
+          .join('')}
+      </div>
+
+      <div class="sec">
+        <h3>面试建议</h3>
+        <div class="callout blue">${esc(c.interview)}</div>
+      </div>
+
+      <div class="sec" id="resumeSec">
+        <h3>简历${c.resume.type === 'image' ? '原图' : '原文'} <span class="badge">${c.resume.type === 'image' ? '拖入查看' : 'PDF 提取'}</span></h3>
+        <p style="font-size:11.5px;color:#8A8A83;margin-bottom:11px">${esc(c.resume.note)}</p>
+        ${
+          c.resume.type === 'text'
+            ? `<div class="resume-raw">${esc(c.resume.raw)}</div>`
+            : `<div class="drop" id="dropZone">
+                 <div class="dt">把简历截图拖到这里</div>
+                 <div class="dd">也可以点击此处选择图片文件<br>图片只在本机浏览器中读取，不会上传</div>
+               </div>
+               <div class="drop-img" id="dropImgBox" style="display:none"><img id="dropImg" alt="候选人简历截图"></div>
+               <div class="drop-tools" id="dropTools" style="display:none">
+                 <button class="btn" id="btnSaveLocal">保存在本机浏览器</button>
+                 <button class="btn" id="btnClearImg">移除图片</button>
+               </div>
+               <input type="file" id="fileInput" accept="image/*" style="display:none">
+               <div style="font-size:11px;color:#8A8A83;margin-top:9px">点「保存在本机浏览器」后，下次打开自动出现，不用重新拖。</div>`
+        }
+      </div>`;
+  }
+
+  /* ---------- 详情面板：岗位 JD ---------- */
+  function openJD(p) {
+    const j = p.jd;
+    if (!j) return;
+    openCandidateId = null;
+    pName.textContent = j.title;
+    pMeta.textContent = j.company + ' · ' + j.location;
+    pAvatar.className = 'avatar green';
+    pAvatar.textContent = 'JD';
+
+    pBody.innerHTML = `
+      <div class="sec" style="margin-bottom:16px">
+        <div style="font-size:13px;font-weight:500;line-height:1.5;margin-bottom:10px">${esc(j.subtitle)} · 汇报对象：${esc(j.reportsTo)}</div>
+        <div class="metaphor">${esc(j.positioning)}</div>
+      </div>
+
+      <div class="sec">
+        <h3>岗位通俗介绍</h3>
+        <div style="font-size:12.5px;font-weight:600;margin-bottom:9px">${esc(j.plainIntro.analogy)}</div>
+        <div class="proles">
+          ${j.plainIntro.roles.map((r) => `<div class="prole"><div class="pn">${esc(r.name)}</div><div class="pd">${esc(r.desc)}</div></div>`).join('')}
+        </div>
+        <div class="metaphor">${esc(j.plainIntro.metaphor)}<div class="mn">${esc(j.plainIntro.metaphorNote)}</div></div>
+      </div>
+
+      ${
+        j.duties
+          ? `<div class="jdsec">
+              <h4>工作职责</h4>
+              ${j.duties
+                .map(
+                  (d) =>
+                    `<div class="req"><span class="rt hot">${esc(d.pct)}</span><span class="rx"><b>${esc(d.name)}</b> —— ${esc(d.text)}</span></div>`
+                )
+                .join('')}
+            </div>`
+          : ''
+      }
+
+      <div class="jdsec">
+        <h4>必备条件</h4>
+        ${j.mustHave
+          .map(
+            (r) => `<div class="req"><span class="rt ${r.tag === '最重要' ? 'hot' : 'norm'}">${esc(r.tag)}</span><span class="rx">${esc(r.text)}</span></div>`
+          )
+          .join('')}
+      </div>
+
+      <div class="jdsec">
+        <h4>加分项</h4>
+        <ul class="simple-list">${j.niceToHave.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+      </div>
+
+      <div class="jdsec">
+        <h4>价值观考察 · 一票否决项</h4>
+        <ul class="simple-list">${j.veto.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+      </div>
+
+      <div class="jdsec">
+        <h4>将参与的产品线</h4>
+        <ul class="simple-list">${j.products.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+      </div>
+
+      <div class="jdsec">
+        <h4>成长路径</h4>
+        <ul class="simple-list">${j.growth.map((g) => `<li><b>${esc(g.period)}</b>：${esc(g.role)}${g.note ? ' —— ' + esc(g.note) : ''}</li>`).join('')}</ul>
+      </div>
+
+      <div class="jdsec">
+        <h4>福利与成长投资</h4>
+        <ul class="simple-list">${j.benefits.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+      </div>`;
+
+    panel.classList.add('open');
+  }
+
+  /* ---------- 拖入简历图片 ---------- */
+  function bindResume(c) {
+    if (c.resume.type !== 'image') return;
+    const zone = $('#dropZone');
+    const box = $('#dropImgBox');
+    const img = $('#dropImg');
+    const tools = $('#dropTools');
+    const input = $('#fileInput');
+    if (!zone) return;
+
+    const show = (src) => {
+      img.src = src;
+      box.style.display = 'block';
+      tools.style.display = 'flex';
+      zone.style.display = 'none';
+    };
+
+    try {
+      const saved = Store.get(LS_RESUME);
+      if (saved) show(saved);
+    } catch (e) {}
+
+    const readFile = (file) => {
+      if (!file || !file.type.startsWith('image/')) return;
+      const r = new FileReader();
+      r.onload = (ev) => show(ev.target.result);
+      r.readAsDataURL(file);
+    };
+
+    zone.addEventListener('click', () => input.click());
+    input.addEventListener('change', (e) => readFile(e.target.files[0]));
+
+    ['dragenter', 'dragover'].forEach((ev) =>
+      zone.addEventListener(ev, (e) => {
+        e.preventDefault();
+        zone.classList.add('over');
+      })
+    );
+    ['dragleave', 'drop'].forEach((ev) =>
+      zone.addEventListener(ev, (e) => {
+        e.preventDefault();
+        zone.classList.remove('over');
+      })
+    );
+    zone.addEventListener('drop', (e) => readFile(e.dataTransfer.files && e.dataTransfer.files[0]));
+
+    const btnSave = $('#btnSaveLocal');
+    if (btnSave)
+      btnSave.addEventListener('click', () => {
+        const saved = Store.set(LS_RESUME, img.src);
+        if (saved) {
+          btnSave.textContent = '已保存 ✓';
+          setTimeout(() => (btnSave.textContent = '保存在本机浏览器'), 1600);
+        } else if (Store.persistent === false) {
+          alert(
+            '当前是「直接双击打开文件」的方式，浏览器不允许保存数据。\n' +
+            '图片在本次查看中有效，关闭页面后需要重新拖入。\n\n' +
+            '如需长期保存，请通过本地服务或在线链接打开本工具。'
+          );
+        } else {
+          alert('保存失败：图片体积较大，超过浏览器存储上限。');
+        }
+      });
+
+    const btnClear = $('#btnClearImg');
+    if (btnClear)
+      btnClear.addEventListener('click', () => {
+        Store.del(LS_RESUME);
+        img.src = '';
+        box.style.display = 'none';
+        tools.style.display = 'none';
+        zone.style.display = 'block';
+      });
+  }
+
+  /* ---------- 事件 ---------- */
+  // 顶栏：导出 / 导入 —— 对应整个工具的数据（决策 + 流水 + 简历截图），任何页面都可用
+  const topExport = $('#btnExport');
+  if (topExport) topExport.addEventListener('click', doExport);
+  const topImport = $('#btnImport');
+  const topFile = $('#importFile');
+  if (topImport && topFile) {
+    topImport.addEventListener('click', () => topFile.click());
+    topFile.addEventListener('change', (e) => {
+      const f = e.target.files && e.target.files[0];
+      doImport(f);
+      topFile.value = '';
+    });
+  }
+  $('#pClose').addEventListener('click', () => {
+    closePanel();
+    renderList();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closePanel();
+      renderList();
+    }
+  });
+
+  /* ---------- 启动 ---------- */
+  renderRail();
+  renderList();
+})();
+
 </script>
 </body>
 </html>
