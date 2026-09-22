@@ -289,7 +289,995 @@ a:hover{text-decoration:underline}
   </div>
 </div>
 
-<script src="lib/data.js"></script>
-<script src="lib/app.js"></script>
+<script>
+/* ===== data.js（内联） ===== */
+/* ============================================================
+   候选人分析 — 数据层
+   数据来源：
+     1) 桌面《AI交付工程师.docx》（岗位 JD）
+     2) 黄懋晟个人简历.pdf / 钟莹玉(简历)_9(1).pdf（简历原文）
+     3) output/20260921-aijd-v14-analysis（V1.4 六维分析结论）
+     4) 敏炜：官网投递截图解析（原图未在本机，工具内支持拖入查看）
+   ============================================================ */
+
+/* ---------- 决策状态定义（顺序即按钮顺序） ---------- */
+const DECISIONS = [
+  { id: 'interview', label: '推进面试', short: '推进面试', cls: 'green',
+    desc: '进入面试流程' },
+  { id: 'pool', label: '进入人才池', short: '人才池', cls: 'amber',
+    desc: '本岗位暂不合适，留档备选' },
+  { id: 'reject', label: '不使用', short: '不使用', cls: 'red',
+    desc: '本次不推进' },
+];
+
+/* ---------- 岗位 JD ---------- */
+const JD = {
+  title: 'AI 交付工程师',
+  subtitle: '应届 8K-15K ／ 实习 4K-6K',
+  company: '广州聚客网络科技有限公司（Joincom）',
+  location: '广州',
+  reportsTo: 'AI 交付负责人',
+  positioning: '不自己写代码，指挥 AI 完成交付 —— AI-0 调度模式',
+  intro:
+    '公司 80% 以上的代码由 AI（Claude Code、Cursor 等）生成，人的工作是设计、调度、Review、判断。' +
+    'AI-0 调度模式中：CEO 是最高指挥者，多个 Claude Project 是专业角色，多个 Claude Code 实例是技术执行者，' +
+    '而这个岗位是把业务意图翻译成可执行指令、并把控质量的那个人。',
+  mustHave: [
+    { text: '2025/2026 届应届生 · 1-2 年早期工程师 · 在校大三大四（实习）', tag: '身份' },
+    { text: 'AI 工具端到端项目经验 —— 用过 Claude / ChatGPT / Cursor / Copilot 之一，真实做过完整小项目', tag: '最重要' },
+    { text: '至少一种编程语言基础（Python / JavaScript / PHP / Java），不要求精通', tag: '基础' },
+    { text: '良好的中文写作能力（需要写大量 Prompt 与文档）', tag: '软性' },
+    { text: '强烈的学习欲望与好奇心 —— 比 GPA 重要 10 倍', tag: '特质' },
+  ],
+  niceToHave: [
+    '有 GitHub 账号且有自己的项目作品',
+    '在 B 站 / 即刻 / 小红书 / 知乎分享过 AI 实践经验',
+    '参加过 hackathon、AI 比赛、开源项目',
+    '熟悉 Laravel / React / Node.js / 微信小程序 / Python 数据处理任一',
+    '用 AI 解决过学习或生活中的真实问题',
+    '英语阅读能力 —— 能看懂英文技术文档',
+  ],
+  veto: ['诚信', '学习心态', '协作精神', '对 AI 的开放态度'],
+  products: [
+    '云算力 AI-OPS（YunForce 运营平台）',
+    '领功小程序（LingGong）',
+    '赏点网（PlanPoint）',
+    '聚客 CRM（PHP → Laravel 11 + React 18）',
+    '内部 PMS 项目管理系统',
+    '聚客 AI 学院',
+  ],
+  benefits: [
+    '报销 AI 工具订阅（Claude Pro / Cursor Pro / ChatGPT Plus）',
+    '每年 8,000 元学习预算',
+    '入职前 3 个月 AI 学院系统培训，CEO 与负责人亲授',
+    '入职第一周即参与真实项目',
+    '完成培训获聚客「AI 协作工程师」认证',
+    '五险一金按广州市规定足额缴纳 · 13 薪',
+  ],
+  growth: [
+    { period: '0-6 个月', role: 'AI 交付实习生 / 初级工程师', note: '完成基础项目模块' },
+    { period: '6-18 个月', role: 'AI 交付工程师', note: '独立负责单一模块，开始 review 实习生' },
+    { period: '18-36 个月', role: '高级工程师 / 项目负责人', note: '选择技术深度或广度方向' },
+    { period: '3 年后', role: '交付负责人 / 技术专家 / 产品技术负责人', note: '' },
+  ],
+  plainIntro: {
+    analogy: '像「包工头 + 质检员 + 翻译官」三合一',
+    roles: [
+      { name: '包工头', desc: '把老板一句模糊需求，拆成 AI 能听懂的活' },
+      { name: '质检员', desc: '检查 AI 写出来的东西对不对，坏了要能修' },
+      { name: '翻译官', desc: '把业务的话翻成技术语言，再把结果讲回业务' },
+    ],
+    metaphor: 'AI 是施工队，他是拿图纸的那个人 —— 要能看懂图纸、验收工程，不必自己会砌砖。',
+    metaphorNote: '但他得懂「砖」是什么，这就是「编程语言基础」被列为硬门槛的原因。',
+  },
+};
+
+/* ---------- 三候选人 ---------- */
+const CANDIDATES = [
+  {
+    id: 'minwei',
+    name: '敏炜',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '敏',
+    meta: '2026 届 · 食品科学与工程 · 福州 → 广州 · 官网投递',
+    listMeta: '2026 届 · 食品科学与工程',
+    source: '官网投递',
+    recommend: 'interview',
+    recommendWhy: '唯一通过全部硬门槛，建议直接约面',
+    headline: '三人中唯一能「明天就上手交付」的候选人',
+    score: '★★★★☆',
+    ksa: { K: 4, S: 5, A: 4.5, O: 3.5, total: 4.3 },
+    star: 4.5,
+    similarity: 78,
+    similarityBand: '较相似（逼近 80% 高度相似阈值）',
+    consistency: { level: 'high', label: '高', note: 'GitHub 开源仓库 + 在线 demo + README + 117 次自动化检查记录，自评有可外部验证的实物证据' },
+    mbti: '偏 I / N / T / P（行为推断）',
+    belbin: '创新者（Plant）+ 专家（Specialist）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '教练型 / 授权型领导适配最高',
+    summary:
+      '完全命中 JD「非相关专业但有大量 AI 项目实践」通道。Cat Is Here 项目是「端到端小项目」的理想样本：' +
+      '个人独立完成需求拆解 → AI 辅助研发（Codex 等）→ 接入多家 OpenAI 格式模型 API → JSON 输出校验、' +
+      '请求限流、输入限制、词条过滤 → 117 次自动化检查全部通过 → 开源 GitHub + 在线 demo + README / 设计说明 / 演示脚本。',
+    highlights: [
+      { t: '端到端闭环最完整', d: '不仅「做过」，还带部署运维与安全意识，直接对应 JD 中「Review AI 代码、调试修复、维护知识库」的潜质。' },
+      { t: '编程基础达标', d: 'JavaScript / Node.js / HTTP-JSON API / 自动化测试。虽自评「正在学习工程基础」，但 JD 明确不要求精通，门槛已过。' },
+      { t: '软素质有支撑', d: '多次竞赛团长 / 队长（省级一等奖、国家级二等奖）；主动投递公司官网，明确表示可赴广州。' },
+    ],
+    risks: [
+      { t: '工程深度待验证', d: '项目为个人作品，无企业级团队协作与正式 Code Review 经验，「能看懂 AI 写的代码」需现场验证。' },
+      { t: '异地稳定性', d: '福州 → 广州，需确认到岗时间、住宿安排与长期留存意愿。' },
+      { t: '材料形态', d: '简历为投递系统截图，姓名全名与联系方式以官网系统信息为准。' },
+    ],
+    interview:
+      '核心验证一条 —— 让她现场讲 Cat Is Here：整体架构怎么定的？哪些代码是 AI 生成、哪些自己改的？' +
+      '出过什么 bug、怎么定位修复的？若能讲清楚，就是「能判断 AI 代码正确性」的直接证据。',
+    resume: {
+      type: 'image',
+      note: '原件为官网投递截图，原图不在本机。可将截图直接拖入下方区域查看，图片仅在本机浏览器中读取，不会上传。',
+      raw: null,
+    },
+  },
+
+  {
+    id: 'huang',
+    name: '黄懋晟',
+    tag: '有条件推荐',
+    tier: 'amber',
+    initial: '黄',
+    meta: '2026 届 · 昆士兰大学（QS40）商务管理（人力资源）· 本科 GPA 6/7',
+    listMeta: '2026 届 · 昆士兰大学 商务管理',
+    source: '招聘系统投递',
+    recommend: 'interview',
+    recommendWhy: '建议加 15 分钟技术摸底后再定',
+    headline: '技术门槛未过，但学习速度与产品思维是三人中最突出的',
+    score: '★★★☆☆',
+    ksa: { K: 2, S: 4, A: 4.5, O: 3.5, total: 3.6 },
+    star: 4.0,
+    similarity: 62,
+    similarityBand: '较相似',
+    consistency: { level: 'mid', label: '中', note: '有 GitHub 作品集可验证，但「独立搭建」的具体技术栈未说明，需现场核验' },
+    mbti: '偏 E / N / F / J（行为推断）',
+    belbin: '协调者（Co-ordinator）+ 资源调查者',
+    fit: { level: 'amber', label: '部分匹配' },
+    style: '需教练型领导补技术短板',
+    summary:
+      'AI 工具硬门槛初步达标：Claude Code / Codex 重度用户，自述零代码起步、半年内独立搭建多个自动化系统。' +
+      '快速交付有实证（黑客松 72 小时出可运行原型并获奖），产品思维与需求翻译能力明显强于同龄应届生；' +
+      '但简历全文未出现任何编程语言，K 知识仅 2 分，这是最大短板。',
+    highlights: [
+      { t: '快速交付有实证', d: 'AdventureX 2026 黑客松 72 小时内完成可运行原型，获百度秒哒赛道「最佳交互奖」。' },
+      { t: '产品思维突出', d: 'MoSCoW 框架把需求收敛到 4 个核心功能；拆解 Trip.com 与奥运官方 App 做竞品定位；AKA Studio 项目完成 180-900 万澳元市场规模测算。' },
+      { t: '附加协同价值', d: '人力资源专业背景 + AI 工具能力，与公司在推的 AI 简历分析、培训体系、积分工具有潜在协同。' },
+    ],
+    risks: [
+      { t: '技术门槛未过（决定性）', d: '简历全文无任何编程语言证据，K 知识评分仅 2 分。JD 要求「能看懂 AI 写的代码、能定位修复」，这是硬缺口。' },
+      { t: '言行一致性待验证', d: '自述「零代码起步却独立搭建自动化系统」，与偏 F/J 的协调者倾向之间存在张力 —— 究竟是自己动手做，还是组织别人做？' },
+      { t: '回国意愿与薪酬预期', d: '海外求学多年，长期发展意愿与薪酬预期待确认。' },
+    ],
+    interview:
+      '加 15 分钟技术摸底，这是决定性的 15 分钟。直接给一个真实小任务让他现场用 AI 工具完成，' +
+      '观察他是否理解 AI 产出的代码、出 bug 时能否定位。若不通过，可考虑转产品 / 运营方向。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取',
+      raw: `黄懋晟
+电话：17813028892　邮箱：huangmmax@outlook.com
+作品集：https://maxi-max-dev.github.io
+
+【教育经历】
+2022.07-2026.07　昆士兰大学（QS40）
+商务管理（人力资源）｜本科　GPA: 6/7
+
+【实习经历】
+2025.2-2025.5　Food and Beverage Accelerator　行政部实习生
+· 活动统筹：负责 60+ 人内部及 800+ 人外部活动的名单、分组、签到，统一三环节数据口径，多场活动按计划交付。
+· 供应商管理：对接 20+ 供应商，以场地档期为关键路径倒排排期，变更即时重排，活动未因衔接延期。
+· 数据台账：从 0 建立 100+ 条合作方信息台账，制定录入核对规则，后续活动直接复用。
+
+【项目经历】
+2026.7　AdventureX2026 黑客松｜百度秒哒赛道「最佳交互奖」　项目负责人
+主导 UNSEEN（基于 360° 全景与视觉 AI 的多人共享记忆空间）的产品设计与开发。
+· 产品定义：将多人手机中分散的照片与视频重组，形成可共同贡献、探索与重温的共享记忆空间。
+· 交互设计：设计空间归位、沉浸式浏览及缺失视角补全机制，打造「素材贡献 — 空间补全 — 互动回顾」体验闭环。
+· 项目落地：承担策划、视觉交互等主要工作，72 小时内完成可运行原型，获百度秒哒赛道「最佳交互奖」。
+
+2025.7-2025.11　AKA Studio 校企合作项目　项目负责人｜3-5 人跨学科团队
+为客户评估旅游应用 Konnect（面向 2032 布里斯班奥运的一站式出行与活动平台）的商业可行性。
+· 需求收敛：收集 50+ 份问卷与访谈样本归纳四类核心需求，MoSCoW 框架收敛 MVP 至 4 个核心功能。
+· 市场测算：按 202 亿澳元奥运旅游消费预测与 9% App 渗透基准，推算 180 万-900 万澳元潜在交易规模。
+· 竞品定位：拆解 Trip.com 与奥运官方 App，提出「本地优先 + 奥运后留存」差异化定位。
+
+【自我评价】
+· AI 实践：零代码起步，半年内独立搭建多个自动化系统，覆盖求职、内容、财经等重复性事务。
+· 产品思维：从真实使用场景出发做工具，将人工逐条翻阅笔记的调研流程改造为自动搜索、截图、出报告的自动化工具。
+· 调研能力：毕业课题独立完成约 45 页用工调研报告，分析 864 条社媒内容与 37 份 JD。
+
+【相关技能】
+· AI 工具：Claude Code / Codex 重度用户，独立完成多个自动化小工具。
+· 调研方法：问卷与访谈设计、竞品分析、MoSCoW 需求优先级、Lean Canvas`,
+    },
+  },
+
+  {
+    id: 'zhong',
+    name: '钟莹玉',
+    tag: '不推荐本岗位',
+    tier: 'red',
+    initial: '钟',
+    meta: '2025 届 · 广东外语外贸大学 人力资源管理（大专）· 7 年物业客服 / 行政经验',
+    listMeta: '2025 届 · 广外 人力资源管理（大专）',
+    source: '招聘系统投递',
+    recommend: 'pool',
+    recommendWhy: '建议转推行政 / 客服主管方向，留档备用',
+    headline: '不是能力差，是能力轴与岗位完全不在一条线上',
+    score: '★☆☆☆☆',
+    ksa: { K: 1, S: 1, A: 4, O: 4, total: 1.9 },
+    star: 3.5,
+    similarity: 28,
+    similarityBand: '差异较大',
+    consistency: { level: 'gray', label: '高（但与本岗无关）', note: '500+ 件诉求闭环、满意度 100%、转化率 80% 等数据支撑，其岗位范围内陈述一致' },
+    mbti: '偏 S / J / F（行为推断）',
+    belbin: '完成者（Completer Finisher）+ 团队粘合剂',
+    fit: { level: 'red', label: '不符' },
+    style: '与本岗位团队风格不符',
+    summary:
+      'STAR 结构在三人中最规范 —— 说明表达与做事都很有条理，7 年客服 / 行政积累的沟通协调能力真实存在。' +
+      '但她的能力全在「服务与流程」这一轴，而本岗位要的是「技术与交付」那一轴。' +
+      '技术类三项（K 知识、AI 工具、编程基础）均不达标，属方向错位而非能力不足。',
+    highlights: [
+      { t: '文书与流程能力扎实', d: '会议纪要与宣传物料编制、300 家租户档案规范化管理、部门 15 人排班与绩效管理。' },
+      { t: '执行稳定性强', d: '7 年稳定从业；500+ 件客诉闭环、满意度 100%；任职期间面试到入职转化率 80%、所招人员留存 100%。' },
+      { t: '跨部门协调经验丰富', d: '日常巡查协调工程、保洁等条线；独立发起 OA 采购流程并督办审批。' },
+    ],
+    risks: [
+      { t: '技术类三项全不达标', d: '无技术背景、简历无任何 AI 工具使用记录、无编程语言基础，JD 硬门槛均不符合。' },
+      { t: '岗位驱动不符', d: '本岗位需探索创新（创新者 / 完成者角色），而非流程执行；其完成者 + 粘合剂角色与本岗位驱动方向相反。' },
+      { t: '学历与届别', d: '2025 届已毕业一年，且为大专学历，与 JD 的应届身份要求不符（若走社招另议）。' },
+    ],
+    interview:
+      '不进入本岗位面试流程。婉拒，并转推行政 / 客服主管 / 人事助理方向 —— 她在这些岗位上是可靠人选，值得留在人才池。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取',
+      raw: `钟莹玉　物业客服文员 / 部门经理助理
+电话：13265046904
+户籍：广西梧州
+政治面貌：群众
+民族：汉族
+
+【教育经历】
+2022.2-2025.3　广东外语外贸大学　人力资源管理｜大专
+2012.9-2015.6　广州市交通运输职业学校　物流管理｜中专
+
+【工作经历】
+2022.6-2025.6　广州智汇集团（西城智汇 PARK）
+· 行政文书与档案管理：负责部门会议安排及会议纪要撰写、通知及宣传物料编制；负责部门（15 人）排班管理、部门员工绩效考核，规范化管理 300 家租户档案及基本信息、部门文件，确保资料完整调阅高效。
+· 数据统计分析与报表支持：运用 Excel 进行客服运营基础数据统计分析、催缴明细、诉求处理进度等报表，为部门决策提供数据支撑。
+· 采购与流程督办：独立发起部门采购需求 OA 流程，跟进审批进度，保障部门办公物资及时供应；协助上级完成内部流程提报与督办。
+· 上传下达与综合协调：各类通知、制度文件分发与签收确认，确保信息传达零遗漏；将工作任务分解传达至部门每个主管，定期跟进执行进度并反馈异常情况；同时汇总部门工作简报呈报领导，为决策层提供准确的一线运营数据，保障畅通与组织高效运转。
+· 客户诉求闭环处理：全流程跟进租户投诉、维修、咨询等诉求，同步整改进度并完成回访，累计处理 500+ 件，满意度达 100%，具备极强的沟通协调与问题解决能力。
+· 合规巡查与跨部门协作：办理租户进驻、入驻装修手续，每日巡查公共区域并及时协调工程、保洁等条线处理问题，积累了丰富的跨部门协作经验。
+
+2021.5-2022.6　广州市尚溪物业管理有限公司　办公室文员｜物业服务
+· 行政事务执行：处理日常行政类基础事务，统筹办公用品的采购、盘点与领用管理，保障办公物资供给稳定；协助完成会议筹备、现场支持，梳理会议纪要并跟进待办事项落地，提升会议决议执行效率。
+· 招聘流程落地：承接各部门岗位招聘需求，在前程无忧平台完成简历初筛、候选人邀约工作，协调总经理面试安排，任职期间实现面试到入职转化率达 80%，所招人员在职稳定性达 100%（均满足在职 1 年以上要求）。
+
+2018.4-2021.2　圆通快递　客服专员｜货运 / 物流仓储
+· 日常客诉处理：承接日均 5 万件跨区域快件的客户诉求响应，标准化处理丢件理赔、派送延误、催件等常规咨询及问题，保障前端服务响应效率。
+· 部门协同执行：配合团队负责人落实客服部门的工作调度与分工协调，联动同事共同达成服务 KPI，前置化解客户不满情绪，有效降低升级投诉发生率。
+· 复杂问题处置：专职处理快件异常类疑难工单、升级投诉及仲裁理赔类诉求，推动问题闭环，提高客户满意度。
+
+【自我评价】
+本人性格开朗亲和，拥有 7 年客户服务经验（含 4 年行政内勤及物业运营），具备扎实的文书写作、档案管理、数据统计及 OA 流程操作能力。熟悉企业日常行政事务运转，擅长跨部门协调与事务跟进，细致耐心。
+
+【相关技能】
+Word；Excel；PPT 等办公软件；数据分析；客户服务；`,
+    },
+  },
+];
+
+/* ---------- 六维分析说明 ---------- */
+const DIMENSIONS = [
+  {
+    key: 'ksao',
+    name: 'KSAO 胜任力',
+    desc: '对照「理想标尺（创业型组织 + JD 要求）」打分。K=知识，S=技能，A=能力，O=其他（动机与稳定性）。',
+    note: 'O 项在敏炜、黄懋晟身上标记为「待验证」—— 需面试确认到岗与留存意愿。',
+  },
+  {
+    key: 'star',
+    name: 'STAR 结构完整性',
+    desc: '识别 S 情境 / T 任务 / A 行动 / R 结果 四要素覆盖度与结果量化度，区分「参与」与「主导」。',
+    note: '关键洞察：STAR 分高 ≠ 岗位匹配高。钟莹玉 STAR 结构最规范，但项目性质与本岗位不同轨。',
+  },
+  {
+    key: 'similarity',
+    name: '对理想标尺相似度',
+    desc: '向量构成 = KSAO 各维度分 + MBTI 类型编码 + Belbin 角色 + STAR 量化分 + 言行一致性指数。',
+    note: '档位：≥80% 高度相似 ／ 60-79% 较相似 ／ 40-59% 部分相似 ／ <40% 差异较大。仅作提示参考，不替代硬门槛判断。',
+  },
+  {
+    key: 'mbti',
+    name: 'MBTI × Belbin 交叉',
+    desc: '岗位驱动特征：高自主性、强逻辑拆解、能承受快速迭代、乐于被 Review、把 AI 视为伙伴。',
+    note: '⚠ 数据缺口：三名候选人的 MBTI 实测结果均未提供，当前为行为推断，需以实际测试结果复核。',
+  },
+  {
+    key: 'consistency',
+    name: '言行一致性指数',
+    desc: '交叉核验自评、面试表现与性格特征差异，识别夸大 / 伪装，建立诚信信号。',
+    note: '⚠ 当前无面试录音，以下为简历内部一致性初筛。建议面试前先实测访问 GitHub / 在线 demo。',
+  },
+  {
+    key: 'style',
+    name: '领导风格适配',
+    desc: '按管理者建档字段轻量落地。本岗位直属领导为 AI 交付负责人（技术型），需先完成其风格建档。',
+    note: '行动项：请 AI 交付负责人用 5 分钟勾选风格标签（指令型 / 教练型 / 支持型 / 授权型 / 变革型）。',
+  },
+];
+
+/* ============================================================
+   在招岗位（左侧列表数据源）
+   ============================================================ */
+const POSITIONS = [
+  {
+    id: 'aijd',
+    name: 'AI 交付工程师',
+    subtitle: '应届 8K-15K ／ 实习 4K-6K',
+    dept: '技术 · AI 交付',
+    status: 'active',
+    statusLabel: '分析已完成',
+    updated: '2026-09-21',
+    candidateCount: 3,
+    jd: JD,
+    candidates: CANDIDATES,
+  },
+  {
+    id: 'overseas-kam',
+    name: '海外达人客户经理',
+    subtitle: '薪酬待定',
+    dept: '商务拓展 · 海外',
+    status: 'pending',
+    statusLabel: '待更新',
+    updated: '—',
+    candidateCount: 0,
+    jd: null,
+    candidates: [],
+    pending: {
+      title: '岗位信息待更新',
+      desc: '该岗位的 JD 与候选人分析尚未录入。',
+      todos: [
+        '补充岗位 JD（职责、任职要求、薪酬区间）',
+        '明确用人部门与汇报关系',
+        '导入候选人简历并启动 V1.4 六维分析',
+      ],
+      framework: [
+        { k: '岗位定位', v: '待补充' },
+        { k: '所属部门', v: '商务拓展 · 海外' },
+        { k: '汇报对象', v: '待补充' },
+        { k: '薪酬区间', v: '待补充' },
+        { k: '核心职责', v: '待补充' },
+        { k: '任职要求', v: '待补充' },
+        { k: '候选人', v: '暂无' },
+      ],
+    },
+  },
+];
+
+
+</script>
+<script>
+/* ===== app.js（内联） ===== */
+/* ============================================================
+   候选人分析 — 交互逻辑
+   结构：左侧在招岗位列表 → 中间候选人列表 → 右侧详情面板
+   决策状态（推进面试 / 人才池 / 不使用）持久化在本机 localStorage
+   ============================================================ */
+(function () {
+  'use strict';
+
+  const $ = (s, r) => (r || document).querySelector(s);
+  const $$ = (s, r) => [...(r || document).querySelectorAll(s)];
+
+  const rail = $('#rail');
+  const list = $('#list');
+  const panel = $('#panel');
+  const pBody = $('#pBody');
+  const pName = $('#pName');
+  const pMeta = $('#pMeta');
+  const pAvatar = $('#pAvatar');
+  const barHint = $('#barHint');
+
+  const LS_DECISION = 'aijd_decisions_v1';
+  const LS_RESUME = 'aijd_resume_minwei';
+
+  let currentPosId = POSITIONS[0].id;
+  let openCandidateId = null;
+
+  /* ---------- 工具 ---------- */
+  const esc = (s) =>
+    String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const ksaCls = (v) => (v >= 4 ? 'green' : v >= 2.5 ? 'amber' : 'red');
+  const simCls = (v) => (v >= 60 ? (v >= 80 ? 'green' : 'amber') : 'red');
+  const posOf = (id) => POSITIONS.find((p) => p.id === id) || POSITIONS[0];
+  const decOf = (id) => DECISIONS.find((d) => d.id === id);
+
+  /* ---------- 存储兼容层 ----------
+     浏览器在 file:// 协议下通常禁用 localStorage。
+     此处自动降级为内存存储，保证双击打开也能正常标记（当次会话有效）。
+     通过 http 访问时自动使用 localStorage → 可长期保存。
+  ---------------------------------- */
+  const Store = (function () {
+    let useLS = false;
+    try {
+      const k = '__t__';
+      window.localStorage.setItem(k, '1');
+      window.localStorage.removeItem(k);
+      useLS = true;
+    } catch (e) {
+      useLS = false;
+    }
+    const mem = {};
+    return {
+      persistent: useLS,
+      get(k) {
+        if (useLS) {
+          try { return window.localStorage.getItem(k); } catch (e) { return mem[k] || null; }
+        }
+        return Object.prototype.hasOwnProperty.call(mem, k) ? mem[k] : null;
+      },
+      set(k, v) {
+        if (useLS) {
+          try { window.localStorage.setItem(k, v); return true; } catch (e) { mem[k] = v; return false; }
+        }
+        mem[k] = v;
+        return false;
+      },
+      del(k) {
+        if (useLS) {
+          try { window.localStorage.removeItem(k); } catch (e) { delete mem[k]; }
+        }
+        delete mem[k];
+      },
+    };
+  })();
+
+  /* ---------- 决策状态读写 ---------- */
+  function loadDecisions() {
+    try {
+      return JSON.parse(Store.get(LS_DECISION) || '{}') || {};
+    } catch (e) {
+      return {};
+    }
+  }
+  function saveDecision(cid, did) {
+    const m = loadDecisions();
+    if (m[cid] === did) delete m[cid];
+    else m[cid] = did;
+    Store.set(LS_DECISION, JSON.stringify(m));
+    return m;
+  }
+  function decisionOf(cid) {
+    return loadDecisions()[cid] || null;
+  }
+  function clearAllDecisions() {
+    Store.del(LS_DECISION);
+  }
+
+  /* ---------- 左侧岗位列表 ---------- */
+  function renderRail() {
+    rail.innerHTML =
+      '<div class="rail-h">在招岗位</div>' +
+      POSITIONS.map((p) => {
+        const on = p.id === currentPosId;
+        const n = p.candidates ? p.candidates.length : 0;
+        return `<button class="pos ${on ? 'on' : ''}" data-pos="${p.id}">
+          <div class="pos-top">
+            <span class="pos-dot ${p.status}"></span>
+            <span class="pos-name">${esc(p.name)}</span>
+          </div>
+          <div class="pos-sub">${esc(p.subtitle)}</div>
+          <span class="pos-badge">${p.status === 'pending' ? esc(p.statusLabel) : n + ' 位候选人'}</span>
+        </button>`;
+      }).join('');
+
+    $$('.pos', rail).forEach((el) =>
+      el.addEventListener('click', () => {
+        if (el.dataset.pos === currentPosId) return;
+        currentPosId = el.dataset.pos;
+        closePanel();
+        renderRail();
+        renderList();
+      })
+    );
+  }
+
+  /* ---------- 中间区域 ---------- */
+  function renderList() {
+    const p = posOf(currentPosId);
+    if (p.status === 'pending') return renderPending(p);
+    renderCandidates(p);
+  }
+
+  /* 待更新岗位 */
+  function renderPending(p) {
+    const pd = p.pending;
+    list.innerHTML = `
+      <div class="list-h">
+        <div class="list-title">${esc(p.name)}</div>
+        <div class="list-sub">${esc(p.dept)} · 岗位编号 ${esc(p.id)}</div>
+      </div>
+      <div class="list-desc">该岗位尚未录入 JD 与候选人材料，当前为空态。</div>
+
+      <div class="pendingBox">
+        <div class="pi">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+            <path d="M11 6v6M11 15.5v.5"/>
+            <circle cx="11" cy="11" r="8.5"/>
+          </svg>
+        </div>
+        <h3>${esc(pd.title)}</h3>
+        <p>${esc(pd.desc)}</p>
+
+        <div class="todoList">
+          <div class="tl">待办事项</div>
+          <ul>${pd.todos.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+        </div>
+
+        <div class="fwgrid">
+          ${pd.framework
+            .map(
+              (f) => `<div class="fw"><span class="fk">${esc(f.k)}</span><span class="fv">${esc(f.v)}</span></div>`
+            )
+            .join('')}
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:12px;color:#8A8A83;margin-top:14px">
+        补齐 JD 与简历后，把文件发我即可一键填入并启动六维分析。
+      </div>`;
+  }
+
+  /* 候选人列表 */
+  function renderCandidates(p) {
+    const decs = loadDecisions();
+    const doneCount = p.candidates.filter((c) => decs[c.id]).length;
+
+    const rows = p.candidates.map((c) => {
+      const dec = decs[c.id];
+      const decDef = dec ? decOf(dec) : null;
+      const on = openCandidateId === c.id;
+
+      const mini = ['K', 'S', 'A', 'O']
+        .map((k) => {
+          const v = c.ksa[k];
+          const pend = k === 'O' && c.id !== 'zhong';
+          return `<div class="mini-c"><span class="k">${k}</span><span class="v ${ksaCls(v)}">${v}${pend ? '*' : ''}</span></div>`;
+        })
+        .join('');
+
+      const btns = DECISIONS.map(
+        (d) =>
+          `<button class="dbtn ${dec === d.id ? 'sel ' + d.cls : ''}" data-cid="${c.id}" data-dec="${d.id}" title="${esc(d.desc)}">${esc(d.label)}</button>`
+      ).join('');
+
+      return `
+      <article class="row ${on ? 'on' : ''}" data-cid="${c.id}">
+        <div class="row-top">
+          <div class="avatar ${c.tier}">${esc(c.initial)}</div>
+          <div class="row-id">
+            <div class="row-name">
+              ${esc(c.name)}
+              <span class="tag ${c.tier}">${esc(c.tag)}</span>
+              ${decDef ? `<span class="tag ${decDef.cls}">已标记 · ${esc(decDef.short)}</span>` : ''}
+            </div>
+            <div class="row-meta">${esc(c.listMeta)} · 来源：${esc(c.source)}</div>
+          </div>
+          <div class="scores">
+            <div class="sc"><div class="lbl">KSAO</div><div class="val ${c.tier}">${c.ksa.total}</div></div>
+            <div class="sc"><div class="lbl">相似度</div><div class="val ${simCls(c.similarity)}">${c.similarity}%</div></div>
+            <div class="sc"><div class="lbl">STAR</div><div class="val ${ksaCls(c.star)}">${c.star}</div></div>
+          </div>
+        </div>
+
+        <div class="row-mid">
+          <div class="mini">${mini}</div>
+          <div class="row-why">${esc(c.headline)}</div>
+        </div>
+
+        <div class="row-act">
+          <span class="lb">决策</span>
+          ${btns}
+          <span class="status-note ${decDef ? decDef.cls : ''}" data-note="${c.id}">${
+            decDef ? '当前：' + decDef.label : '建议：' + (decOf(c.recommend) ? decOf(c.recommend).label : '—')
+          }</span>
+          <button class="viewbtn" data-view="${c.id}">查看详情 →</button>
+        </div>
+      </article>`;
+    }).join('');
+
+    list.innerHTML = `
+      <div class="list-h">
+        <div class="list-title">${esc(p.name)}</div>
+        <div class="list-sub">${esc(p.dept)} · 共 ${p.candidates.length} 位候选人 · 数据更新 ${esc(p.updated)}</div>
+      </div>
+      <div class="list-desc">${esc(p.jd ? p.jd.positioning : '')} —— 分析基准：《公司智能招聘系统 AI 分析优化方案 V1.4》六维融合体系</div>
+      <div class="list-bar">
+        <div class="legend"><span class="ldot g"></span>优先推荐</div>
+        <div class="legend"><span class="ldot a"></span>有条件推荐</div>
+        <div class="legend"><span class="ldot r"></span>不推荐本岗</div>
+        <div style="flex:1"></div>
+        <span style="font-size:11.5px;color:#8A8A83">已标记 ${doneCount} / ${p.candidates.length}</span>
+        ${doneCount ? '<button class="resetbtn" id="resetDec">清除全部标记</button>' : ''}
+        <button class="viewbtn" id="viewJD" style="margin-left:8px">查看岗位 JD →</button>
+      </div>
+      <div class="rows">${rows}</div>`;
+
+    // 决策按钮
+    $$('.dbtn', list).forEach((b) =>
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cid = b.dataset.cid;
+        const did = b.dataset.dec;
+        const keep = openCandidateId;
+        saveDecision(cid, did);
+        renderCandidates(p);
+        openCandidateId = keep;
+        $$('.row', list).forEach((r) => r.classList.toggle('on', r.dataset.cid === keep));
+        if (keep && keep === cid) syncPanelDecision(cid);
+      })
+    );
+
+    // 查看详情
+    $$('.viewbtn[data-view]', list).forEach((b) =>
+      b.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openPanel(b.dataset.view);
+      })
+    );
+
+    // 整行也可以点
+    $$('.row', list).forEach((r) =>
+      r.addEventListener('click', () => openPanel(r.dataset.cid))
+    );
+
+    const btnJD = $('#viewJD');
+    if (btnJD) btnJD.addEventListener('click', () => openJD(p));
+
+    const btnReset = $('#resetDec');
+    if (btnReset)
+      btnReset.addEventListener('click', () => {
+        const keep = openCandidateId;
+        clearAllDecisions();
+        renderCandidates(p);
+        openCandidateId = keep;
+        $$('.row', list).forEach((r) => r.classList.toggle('on', r.dataset.cid === keep));
+        if (keep) syncPanelDecision(keep);
+      });
+
+    barHint.innerHTML = Store.persistent
+      ? '决策标记保存在本机浏览器，关闭后仍保留'
+      : '<span style="color:#8A5309">当前为离线单文件模式，标记仅本次查看有效（关闭后不保留）</span>';
+  }
+
+  /* ---------- 详情面板：候选人 ---------- */
+  function openPanel(cid) {
+    const p = posOf(currentPosId);
+    const c = p.candidates.find((x) => x.id === cid);
+    if (!c) return;
+    openCandidateId = cid;
+
+    pName.textContent = c.name;
+    pMeta.textContent = c.meta;
+    pAvatar.className = 'avatar ' + c.tier;
+    pAvatar.textContent = c.initial;
+    pBody.innerHTML = buildCandidateDetail(c);
+    panel.classList.add('open');
+
+    $$('.row', list).forEach((r) => r.classList.toggle('on', r.dataset.cid === cid));
+    bindResume(c);
+    bindPanelDecision(c);
+  }
+
+  function closePanel() {
+    openCandidateId = null;
+    panel.classList.remove('open');
+    $$('.row', list).forEach((r) => r.classList.remove('on'));
+  }
+
+  function syncPanelDecision(cid) {
+    const host = $('#panelDecision');
+    if (!host) return;
+    const dec = decisionOf(cid);
+    const def = dec ? decOf(dec) : null;
+    host.innerHTML = decisionButtonsHTML(cid, dec) +
+      `<span class="status-note ${def ? def.cls : ''}">${def ? '当前：' + def.label : '尚未标记'}</span>`;
+    bindDecisionBtns(host, cid);
+  }
+
+  function decisionButtonsHTML(cid, dec) {
+    return DECISIONS.map(
+      (d) =>
+        `<button class="dbtn ${dec === d.id ? 'sel ' + d.cls : ''}" data-cid="${cid}" data-dec="${d.id}" title="${esc(d.desc)}">${esc(d.label)}</button>`
+    ).join('');
+  }
+
+  function bindDecisionBtns(host, cid) {
+    $$('.dbtn', host).forEach((b) =>
+      b.addEventListener('click', () => {
+        saveDecision(cid, b.dataset.dec);
+        syncPanelDecision(cid);
+        const keep = openCandidateId;
+        renderCandidates(posOf(currentPosId));
+        openCandidateId = keep;
+        $$('.row', list).forEach((r) => r.classList.toggle('on', r.dataset.cid === keep));
+      })
+    );
+  }
+
+  function bindPanelDecision(c) {
+    const host = $('#panelDecision');
+    if (!host) return;
+    syncPanelDecision(c.id);
+  }
+
+  function buildCandidateDetail(c) {
+    const dec = decisionOf(c.id);
+    const def = dec ? decOf(dec) : null;
+    const rec = decOf(c.recommend);
+
+    return `
+      <div class="sec" style="margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:9px;margin-bottom:11px;flex-wrap:wrap">
+          <span class="tag ${c.tier}">${esc(c.tag)}</span>
+          <span class="tag blue">推荐指数 ${esc(c.score)}</span>
+          <span class="tag gray">KSAO ${c.ksa.total} / 5</span>
+          <span class="tag gray">相似度 ${c.similarity}%</span>
+        </div>
+        <p style="font-size:13px;font-weight:500;line-height:1.6;color:#1F1F1D">${esc(c.headline)}</p>
+      </div>
+
+      <div class="sec">
+        <h3>决策标记 <span class="badge">本机保存</span></h3>
+        <div class="row-act" id="panelDecision" style="border-top:none;padding-top:0;margin-top:0"></div>
+        <div style="font-size:11.5px;color:#8A8A83;margin-top:9px">
+          系统建议：<b>${rec ? esc(rec.label) : '—'}</b> —— ${esc(c.recommendWhy)}
+        </div>
+      </div>
+
+      <div class="sec">
+        <h3>综合判断</h3>
+        <p>${esc(c.summary)}</p>
+      </div>
+
+      <div class="sec">
+        <h3>六维评估数据 <span class="badge">V1.4</span></h3>
+        <dl class="kv">
+          <dt>KSAO 各维度</dt>
+          <dd>K 知识 ${c.ksa.K} ／ S 技能 ${c.ksa.S} ／ A 能力 ${c.ksa.A} ／ O 其他 ${c.ksa.O}${c.id !== 'zhong' ? '（待验证）' : ''}</dd>
+          <dt>STAR 完整性</dt><dd>${c.star} / 5</dd>
+          <dt>对理想标尺相似度</dt><dd>${c.similarity}% · ${esc(c.similarityBand)}</dd>
+          <dt>言行一致性</dt><dd>${esc(c.consistency.label)}</dd>
+          <dt>MBTI 倾向</dt><dd>${esc(c.mbti)}</dd>
+          <dt>Belbin 角色</dt><dd>${esc(c.belbin)}</dd>
+          <dt>岗位驱动匹配</dt><dd>${esc(c.fit.label)}</dd>
+          <dt>领导风格适配</dt><dd>${esc(c.style)}</dd>
+        </dl>
+      </div>
+
+      <div class="sec">
+        <h3>匹配亮点</h3>
+        ${c.highlights
+          .map(
+            (h) => `<div class="item">
+              <div class="it"><span class="dot g"></span>${esc(h.t)}</div>
+              <div class="id" style="padding-left:14px">${esc(h.d)}</div>
+            </div>`
+          )
+          .join('')}
+      </div>
+
+      <div class="sec">
+        <h3>风险与存疑</h3>
+        ${c.risks
+          .map(
+            (r) => `<div class="item">
+              <div class="it"><span class="dot ${c.tier === 'green' ? 'a' : 'r'}"></span>${esc(r.t)}</div>
+              <div class="id" style="padding-left:14px">${esc(r.d)}</div>
+            </div>`
+          )
+          .join('')}
+      </div>
+
+      <div class="sec">
+        <h3>面试建议</h3>
+        <div class="callout blue">${esc(c.interview)}</div>
+      </div>
+
+      <div class="sec" id="resumeSec">
+        <h3>简历${c.resume.type === 'image' ? '原图' : '原文'} <span class="badge">${c.resume.type === 'image' ? '拖入查看' : 'PDF 提取'}</span></h3>
+        <p style="font-size:11.5px;color:#8A8A83;margin-bottom:11px">${esc(c.resume.note)}</p>
+        ${
+          c.resume.type === 'text'
+            ? `<div class="resume-raw">${esc(c.resume.raw)}</div>`
+            : `<div class="drop" id="dropZone">
+                 <div class="dt">把简历截图拖到这里</div>
+                 <div class="dd">也可以点击此处选择图片文件<br>图片只在本机浏览器中读取，不会上传</div>
+               </div>
+               <div class="drop-img" id="dropImgBox" style="display:none"><img id="dropImg" alt="候选人简历截图"></div>
+               <div class="drop-tools" id="dropTools" style="display:none">
+                 <button class="btn" id="btnSaveLocal">保存在本机浏览器</button>
+                 <button class="btn" id="btnClearImg">移除图片</button>
+               </div>
+               <input type="file" id="fileInput" accept="image/*" style="display:none">
+               <div style="font-size:11px;color:#8A8A83;margin-top:9px">点「保存在本机浏览器」后，下次打开自动出现，不用重新拖。</div>`
+        }
+      </div>`;
+  }
+
+  /* ---------- 详情面板：岗位 JD ---------- */
+  function openJD(p) {
+    const j = p.jd;
+    if (!j) return;
+    openCandidateId = null;
+    pName.textContent = j.title;
+    pMeta.textContent = j.company + ' · ' + j.location;
+    pAvatar.className = 'avatar green';
+    pAvatar.textContent = 'JD';
+
+    pBody.innerHTML = `
+      <div class="sec" style="margin-bottom:16px">
+        <div style="font-size:13px;font-weight:500;line-height:1.5;margin-bottom:10px">${esc(j.subtitle)} · 汇报对象：${esc(j.reportsTo)}</div>
+        <div class="metaphor">${esc(j.positioning)}</div>
+      </div>
+
+      <div class="sec">
+        <h3>岗位通俗介绍</h3>
+        <div style="font-size:12.5px;font-weight:600;margin-bottom:9px">${esc(j.plainIntro.analogy)}</div>
+        <div class="proles">
+          ${j.plainIntro.roles.map((r) => `<div class="prole"><div class="pn">${esc(r.name)}</div><div class="pd">${esc(r.desc)}</div></div>`).join('')}
+        </div>
+        <div class="metaphor">${esc(j.plainIntro.metaphor)}<div class="mn">${esc(j.plainIntro.metaphorNote)}</div></div>
+      </div>
+
+      <div class="jdsec">
+        <h4>必备条件</h4>
+        ${j.mustHave
+          .map(
+            (r) => `<div class="req"><span class="rt ${r.tag === '最重要' ? 'hot' : 'norm'}">${esc(r.tag)}</span><span class="rx">${esc(r.text)}</span></div>`
+          )
+          .join('')}
+      </div>
+
+      <div class="jdsec">
+        <h4>加分项</h4>
+        <ul class="simple-list">${j.niceToHave.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+      </div>
+
+      <div class="jdsec">
+        <h4>价值观考察 · 一票否决项</h4>
+        <ul class="simple-list">${j.veto.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+      </div>
+
+      <div class="jdsec">
+        <h4>将参与的产品线</h4>
+        <ul class="simple-list">${j.products.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+      </div>
+
+      <div class="jdsec">
+        <h4>成长路径</h4>
+        <ul class="simple-list">${j.growth.map((g) => `<li><b>${esc(g.period)}</b>：${esc(g.role)}${g.note ? ' —— ' + esc(g.note) : ''}</li>`).join('')}</ul>
+      </div>
+
+      <div class="jdsec">
+        <h4>福利与成长投资</h4>
+        <ul class="simple-list">${j.benefits.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+      </div>`;
+
+    panel.classList.add('open');
+  }
+
+  /* ---------- 拖入简历图片 ---------- */
+  function bindResume(c) {
+    if (c.resume.type !== 'image') return;
+    const zone = $('#dropZone');
+    const box = $('#dropImgBox');
+    const img = $('#dropImg');
+    const tools = $('#dropTools');
+    const input = $('#fileInput');
+    if (!zone) return;
+
+    const show = (src) => {
+      img.src = src;
+      box.style.display = 'block';
+      tools.style.display = 'flex';
+      zone.style.display = 'none';
+    };
+
+    try {
+      const saved = Store.get(LS_RESUME);
+      if (saved) show(saved);
+    } catch (e) {}
+
+    const readFile = (file) => {
+      if (!file || !file.type.startsWith('image/')) return;
+      const r = new FileReader();
+      r.onload = (ev) => show(ev.target.result);
+      r.readAsDataURL(file);
+    };
+
+    zone.addEventListener('click', () => input.click());
+    input.addEventListener('change', (e) => readFile(e.target.files[0]));
+
+    ['dragenter', 'dragover'].forEach((ev) =>
+      zone.addEventListener(ev, (e) => {
+        e.preventDefault();
+        zone.classList.add('over');
+      })
+    );
+    ['dragleave', 'drop'].forEach((ev) =>
+      zone.addEventListener(ev, (e) => {
+        e.preventDefault();
+        zone.classList.remove('over');
+      })
+    );
+    zone.addEventListener('drop', (e) => readFile(e.dataTransfer.files && e.dataTransfer.files[0]));
+
+    const btnSave = $('#btnSaveLocal');
+    if (btnSave)
+      btnSave.addEventListener('click', () => {
+        const saved = Store.set(LS_RESUME, img.src);
+        if (saved) {
+          btnSave.textContent = '已保存 ✓';
+          setTimeout(() => (btnSave.textContent = '保存在本机浏览器'), 1600);
+        } else if (Store.persistent === false) {
+          alert(
+            '当前是「直接双击打开文件」的方式，浏览器不允许保存数据。\n' +
+            '图片在本次查看中有效，关闭页面后需要重新拖入。\n\n' +
+            '如需长期保存，请通过本地服务或在线链接打开本工具。'
+          );
+        } else {
+          alert('保存失败：图片体积较大，超过浏览器存储上限。');
+        }
+      });
+
+    const btnClear = $('#btnClearImg');
+    if (btnClear)
+      btnClear.addEventListener('click', () => {
+        Store.del(LS_RESUME);
+        img.src = '';
+        box.style.display = 'none';
+        tools.style.display = 'none';
+        zone.style.display = 'block';
+      });
+  }
+
+  /* ---------- 事件 ---------- */
+  $('#pClose').addEventListener('click', () => {
+    closePanel();
+    renderList();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closePanel();
+      renderList();
+    }
+  });
+
+  /* ---------- 启动 ---------- */
+  renderRail();
+  renderList();
+})();
+
+</script>
+
+<noscript>
+  <div style="padding:40px;text-align:center;font-family:system-ui,sans-serif;color:#5A5A55">
+    <h2 style="font-size:16px;margin-bottom:10px">浏览器已禁用 JavaScript</h2>
+    <p style="font-size:13px">本工具需要 JavaScript 才能运行，请在浏览器设置中开启后刷新页面。</p>
+  </div>
+</noscript>
 </body>
 </html>
