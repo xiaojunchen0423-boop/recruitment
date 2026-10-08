@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>候选人分析</title>
+<title>候选人分析（脱敏版）</title>
 <style>
 :root{
   --bg:#F7F7F5; --card:#FFFFFF; --line:#E4E3DD; --line-strong:#CFCEC6;
@@ -266,6 +266,22 @@ a:hover{text-decoration:underline}
 .logline .lo.r{color:var(--red);font-weight:500}
 .logline .lp{color:var(--ink3);font-size:11px;margin-left:auto;text-align:right}
 
+/* 推送简历至邮箱 */
+.mailbox{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.mailbox .mlb{font-size:12px;color:var(--ink3);white-space:nowrap}
+.minput{
+  flex:1;min-width:0;padding:7px 11px;border:1px solid var(--line-strong);border-radius:7px;
+  font-size:12.5px;font-family:inherit;color:var(--ink);background:var(--card);transition:border-color .15s;
+}
+.minput:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,.1)}
+.mailbtns{display:flex;gap:8px;flex-wrap:wrap}
+.btn.primary{
+  background:var(--blue-bg);border-color:var(--blue-line);color:var(--blue);font-weight:500;
+}
+.btn.primary:hover{background:#DCEAF9;border-color:var(--blue);color:var(--blue)}
+.mailnote{font-size:11.5px;color:var(--ink3);line-height:1.65;margin-top:9px}
+.mailnote b{color:var(--ink2)}
+
 .empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;color:var(--ink3)}
 .empty h3{font-size:14px;font-weight:600;color:var(--ink2);margin-bottom:8px}
 .empty p{font-size:12.5px;line-height:1.7;max-width:320px}
@@ -286,7 +302,7 @@ a:hover{text-decoration:underline}
 <div class="app">
 
   <div class="topbar">
-    <div class="brand">候选人分析<span class="sub">Joincom · V1.4 六维融合分析</span></div>
+    <div class="brand">候选人分析（脱敏版）<span class="sub">Joincom · V1.4 六维融合分析 · 联系方式已脱敏</span></div>
     <div class="topbar-tools">
       <button class="btn" id="btnExport" title="导出全部数据（决策、操作流水、简历截图）为 JSON 备份文件">导出数据</button>
       <button class="btn" id="btnImport" title="从 JSON 备份文件导入，覆盖当前全部数据">导入数据</button>
@@ -493,9 +509,9 @@ const CANDIDATES = [
       '观察他是否理解 AI 产出的代码、出 bug 时能否定位。若不通过，可考虑转产品 / 运营方向。',
     resume: {
       type: 'text',
-      note: '以下内容由 PDF 简历原文提取',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）',
       raw: `黄懋晟
-电话：17813028892　邮箱：huangmmax@outlook.com
+联系方式：已脱敏（完整联系方式以招聘系统为准）
 作品集：https://maxi-max-dev.github.io
 
 【教育经历】
@@ -572,9 +588,9 @@ const CANDIDATES = [
       '不进入本岗位面试流程。婉拒，并转推行政 / 客服主管 / 人事助理方向 —— 她在这些岗位上是可靠人选，值得留在人才池。',
     resume: {
       type: 'text',
-      note: '以下内容由 PDF 简历原文提取',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）',
       raw: `钟莹玉　物业客服文员 / 部门经理助理
-电话：13265046904
+电话：已脱敏
 户籍：广西梧州
 政治面貌：群众
 民族：汉族
@@ -755,9 +771,9 @@ const CANDIDATES_OVERSEAS = [
       '英语可现场 5 分钟英文对话直接验证。',
     resume: {
       type: 'text',
-      note: '以下内容由 PDF 简历原文提取',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）',
       raw: `欧泾宇
-电话：15788589903
+电话：已脱敏
 
 【关于本人】
 海外社媒运营与 AI workflow 应用：熟悉 TikTok、YouTube、LinkedIn、Instagram、X（Twitter）等主流海外社媒运营方式，有美区、日区、东南亚等多地区社媒运营经验。熟悉各类主流 AI 工具的使用，Codex、Workbuddy、Heygen、MiniMax 等，能够结合业务制作 AI 工作流 workflow，批量生产视频、数字人、图文等内容。
@@ -789,51 +805,166 @@ const CANDIDATES_OVERSEAS = [
   },
 
   {
+    id: 'yzf',
+    name: '杨振峰',
+    tag: '有条件推荐',
+    tier: 'amber',
+    initial: '杨',
+    meta: '23 岁 · 2 年+ 海外达人营销 · 广外英语自考在读 · CET-4 · 期望 12-15K',
+    listMeta: '2 年+ 海外达人 BD · CET-4 · 6 万达人资源',
+    source: '招聘系统投递（2026-10-08 新增）',
+    recommend: 'interview',
+    recommendWhy: '达人拓展与海外平台最对口，先过学历与薪资两道门槛再约面',
+    headline: '达人资源与海外市场覆盖最扎实的一位，学历与薪资两道门槛需先确认',
+    score: '★★★★☆',
+    ksa: { K: 4.5, S: 4.5, A: 3.5, O: 3, total: 3.9 },
+    star: 4.5,
+    similarity: 78,
+    similarityBand: '较相似（接近 80% 高度相似阈值）',
+    consistency: { level: 'mid', label: '中', note: '数据密度高但口径需核验：60,000+ KOL/KOC 资源、月均 GMV $300K+ 的统计方式不明；团队规模简历内前后不一（5-8 人 vs 6-10 人）；CET-4 与全国大赛奖项可查证' },
+    mbti: '偏 E / N / J（行为推断）',
+    belbin: '资源调查者（Resource Investigator）+ 塑造者（Shaper）',
+    fit: { level: 'amber', label: '部分匹配（学历与薪资待定）' },
+    style: '授权型 / 变革型领导适配最高',
+    summary:
+      '海外达人营销出身，2 年+ 内走完「媒介专员 → BD 组长」：从 0 搭建海外达人合作板块与执行团队，' +
+      '沉淀 60,000+ 海外 KOL/KOC 资源，覆盖美国、英国、墨西哥、马来西亚市场，统筹 5 个品牌级 Campaign、700-800 条内容、80M+ 曝光，' +
+      '电商达人渠道月均 GMV $300K+、核心合作 ROI 5+。对 40% 权重的「达人 & MCN 拓展」是候选人中证据最扎实的一位，' +
+      '英语有 CET-4 硬证据，且正在广东外语外贸大学自考英语本科。' +
+      '但有两道门槛需要先拍板：① 学历 —— 专科毕业、本科自考在读，与 JD「本科及以上」冲突；② 薪资 —— 期望 12-15K（求职意向另写 15-20K），超出岗位 8-12K 预算。',
+    highlights: [
+      { t: '达人资源体系与市场覆盖最扎实', d: '累计沉淀 60,000+ 海外 KOL/KOC，建立标签分层与报价库，重点积累 AI / 3C 类 KOL，市场横跨美、英、墨、马 —— 直接命中 40% 权重的「达人挖掘、初筛、建联与长期关系维护」。' },
+      { t: '从 0 搭 SOP + 带团队', d: '独立搭建筛选、建联、寄样、履约、复盘全链路 SOP，带 5-8 人团队做目标拆解与日常带教；平均合作成本下降 20%，内容交付率与优质达人二次合作率各提升 15%，对齐 30% 权重的项目管理职责。' },
+      { t: '数据化运营与内容矩阵', d: '用 CPM / CPE / CTR / CVR / ROI 做复盘（Excel + Google Analytics），沉淀 500+ 可复用素材、筛出 200+ 条 S/A 级内容并协同 Spark Ads 二次放大，对齐 15% 权重的达人筛选与判断。' },
+    ],
+    risks: [
+      { t: '学历硬门槛冲突（需先决策）', d: '重庆轻工职业学院跨境电商专科（2025.07 毕业）+ 广东外语外贸大学英语本科自考在读（2025.09 起，未毕业）；JD 明确「本科及以上学历」，属硬性条件不符，是否放宽需用人部门确认。' },
+      { t: '薪资期望超预算', d: '简历头部写 12-15K、求职意向另写 15-20K，岗位预算 8-12K；即使按最低 12K 也贴到预算上限，谈薪空间与候选人心理预期需先对齐。' },
+      { t: '数据口径与团队规模待核验', d: '60,000+ 达人资源（约 1.5 年积累）与月均 GMV $300K+ 的统计方式不明；团队规模一处写 5-8 人、一处写 6-10 人；23 岁工作一年半即任 BD 组长，管理纵深需现场验证。' },
+      { t: 'AI 工具使用未提及（未评估项）', d: 'JD 把「会用 AI 辅助数据分析、报告撰写与项目复盘」列为加分项与公司底色，简历通篇未提 AI 工具。此项为数据缺口，不作负面计分，面试直接追问。' },
+      { t: '达人链路偏「流量型」', d: '擅长 KOL 种草、Campaign 铺量与电商转化，JD 里「签约、Onboarding、定期沟通、续约深化」这类长期关系经营的动作证据较少，偏项目制打爆款，而非长线经纪式经营。' },
+    ],
+    interview:
+      '面试前先过两道门槛（学历能否放宽、薪资能否对齐 8-12K），过关再约面。面试抓三点：' +
+      '① 达人资源真伪 —— 现场打开其资源分层表，抽 3 位达人问合作细节（怎么找到、谈了什么条件、有没有复投）；' +
+      '② 长线关系经营 —— 让他完整讲一个「从第一次接触到续约深化」的案例，验证是否具备 JD 要的经纪人视角；' +
+      '③ AI 使用深度 —— 简历未提 AI，直接问日常用哪些工具、用 AI 做过什么分析或内容。' +
+      '另需澄清团队规模（5-8 还是 6-10 人）与两处不一致的薪资期望。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）',
+      raw: `杨振峰（Andy）
+海外达人媒介专员｜海外达人营销组长｜AI / 3C 内容增长｜Creator 生态｜KOL & PR
+电话：已脱敏　邮箱：（邮箱已脱敏）
+2.5 年+工作经验｜23 岁｜期望城市：广州
+期望薪资：简历头部标注 12-15K/月，求职意向处标注 15-20K/月（两处不一致）
+
+【职业摘要】
+· 2 年+海外达人营销与增长经验，覆盖 AI 产品、3C 数码及美妆服饰等领域；从 0 搭建达人业务板块，带领 5-8 人团队，统筹达人策略、商务合作、内容管理与项目复盘。
+· 累计沉淀 60,000+ 海外 KOL/KOC 资源，重点积累 AI 产品与 3C 数码类 KOL，并拥有丰富的美妆服饰类 KOL/KOC 及社群资源；覆盖美国、英国、墨西哥、马来西亚等市场，建立标签化与分层运营体系。
+· 统筹 5 个品牌级多市场 Campaign，推动 800+ 条商业内容交付、80M+ 曝光；电商达人渠道月均 GMV $300K+、核心合作 ROI 5+，通过内容测试、数据复盘与优质达人复投提升品牌曝光及商业转化。
+
+【核心能力】
+· 创作者生态与渠道：KOL/KOC 分层、MCN 及社群资源拓展、长期合作运营；熟悉 TikTok、YouTube、Instagram、Facebook、X 等平台及 TikTok Shop Affiliate。
+· 内容策略与增长：用户与竞品研究、卖点提炼、Creative Brief、内容共创与审核；内容矩阵搭建、爆款复盘、优质素材复用及案例包装。
+· PR 与商务合作：媒体及达人资源拓展、品牌与 IP 合作沟通；商务谈判、报价 Benchmark、权益设计、合同推进、内容授权及合作关系维护。
+· 增长策略与目标管理：基于业务目标拆解 OKR，制定市场、达人与内容优先级；结合曝光、互动、注册、付费及 GMV 等项目指标调整资源配置。
+· 团队统筹与跨部门协同：团队分工、目标管理、SOP 搭建与带教；协调品牌、产品、设计及供应链推进项目，整理市场与达人反馈支持优化。
+· GTM 与数据分析：市场及用户洞察、冷启动与整合营销；CPM、CPE、CTR、CVR、ROI 等指标复盘，使用 Excel、Google Analytics 及数据报表支持决策。
+· 广告协同：了解 Google、TikTok、Meta 广告基础；配合投放团队完成 Spark Ads 授权、素材筛选与效果反馈。
+
+【工作经历】
+2025.05-至今　广州百世寰达品牌管理有限公司（BUZZD）　海外达人 BD 组长
+· 从 0 搭建业务与团队：搭建海外达人合作板块及 5-8 人团队的执行体系，建立筛选、建联、寄样、履约与复盘 SOP；拆解团队目标、分配资源并推进日常管理与带教。
+· 统筹项目策略：围绕品牌目标与产品阶段，制定目标市场、达人组合、内容方向及执行优先级；统筹 5 个多市场品牌 Campaign，推动 700+ 条商业内容交付、80M+ 曝光。
+· 建设资源体系：累计开发及维护 60,000+ KOL/KOC 资源，重点积累 AI/3C 类 KOL，兼顾美妆服饰类达人及社群资源；建立标签、分层和报价库，支持跨项目匹配与复用。
+· 推动内容矩阵与爆款机制建设：组织卖点与 Brief 制定、内容测试、审核及复盘，沉淀 500+ 条可复用素材、筛选 200+ 条 S/A 级内容，并协同投放团队进行二次放大。
+· 推进电商增长：团队月均触达 20,000+ 美国本土达人，推动 1,500+ 寄样、1,000+ 条内容上线；通过分层匹配、内容测试与达人复投，实现达人渠道月均 GMV $300K+、核心合作 ROI 5+。
+· 优化交付与合作效率：协调品牌及相关团队推进样品、内容和上线排期；通过报价对标、分层与标准化合作，使平均合作成本下降约 20%、内容交付率及优质达人二次合作率均提升约 15%。
+
+2024.07-2025.03　广州奇光泛海传媒有限公司　海外媒介专员
+· 累计开发及筛选 6,000+ 海外 KOL/KOC，以付费 KOL 品牌种草为主，推动 1,000+ 达人合作，持续沉淀可复用资源池。
+· 参与 3 个海外品牌 Campaign，覆盖达人筛选、邀约、商务沟通、Brief、内容审核及上线跟进，累计推动 800+ 条商业内容上线。
+· 参与项目累计实现 30M+ 曝光，跟踪 Views、Reach、Engagement 等指标；优化筛选、邀约话术及跟进机制，使达人有效回复率提升约 10%。
+
+【项目经历】
+美区 TikTok Shop 达人增长项目｜业务负责人｜2025.05-至今
+· 围绕香水、美妆及服饰品类，制定达人分层、产品匹配、内容测试和复投策略，搭建从达人合作到内容转化的增长流程。
+· 团队月均触达 20,000+ 美国本土达人，推动 1,500+ 寄样、1,000+ 条内容上线；达人渠道月均 GMV $300K+，核心合作 ROI 5+。
+
+多市场品牌 KOL Campaign｜项目统筹｜2025.05-至今
+· 面向美国、英国、墨西哥、马来西亚等市场，统筹目标拆解、达人组合、商务谈判、Brief、内容审核与上线复盘；累计推进 5 个品牌级 Campaign、800+ 条商业内容、80M+ 曝光。
+· 推动内容矩阵及爆款复盘机制建设，以 Reach、Views、Engagement、CPM、CPE 优化达人与内容组合；沉淀 500+ 条素材、筛选 200+ 条 S/A 级内容，协同 Spark Ads / Paid Media 二次放大。
+
+Creator Partnership 从 0 搭建与规模化｜团队负责人｜2025.05-至今
+· 从 0 建立达人资源库、标签分层、报价 Benchmark 及合作 SOP，推进 6-10 人团队的目标拆解、日常管理与带教；累计沉淀 60,000+ 海外 KOL/KOC，重点积累 AI/3C 类 KOL 及美妆服饰类达人资源。
+· 建立资源匹配、履约跟进与二次合作机制，平均达人合作成本下降约 20%，内容交付率与优质达人二次合作率均提升约 15%。
+
+【教育背景】
+· 2025.09-至今｜广东外语外贸大学｜英语｜本科（自考在读）：持续学习英语语言及商务相关课程，提升英语应用与国际商务沟通能力。
+· 2022.09-2025.07｜重庆轻工职业学院｜跨境电商｜专科：相关实践涵盖跨境电商运营、独立站搭建、海外社媒推广与竞品分析。
+· 在校荣誉：国家奖学金、学院奖学金、省口语大赛三等奖。
+
+【荣誉经历】
+· 全国跨境电商创业大赛｜一等奖
+· 全国大学生跨境电商创新实践大赛｜二等奖｜团队负责人
+· 带领 3 人团队搭建面向东南亚市场的家居小家电独立站，通过 SEO 与 Facebook 广告引流，两个月销售额 $3,000+；独立完成竞品分析报告。
+
+【证书与语言】
+· 语言能力：中文（母语）；英语（海外商务沟通、达人邀约及合作跟进）。
+· 语言与计算机证书：大学英语四级（CET-4）、公共英语一级、计算机二级。
+· 专业证书：网络营销师、高级电子商务师、CCPIT 跨境运营师。`,
+    },
+  },
+
+  {
     id: 'hcy',
     name: '黄翠云',
     tag: '有条件推荐',
     tier: 'amber',
     initial: '黄',
-    meta: '10 年广告营销 · 华南理工大学广州学院 工商管理 · 广州 · 离职状态',
-    listMeta: '10 年广告营销 · 前海外品牌经理',
-    source: '招聘系统投递',
+    meta: '10 年广告营销 · 华南理工大学广州学院 工商管理 · CET-4 · 广州 · 离职状态',
+    listMeta: '10 年广告营销 · CET-4 · 有 AI 实战',
+    source: '招聘系统投递（2026-10-08 补充英语与 AI 使用信息）',
     recommend: 'interview',
-    recommendWhy: '达人实操最厚，加英文摸底与 BD 动机确认后再定',
-    headline: '10 年广告营销老兵，达人投放统筹是强项，短板在「拓展」与英语',
-    score: '★★★☆☆',
-    ksa: { K: 4, S: 4, A: 4, O: 3, total: 3.8 },
+    recommendWhy: '英语与 AI 两块底板已确认，补完 BD 动机与空窗确认即可面',
+    headline: '10 年广告营销老兵，达人投放统筹是强项，补齐英语与 AI 后短板收窄',
+    score: '★★★★☆',
+    ksa: { K: 4, S: 4.5, A: 4, O: 3.5, total: 4.0 },
     star: 4.5,
-    similarity: 72,
-    similarityBand: '较相似',
-    consistency: { level: 'mid', label: '中高', note: '有网盘作品集可核验，量化数据具体（100+ 达人、曝光 +30%）；「投放 ROI 5%」口径不明，需面试确认统计方式' },
+    similarity: 76,
+    similarityBand: '较相似（英语与 AI 补入后上调 4 个百分点）',
+    consistency: { level: 'mid', label: '中高', note: '有网盘作品集可核验，量化数据具体（100+ 达人、曝光 +30%）；补充信息（CET-4、AI 工具日常使用）与简历表述自洽；「投放 ROI 5%」口径仍不明，需面试确认统计方式' },
     mbti: '偏 E / S / F / J（行为推断）',
     belbin: '协调者（Co-ordinator）+ 完成者（Completer Finisher）',
     fit: { level: 'amber', label: '部分匹配' },
     style: '教练型 / 支持型领导适配最高',
     summary:
       '职业主线是广告策划 → 客户经理 → 海外品牌经理，统筹与多方协调能力经过 10 年打磨。' +
-      '最近一段主导 TikTok 店铺投流与 KOL 排期发布，联动 100+ 位达人做内容测试与素材迭代（曝光 +30%），是三人中达人合作量级最大的一位。' +
-      '但她的达人是「投放执行」视角，JD 40% 权重的是「挖掘-建联-谈判-签约」的 BD 视角，加上简历通篇无英语能力证据，需要面试补两块短板。',
+      '最近一段主导 TikTok 店铺投流与 KOL 排期发布，联动 100+ 位达人做内容测试与素材迭代（曝光 +30%），是候选人中达人合作量级最大的一位。' +
+      '2026-10-08 补充确认两块底板：英语 CET-4（满足 JD 硬性门槛）与 AI 工具日常实战（原公司 Codex / WorkBuddy，无则用豆包、DeepSeek 做营销内容与数据分析）。' +
+      '主要剩余差距是视角错位 —— 她的达人是「投放执行」视角，JD 40% 权重的是「挖掘-建联-谈判-签约」的 BD 视角，需面试确认转换意愿与能力。',
     highlights: [
       { t: '达人合作量级最大', d: '主导 TikTok KOL 排期发布，联动 100+ 位达人做内容测试与素材迭代，品牌曝光增长 30% —— 直接对齐「达人拓展与内容合作」的核心动作。' },
       { t: '商业化项目管理成熟', d: '10 年广告全链路（策划 → 客户经理 → 品牌经理），预算管控、节点把控、跨部门推动、供应商管理都是熟手，对齐 30% 权重的项目管理职责。' },
-      { t: '品牌 0-1 与数据复盘', d: '独立完成品牌 0-1 全体系搭建并搭建品牌 AI 识别资料库；投放数据跟踪、舆情分析、竞品数据库等复盘方法体系化。' },
+      { t: '品牌 0-1 搭建 + AI 实战应用', d: '独立完成品牌 0-1 全体系搭建并搭建品牌 AI 识别资料库；日常用 AI（Codex / WorkBuddy / 豆包 / DeepSeek）产出营销内容与做数据分析，正对 JD「会用 AI 辅助数据分析、报告撰写与复盘」的加分项 —— 是有真实工作场景的 AI 用户，不止是听说过。' },
     ],
     risks: [
-      { t: '英语无任何证据', d: '简历未出现 CET、雅思或英文工作经历，而 JD 硬性要求「CET-4 及以上，能应对日常英文交流」，需现场摸底。' },
-      { t: 'BD 拓展视角偏弱', d: '达人经验集中在投放排期与内容测试（甲方/代理视角），「主动挖掘新达人、谈判签约」的开拓动作证据少，与 40% 权重的拓展职责有错位。' },
+      { t: '英语有证但缺实战证据', d: 'CET-4 已确认（达到 JD 硬性门槛），但简历中无英文工作场景、无海外客户对接记录，能否「应对日常英文交流」仍要靠现场验证。' },
+      { t: 'BD 拓展视角偏弱（核心）', d: '达人经验集中在投放排期与内容测试（甲方/代理视角），「主动挖掘新达人、谈判签约」的开拓动作证据少，与 40% 权重的拓展职责有错位。' },
       { t: '近期履历波动', d: '最近一份海外品牌经理仅 8 个月，且 2025.01-2026.01 存在约一年空窗，离职原因与职业规划需面谈澄清。' },
     ],
     interview:
-      '面试加两个摸底：① 英语 —— 用英文寒暄 + 读一段英文达人合作邮件并口头回复要点，判断能否应对日常海外沟通；' +
-      '② BD 动机 —— 问她从「投放统筹」转「达人商务拓展」的准备，现场模拟「怎么冷启动联系一位没合作过的达人」。' +
+      '面试抓三个点：① 英语实战 —— 已确认 CET-4，改为用英文寒暄 + 读一段英文达人合作邮件并口头回复要点，验证实际交流能力；' +
+      '② BD 动机与能力（决定性）—— 问她从「投放统筹」转「达人商务拓展」的准备，现场模拟「怎么冷启动联系一位没合作过的达人」；' +
+      '③ AI 工具深度 —— 让她举一个用 AI 提升效率的具体例子（做过什么、省了多少时间）。' +
       '另外追问 2025 年空窗与两段短期经历的离职原因。',
     resume: {
       type: 'text',
-      note: '以下内容由 PDF 简历原文提取',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）',
       raw: `黄翠云
 女 | 95年 | 广州
-电话：18826245474　邮箱：1260303243@qq.com
+电话：已脱敏　邮箱：（邮箱已脱敏）
 求职状态：离职
 
 【个人优势】
@@ -870,7 +1001,12 @@ const CANDIDATES_OVERSEAS = [
 2014-2018　华南理工大学广州学院　工商管理｜本科
 
 【作品集】
-百度网盘：https://pan.baidu.com/s/1y7G3OjeiBxHwAnas7q0HEw?pwd=1cii`,
+百度网盘：https://pan.baidu.com/s/1y7G3OjeiBxHwAnas7q0HEw?pwd=1cii
+
+【候选人补充信息（2026-10-08 HR 沟通确认）】
+· 英语能力：已通过大学英语四级（CET-4）
+· AI 工具使用：日常有使用 AI 辅助工作；原公司提供 Codex、WorkBuddy 免费使用（视公司是否提供，若无则使用常规的豆包、DeepSeek 辅助）
+· AI 主要用途：使用 AI 生成营销内容、进行数据分析等相关辅助工作`,
     },
   },
 
@@ -915,10 +1051,10 @@ const CANDIDATES_OVERSEAS = [
       '如坚持本岗需先验证英语（安排简单英文自我介绍测试）与出海意愿，两项都过关再进面。',
     resume: {
       type: 'text',
-      note: '以下内容由 PDF 简历原文提取',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）',
       raw: `徐靖凇
 男 | 2002/12/30
-电话：19550162261　邮箱：1832258293@qq.com
+电话：已脱敏　邮箱：（邮箱已脱敏）
 
 【教育背景】
 2021-2025　中国计量大学　广告学｜本科
@@ -947,6 +1083,7 @@ const CANDIDATES_OVERSEAS = [
   },
 ];
 
+
 /* ============================================================
    在招岗位（左侧列表数据源）
    ============================================================ */
@@ -970,13 +1107,12 @@ const POSITIONS = [
     dept: '商务拓展 · 海外',
     status: 'active',
     statusLabel: '分析已完成',
-    updated: '2026-09-22',
-    candidateCount: 3,
+    updated: '2026-10-08',
+    candidateCount: 4,
     jd: JD_OVERSEAS,
     candidates: CANDIDATES_OVERSEAS,
   },
 ];
-
 
 </script>
 <script>
@@ -1008,6 +1144,9 @@ const POSITIONS = [
   const LS_DECISION_V1 = 'aijd_decisions_v1'; // 旧版：{cid: 'interview'}，首次加载自动迁移
   const LS_LOG = 'aijd_decisions_log_v1'; // 操作流水（按时间正序的数组）
   const LS_RESUME = 'aijd_resume_minwei';
+  const LS_MAILTO = 'aijd_mailto_to'; // 收件邮箱记忆
+  const MAILTO_DEFAULT = 'chenxj@planpoint.cn'; // 默认收件邮箱（可在页面上随时改）
+  const MAIL_BODY_LIMIT = 1800; // mailto 正文安全长度上限（超长截断，避免邮件客户端截断）
 
   const LOG_MAX = 200; // 本机最多保留 200 条流水
   const LOG_SHOW = 30; // 决策情况页展示最近 30 条
@@ -1608,6 +1747,7 @@ const POSITIONS = [
 
     $$('.row', list).forEach((r) => r.classList.toggle('on', r.dataset.cid === cid));
     bindResume(c);
+    bindMail(c);
     bindPanelDecision(c);
   }
 
@@ -1728,6 +1868,21 @@ const POSITIONS = [
         <div class="callout blue">${esc(c.interview)}</div>
       </div>
 
+      <div class="sec">
+        <h3>推送简历至邮箱 <span class="badge">唤起本机邮件客户端</span></h3>
+        <div class="mailbox">
+          <label class="mlb" for="mailTo">收件邮箱</label>
+          <input class="minput" type="email" id="mailTo" value="${esc(Store.get(LS_MAILTO) || MAILTO_DEFAULT)}" placeholder="（邮箱已脱敏）" spellcheck="false">
+        </div>
+        <div class="mailbtns">
+          <button class="btn primary" id="btnMail">推送简历至邮箱</button>
+          <button class="btn" id="btnCopyMail">复制邮件内容</button>
+        </div>
+        <div class="mailnote" id="mailNote">
+          邮件正文包含：<b>六维分析结论 + 简历原文</b>。点击后会自动打开本机邮件客户端并填好收件人、主题与正文，你确认后点「发送」即可。收件邮箱会记在本机，下次自动带出。
+        </div>
+      </div>
+
       <div class="sec" id="resumeSec">
         <h3>简历${c.resume.type === 'image' ? '原图' : '原文'} <span class="badge">${c.resume.type === 'image' ? '拖入查看' : 'PDF 提取'}</span></h3>
         <p style="font-size:11.5px;color:#8A8A83;margin-bottom:11px">${esc(c.resume.note)}</p>
@@ -1823,6 +1978,118 @@ const POSITIONS = [
       </div>`;
 
     panel.classList.add('open');
+  }
+
+  /* ---------- 推送简历至邮箱（唤起本机邮件客户端） ---------- */
+  function buildMailBody(c, p) {
+    const dObj = decisionOf(c.id);
+    const def = dObj ? decOf(dObj.dec) : null;
+    const rec = decOf(c.recommend);
+    const L = [];
+    const push = (s) => L.push(s);
+
+    push('【候选人分析报告】' + c.name + ' —— ' + p.name);
+    push('');
+    push('一、基本情况');
+    push('· 基本信息：' + c.meta);
+    push('· 简历来源：' + c.source);
+    push('· 六维结论：' + c.tag + '｜推荐指数 ' + c.score);
+    push('');
+    push('二、六维评估数据（V1.4）');
+    push('· KSAO 胜任力：' + c.ksa.total + ' / 5（K 知识 ' + c.ksa.K + '／S 技能 ' + c.ksa.S + '／A 能力 ' + c.ksa.A + '／O 其他 ' + c.ksa.O + '）');
+    push('· STAR 结构完整性：' + c.star + ' / 5');
+    push('· 对理想标尺相似度：' + c.similarity + '%（' + c.similarityBand + '）');
+    push('· 言行一致性：' + c.consistency.label);
+    push('· MBTI 倾向：' + c.mbti);
+    push('· Belbin 角色：' + c.belbin);
+    push('· 岗位驱动匹配：' + c.fit.label);
+    push('· 领导风格适配：' + c.style);
+    push('');
+    push('三、综合判断');
+    push(c.summary);
+    push('');
+    push('四、匹配亮点');
+    c.highlights.forEach((h, i) => push((i + 1) + '）' + h.t + '：' + h.d));
+    push('');
+    push('五、风险与存疑');
+    c.risks.forEach((r, i) => push((i + 1) + '）' + r.t + '：' + r.d));
+    push('');
+    push('六、面试建议');
+    push(c.interview);
+    push('');
+    push('七、决策记录');
+    push('· 系统建议：' + (rec ? rec.label : '—') + '（' + c.recommendWhy + '）');
+    push('· 当前标记：' + (def ? def.label + '（' + fmtTs(dObj.at) + '）' : '尚未标记'));
+    push('');
+    push('八、简历原文');
+    push(c.resume.type === 'text' ? (c.resume.raw || '（无）') : '（简历为官网投递截图，原图存于本机工具中，请打开工具查看）');
+    push('');
+    push('—— 以上由《公司智能招聘系统 AI 分析优化方案 V1.4》六维融合体系生成');
+
+    let body = L.join('\n');
+    if (body.length > MAIL_BODY_LIMIT) {
+      body = body.slice(0, MAIL_BODY_LIMIT) + '\n\n……（正文过长，后续内容请在工具中查看完整报告）';
+    }
+    return body;
+  }
+
+  function sendResumeToMail(c) {
+    const p = posOf(currentPosId);
+    const to = ($('#mailTo') && $('#mailTo').value.trim()) || MAILTO_DEFAULT;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
+      alert('收件邮箱格式不正确，请检查后重试。\n当前填写：' + to);
+      return;
+    }
+    Store.set(LS_MAILTO, to); // 记住邮箱，下次自动带出
+
+    const subject = '【候选人分析】' + p.name + ' · ' + c.name + '（' + c.tag + '）';
+    const href = 'mailto:' + encodeURIComponent(to) +
+      '?subject=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(buildMailBody(c, p));
+
+    const note = $('#mailNote');
+    try {
+      // 唤起本机邮件客户端。优先走可注入钩子（便于测试与将来替换为后端发送）
+      if (typeof window.__openMailto === 'function') window.__openMailto(href);
+      else window.location.href = href;
+      if (note) {
+        note.innerHTML = '<span style="color:#0F6E56">已唤起邮件客户端（如 Outlook / Foxmail / 系统邮件），' +
+          '请在弹出的窗口中确认内容并点击「发送」。</span>';
+      }
+    } catch (e) {
+      if (note) {
+        note.innerHTML = '<span style="color:#8A5309">未能自动唤起邮件客户端。请确认本机已安装并设置默认邮件程序，' +
+          '或点击下方「复制邮件内容」手动粘贴。</span>';
+      }
+    }
+  }
+
+  function copyMailContent(c) {
+    const p = posOf(currentPosId);
+    const text = '收件人：' + (($('#mailTo') && $('#mailTo').value.trim()) || MAILTO_DEFAULT) +
+      '\n主题：【候选人分析】' + p.name + ' · ' + c.name + '（' + c.tag + '）\n\n' + buildMailBody(c, p);
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    ta.remove();
+    const note = $('#mailNote');
+    if (note) {
+      note.innerHTML = ok
+        ? '<span style="color:#0F6E56">邮件内容已复制，可直接粘贴到任意邮件正文中。</span>'
+        : '<span style="color:#8A5309">复制失败，请手动选中内容复制。</span>';
+    }
+  }
+
+  function bindMail(c) {
+    const btn = $('#btnMail');
+    if (btn) btn.addEventListener('click', () => sendResumeToMail(c));
+    const btnCopy = $('#btnCopyMail');
+    if (btnCopy) btnCopy.addEventListener('click', () => copyMailContent(c));
   }
 
   /* ---------- 拖入简历图片 ---------- */
