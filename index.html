@@ -127,6 +127,7 @@ a:hover{text-decoration:underline}
 .dbtn.sel.green{background:var(--green-bg);border-color:var(--green-line);color:var(--green)}
 .dbtn.sel.amber{background:var(--amber-bg);border-color:var(--amber-line);color:var(--amber)}
 .dbtn.sel.red{background:var(--red-bg);border-color:var(--red-line);color:var(--red)}
+.dbtn.sel.gray{background:var(--bg);border-color:var(--line-strong);color:var(--ink2)}
 .viewbtn{
   margin-left:auto;padding:5px 13px;border-radius:7px;font-size:12.5px;font-weight:500;
   background:var(--blue-bg);border:1px solid var(--blue-line);color:var(--blue);transition:all .15s;
@@ -136,6 +137,7 @@ a:hover{text-decoration:underline}
 .status-note.green{color:var(--green);font-weight:500}
 .status-note.amber{color:var(--amber);font-weight:500}
 .status-note.red{color:var(--red);font-weight:500}
+.status-note.gray{color:var(--ink2);font-weight:500}
 
 .resetbtn{
   font-size:11.5px;color:var(--ink3);text-decoration:underline;
@@ -264,6 +266,7 @@ a:hover{text-decoration:underline}
 .logline .lo.g{color:var(--green);font-weight:500}
 .logline .lo.a{color:var(--amber);font-weight:500}
 .logline .lo.r{color:var(--red);font-weight:500}
+.logline .lo.n{color:var(--ink2);font-weight:500}
 .logline .lp{color:var(--ink3);font-size:11px;margin-left:auto;text-align:right}
 
 /* 推送简历至邮箱 */
@@ -441,6 +444,7 @@ a:hover{text-decoration:underline}
      4) 敏炜：官网投递截图解析（原图未在本机，工具内支持拖入查看）
      5) 2026-10-10 新增：陈俊瑜_广州聚客_AI交付工程师_简历_优化版.pdf、沈毅天_求职简历.pdf
      6) 2026-10-13 新增：李友朝简历.pdf、何鑫.pdf（AI 交付工程师岗位，现共 7 位候选人）
+     7) 2026-10-26 新增：罗广龙、杨和宇、陈熠暄、姚卓昕、莫舒婷（新批次 5 人，现共 12 位候选人）
    ============================================================ */
 
 /* ---------- 决策状态定义（顺序即按钮顺序） ---------- */
@@ -451,6 +455,8 @@ const DECISIONS = [
     desc: '本岗位暂不合适，留档备选' },
   { id: 'reject', label: '不使用', short: '不使用', cls: 'red',
     desc: '本次不推进' },
+  { id: 'noreach', label: '无法联系邀约', short: '无法联系', cls: 'gray',
+    desc: '电话未接 / 消息未回，邀约未成功' },
 ];
 
 /* ---------- 岗位 JD ---------- */
@@ -518,6 +524,288 @@ const JD = {
 /* ---------- 候选人（按对理想标尺相似度降序排列） ---------- */
 const CANDIDATES = [
   {
+    id: 'lgd',
+    name: '罗广龙',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '罗',
+    meta: '2027 届 · 珠海科技学院计算机科学与技术 · AI 应用开发实习 6 个月（已落地客户现场）· 机器人及 AI 大赛国一',
+    listMeta: '2027 届 · AI 实习 6 个月 · 大赛国一',
+    source: '招聘平台投递（2026-10-26 新批次）',
+    analyzed: '2026-10-26',
+    recommend: 'interview',
+    recommendWhy: 'AI-0 同款工具链 + 多智能体已落地客户现场，建议优先约面（先确认广州意愿与出勤）',
+    headline: '唯一「多智能体已落地客户公司」的在校生 —— 工具链与本岗 AI-0 模式同款',
+    score: '★★★★★',
+    ksa: { K: 4, S: 4.5, A: 4, O: 4.5, total: 4.3 },
+    star: 4.5,
+    similarity: 84,
+    similarityBand: '高度相似（升至全场第一）',
+    consistency: { level: 'mid', label: '中高', note: '两段实习衔接自洽（2025.12-2026.03 全栈 → 2026.04-2026.09 AI 应用），数字具体可核（意图识别 82%→94%、RAG 召回 70%→95%）；但简历排版粗糙、表述口语化，且「乐家帮手」项目与常见培训项目高度相似，独立完成度需现场区分' },
+    mbti: '偏 I / N / T / P（行为推断）',
+    belbin: '创新者（Plant）+ 执行者（Implementer）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '授权型带教适配最高 —— 自驱强，给目标与边界即可，带教人负责 Review',
+    summary:
+      '本批综合第一，也是全场第一位：① 工具链与本岗完全同款 —— 他日常用 Claude Code、Cursor、Codex 做 vibe coding，' +
+      'LangChain/LangGraph、RAG、MCP、Function Calling、Dify/Coze workflow 全套都动过，与 JD「AI-0 调度模式」的要求零翻译成本；' +
+      '② 欧森斯传感 6 个月 AI 应用实习不是打杂 —— LoRA 微调 Qwen + vLLM 部署（意图识别 82%→94%）、ReAct 多智能体 + Harness 自进化机制' +
+      '「已落地在客户公司为机器赋能」——「到客户那让它真的跑起来」正是交付工程师的核心动作；' +
+      '③ 校园社交平台 + AI 校园事务 Agent 的工程细节（置信度门控、幂等 + 人工确认、三层记忆、三段式 RAG 召回 70%→95%）说明他懂「AI 会出错，工程要兜底」；' +
+      '④ 中国机器人及人工智能大赛国一。主要待确认：珠海上学、广州出勤，以及「乐家帮手」项目的真实完成度。',
+    highlights: [
+      { t: '工具链与本岗完全同款（最难得）', d: 'Claude Code / Cursor / Codex vibe coding + LangChain/LangGraph + RAG + MCP + Function Calling + Dify/Coze —— JD「AI-0 调度模式」要求的那套动作他已日常化，上手成本全场最低。' },
+      { t: 'AI 应用已落地客户现场（交付属性实证）', d: '欧森斯实习 6 个月：模型选型后基于 Qwen 做 LoRA 微调、vLLM 部署到 A100，意图识别 82%→94%；ReAct 多智能体 + skills.py/yaml 自修复流程，简历原话「已落地在客户公司为机器赋能」。' },
+      { t: '工程兜底意识系统化', d: '校园 AI Agent 项目：LLM 语义路由 + 置信度门控（低置信保守转检索）、幂等键 + 结果缓存重放 + 写操作人工确认（HITL）三重保护、三层记忆架构、Query Rewrite → 向量粗排 → Cross-Encoder 精排 → MMR 去重（召回 70%→95%）、Answer Gate 拒答策略 —— 不是「调个 API」，是懂 AI 的失败模式。' },
+      { t: '竞赛硬通货', d: '中国机器人及人工智能大赛国家级一等奖、数学建模广东赛区三等奖、蓝桥杯广东赛区二等奖；CET-4。' },
+      { t: '全栈兜底 + 企微经验', d: 'SpringBoot/SpringCloud + Redis/RabbitMQ/MySQL + Python/FastAPI；同讯智能实习做过企业微信流式被动回复与系统嵌入（日均活跃 +200%）—— 公司内部 PMS/CRM 与企微生态他都能接。' },
+    ],
+    risks: [
+      { t: '通勤与出勤（最需先确认）', d: '珠海科技学院在珠海，广州 IFC 每周出勤方案要先问清（能否搬到广州、每周几天）；若只能远程或周末，则不满足岗位节奏。' },
+      { t: '2027 届毕业前的身份安排', d: '2027.06 毕业。若按实习档进来（4-6K）需谈清毕业转正衔接；若直接按应届档 8-13K，要确认大四剩余课业是否允许全职出勤。' },
+      { t: '「乐家帮手」疑似跟练项目', d: '技术栈（SpringCloud/Seata/XXL-JOB/Canal）与常见视频教程项目高度相似，需现场追问细节区分：抢券的 Lua 脚本、Seata 的事务边界，哪些是自己写的。' },
+      { t: '简历表达粗糙', d: 'PDF 排版与断句较乱、错别字偏多，与本岗「良好的中文写作能力（大量 Prompt 与文档）」存在落差；面试建议现场出一道结构化 Prompt 写作题实测。' },
+      { t: '学历背景一般', d: '民办本科，JD 无院校门槛不构成硬伤，但学习能力主要靠竞赛（国一）与项目实证背书，面谈时确认自学的深度。' },
+    ],
+    interview:
+      '三个动作：① 先问通勤与出勤 —— 住哪、每周几天、2027 年毕业前能否持续在岗；' +
+      '② 现场实测 —— 给一个公司真实杂活（如批量整理资料并出表）让他用 Claude Code/Cursor 现场做到能跑，同时出一道「把这个业务需求写成结构化 Prompt」的写作题；' +
+      '③ 追问真实份额 —— 乐家帮手里的抢券与分布式事务，哪些自己写的、哪些跟教程做的。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文识别整理（原排版断句较碎，已按原意归并）',
+      raw: `罗广龙
+21 岁 · AI 全栈开发
+电话：已脱敏　邮箱：（邮箱已脱敏）
+
+【教育背景】
+珠海科技学院　计算机科学与技术（本科）　2023.09-2027.06
+主修课程：数据结构、操作系统、计算机网络、数据库原理、算法分析与设计、Python、Java 面向对象、C++ 程序设计、机器学习等
+奖项荣誉：CET-4、中国机器人及人工智能大赛国家级一等奖、数学建模广东赛区三等奖、蓝桥杯广东赛区二等奖
+
+【实习经历】
+珠海欧森斯传感技术有限公司　AI 应用开发实习生　2026.04-2026.09
+· 模型选型后基于 Qwen3.8:27b 用 LLaMA-Factory 做 LoRA 微调，通过 vLLM 部署到 A100，意图识别准确率从 82% 提升到 94%
+· 基于 Python 协助 leader 进行多智能体开发，采用 ReAct 思想架构，设计 Harness 自进化机制，已落地在客户公司为机器赋能
+· 编写 skills.py 和 yaml 意图识别文件实现全自动流程、自我修复错误、定时解析分析文件给出合理建议等技能
+· 使用 TreeSitter 解析代码、PDF 解析文件等，使用 LLM 构建三元组添加进 Neo4j 搭建 GraphRAG，自动解读元器件电路图信息
+
+同讯智能科技有限公司　全栈开发实习生　2025.12-2026.03
+· 负责办公系统与 OpenClaw 模块，通过企业微信流式被动回复，并将系统嵌入企业微信，用户日均活跃量提升 200%
+· 负责积分商城模块开发：签到、积分兑换、定点抢购商品功能
+· 负责系统后台数据的报表功能，使用 Excel 模板制作数据导出功能
+· 参与数据模型优化，扩展部门档案第三方系统编号字段，为跨系统对接提供支撑
+· 协同团队完成多模块 Bug 修复与功能迭代，熟悉敏捷开发流程与版本管理规范
+
+【项目经历】
+校园社交平台（github.com/xiaolongs-coder/Campus_life）　2026.07-至今
+面向在校学生的综合社交平台，内置 AI 校园事务 Agent：用自然语言查询学校通知、办事流程、拼团状态、待办事项，支持多轮对话与写操作。
+技术栈：SpringBoot、MyBatis-Plus、MySQL、Redis、RabbitMQ、WebSocket、Qdrant 向量库、DeepSeek、Vue3、SSE
+· Agent 架构与意图路由：基于 LLM 语义路由 + 置信度门控实现意图识别，输出结构化 JSON（intent/confidence/reason），置信度低于 0.7 时保守倒向「需要检索」分支；路由失败降级为关键词兜底，保证单点故障不阻断主流程
+· Function Calling 工具层与幂等保护：统一工具契约（JSON Schema 声明入参 + 安全等级），针对重复下单事故实现幂等键 + 结果缓存重放 + 写操作人工确认（HITL）三重保护
+· 三层记忆架构：工作记忆（滑动窗口保留首轮锚定 + 最近 5 轮原文）、滚动会话摘要、长期结构化记忆
+· RAG 检索链路优化：Query Rewrite → Qdrant 向量粗排 → Cross-Encoder 精排 → MMR 多样性去重的三段式检索；引入 Answer Gate 拒答策略（按检索质量分档决定正常回答/标注参考/拒答转人工），召回率从 70% 提升至 95%
+· 拼团抢单：Redis Lua 脚本原子预检 → MySQL 条件 UPDATE → 成员表唯一索引兜底三重保护，杜绝超卖与重复参团；DB 更新失败时回滚 Redis 计数
+· 首页聚合查询并行化：CompletableFuture + 独立业务线程池并行查询，接口响应时间从累加变为取最大值
+
+乐家帮手（家政服务 O2O 平台）　2025.06-2025.10
+涵盖日常保洁、保姆服务、家电维修等，提供在线下单、支付、抢单、派单、上门服务等业务，含运营端、用户端、个体家政端、中介公司端。
+技术栈：SpringCloud Alibaba、MyBatis-Plus、MySQL、Redis、RabbitMQ、ES、Canal、XXL-JOB、EasyExcel
+· 负责开发取消订单功能，使用策略模式优化取消订单代码，使用 XXL-JOB 完成退款功能开发
+· 使用 XXL-JOB + 懒加载实现取消超时未支付订单功能
+· 开发预约下单功能，使用 Redisson 解决接口幂等性问题
+· 负责抢券流程和表的设计，使用 Redis+Lua 实现抢券且防超卖，使用线程池 + Redisson 分布式锁同步抢券结果
+· 负责优惠券核销和退回，引入 Seata 分布式事务框架解决分布式场景下数据一致性问题
+· 调用微信官方接口完成小程序的登录、支付和接收支付结果功能
+
+【专业技能】
+· 熟练掌握 Java 核心知识：集合与数据结构、面向对象、IO 流、反射、泛型
+· 熟练使用 SpringBoot、SpringCloudAlibaba 框架，理解 IOC/AOP，熟练使用 MybatisX、Mybatis-Plus
+· 熟练使用 MySQL：索引失效场景、事务及原理、存储引擎、锁机制、MVCC、日志与基本调优
+· 熟悉 Redis 五种常用数据类型与应用场景、缓存穿透/击穿/雪崩的解决方案、Redis 与 Caffeine 多级缓存
+· 熟悉 RabbitMQ：异步通信、延迟消息及消息可靠性保障
+· 熟悉 Git、Maven、Linux、Docker 等工具，能通过 Claude Code、Cursor、Codex 进行 vibe coding 高效开发
+· 熟悉 Python/FastAPI 后端开发，以及使用 LangChain/LangGraph、RAG、MCP、Function Calling、Memory 记忆机制等技术实现基础智能体开发，并能基于 Dify、Coze 平台快速搭建 workflow`,
+    },
+  },
+
+  {
+    id: 'yhy',
+    name: '杨和宇',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '杨',
+    meta: '2027 届 · 重庆师范大学软件工程 · 计算机设计大赛国二 + 挑战杯国二 · 两段 AI 后端实习（生产级）',
+    listMeta: '2027 届 · 国二×2 · 生产级 AI 后端实习',
+    source: '招聘平台投递（2026-10-26 新批次）',
+    analyzed: '2026-10-26',
+    recommend: 'interview',
+    recommendWhy: '技术深度与可靠性工程本批最强，建议约面（第一时间确认来广州的意愿）',
+    headline: '两段实习都带着生产数据：53 天 2769 个异步任务零重复计费 —— 可靠性工程本批最强',
+    score: '★★★★★',
+    ksa: { K: 4.5, S: 4, A: 4, O: 4, total: 4.1 },
+    star: 4.5,
+    similarity: 83,
+    similarityBand: '高度相似',
+    consistency: { level: 'high', label: '高', note: '时间线自洽（在校 2023.09-2027.06；实习 2026.03-06 亚信 → 2026.07-09 瑞池）；量化数据具体且互洽（53 天 2769 任务/92 部剧/13% 失败接管/0.01% 对账异常；ReviewMind 34 PR 评测集指标链完整）；国家级竞赛奖项可官方渠道核验' },
+    mbti: '偏 I / N / T / J（行为推断）',
+    belbin: '创新者（Plant）+ 品质控制者（Monitor Evaluator）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '授权型带教适配最高 —— 有评测思维，给目标与验收标准即可',
+    summary:
+      '技术面本批最硬：亚信科技企业级 AI 智能对话中台（RAG、SSE 流式对话、DFA 敏感词、按省份策略路由多模型），' +
+      '瑞池广告 AI 漫剧创作平台（多模型路由、预授权-结算-释放计费闭环、幂等重入与失败补偿、媒体可靠归档 —— 53 天生产运行 2769 个异步任务、' +
+      '供应商 13% 生成失败全被补偿链路接管、零重复计费、人工对账异常率 0.01%）。' +
+      '独立开发 ReviewMind PR 智能审查 Agent，自建 34 PR 评测集把弱标签召回从 21.7% 提到 32.6%，外加四级消融实验 —— 「拿数据验证 AI 输出质量」的习惯在本批是独一份，这正是本岗 Review 环节的高级形态。' +
+      '中国大学生计算机设计大赛国二、挑战杯国二、创新大赛国三、蓝桥杯省二，CET-6。' +
+      '主要待确认：学校在重庆，是否愿意来广州是第一道门槛；经历偏平台后端研发，缺少客户现场交付动作。',
+    highlights: [
+      { t: '生产级可靠性工程（本批最强）', d: 'AI 漫剧平台围绕「提交 → 预授权 → 异步任务 → 轮询 → 结算/释放」设计状态流转，幂等重入与失败补偿；53 天 2769 个异步任务、13% 供应商失败全被接管、零重复计费、对账异常 0.01% —— 公司内部 PMS/计费类系统可直接受益。' },
+      { t: 'RAG 与多模型路由实操', d: '亚信对话中台：FAQ 两级检索 + Dify BM25/向量混合检索降级、WebClient 消费大模型 SSE 流并用状态机解析 <think> 与最终回复、策略模式接入新省份模型 —— AI 应用后端的全套动作都摸过。' },
+      { t: '自建评测集（本批唯一）', d: 'ReviewMind：34 PR/49 条弱标签评测，召回 21.7%→32.6%，分组路由消融 19.6%→28.3%，外加 AACR-Bench 黑盒外部评测与负样本误报检验 —— 「用数据验证 AI 输出」正是本岗 Review AI 产出的高级形态。' },
+      { t: '竞赛双国二', d: '中国大学生计算机设计大赛国家级二等奖、挑战杯国家级二等奖、中国国际大学生创新大赛国三、蓝桥杯省二；CET-6。' },
+      { t: '全栈交付能力', d: 'Java/Spring Cloud/MyBatis + Python/FastAPI + Vue3/React，具备前后端联调与全栈交付能力。' },
+    ],
+    risks: [
+      { t: '地域（一票前置项）', d: '重庆师范大学在读，是否愿意来广州实习/工作必须第一时间确认；人不来，其余免谈。' },
+      { t: '经历偏「研发后台」而非「交付现场」', d: '两段实习都是平台后端，没有到客户现场部署、陪客户验收、处理客户方脏数据的记录；本岗要的是把 AI 用起来并交付出去的人，这个差异要在面试里区分。' },
+      { t: '2027 届毕业前出勤', d: '大四课业与毕业设计的时间安排需确认（若来广州以实习档还是应届档进入也要谈）。' },
+      { t: '个人项目偏内部工具', d: 'ReviewMind 是面向研发流程的 PR 审查，客户可感知的交付物少；现场表达与需求翻译能力要实测。' },
+      { t: '简历信息密度过高', d: '书面表达密集但偏技术堆叠，口头能否讲清给非技术的人听，要面谈确认（本岗要给业务当「翻译官」）。' },
+    ],
+    interview:
+      '① 先问：愿意来广州吗？家里什么意见？什么时候能到岗；' +
+      '② 让他讲 AI 漫剧平台「一次供应商生成失败」的完整处理：怎么发现、补偿链路怎么走、钱最后怎么对平；' +
+      '③ 现场题：把公司一个真实业务需求写成给 AI 的任务指令，看他拆步骤与验收结果的习惯。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文识别整理（原排版顺序较散，已按模块归并）',
+      raw: `杨和宇
+男 | 21 岁 | 中共预备党员
+电话：已脱敏　邮箱：（邮箱已脱敏）
+求职意向：AI 应用全栈开发
+
+【教育背景】
+重庆师范大学 · 计算机与信息科学学院 · 软件工程　本科　2023.09-2027.06
+英语：CET-6
+竞赛荣誉：中国大学生计算机设计大赛国家级二等奖 | 挑战杯全国大学生课外学术科技作品竞赛国家级二等奖 | 中国国际大学生创新大赛国家级三等奖 | 蓝桥杯大赛省级二等奖
+
+【实习经历】
+亚信科技 · 后端开发实习生　2026.03-2026.09 前（2026.03-2026.06）
+项目：企业级 AI 智能对话中台 —— 基于 Spring Cloud，为政务问答、电信导购提供 RAG、多模型对话及自动化服务。
+· RAG 与模型路由：实现 DFA 敏感词过滤及两级检索；FAQ 标签命中直答，未命中降级至 Dify BM25 + 向量混合检索；基于策略模式完成新省份模型策略接入。
+· SSE 流式对话：基于 WebClient 消费大模型 SSE 流，使用状态机解析 <think> 与最终回复，实现分字段流式输出；参与三级营销推荐及转人工链路。
+· 问答质量优化：实现高频问题相似度去重入库、点赞/点踩反馈及人工兜底的问答优化，参与问答质量闭环。
+
+瑞池广告 · 全栈开发实习生　2026.07-2026.09
+项目：AI 漫剧创作平台 —— 覆盖剧本生成、分镜拆解、多模型生图/生视频、插帧超分、配音及成片导出的 AI 内容生产平台。
+· 多模型接入：设计统一厂商适配层，屏蔽异步提交、轮询及认证差异，按素材能力路由视频/图像/文本/插帧超分模型；支持分镜子集重跑。
+· 任务可靠性：围绕「提交 → 预授权 → 异步任务 → 轮询 → 结算/释放」设计状态流转；复用持久化任务 ID 避免重复提交与计费，核心接口支持幂等重入与失败补偿。
+· 计费与媒体归档：基于供应商真实用量及价格快照完成预授权、结算、释放闭环；采用本地热副本 → OSS → HEAD 校验 → 延迟清理保证媒体可靠归档。
+· 生产结果：53 天运行累计 2769 个异步任务/92 部剧/2638 段视频；供应商侧 13% 生成失败均由补偿链路接管，实现零重复计费，人工对账异常率 0.01%。
+
+【项目经历】
+ReviewMind — PR 智能审查 Agent | 独立开发（github.com/Yangheyu123/ReviewMind）
+背景：PR 深度审查是研发流程中最贵的环节之一，针对通用 LLM 直接审查 Diff 存在的上下文不足、行号漂移、缺乏反思问题，构建「确定性工程 × Agent」的 PR 审查链路。
+· Agent 编排：LangGraph StateGraph 编排 —— 按文件组 fan-out 并行审查，预算闸/grace round/失败降级走条件边，PostgresSaver 断点恢复；组内 Function Calling 工具循环（file_read/code_search/find_symbol/提交），token 预算护栏保证有界收敛。
+· 上下文与检索：基于 import 依赖图 + Union-Find 进行语义分组；组内通过 Function Calling 按需获取上下文，以 token/文件数双重预算控制成本。
+· 确定性评论定位：放弃模型输出行号，要求模型提供 Diff 原文锚点，工程侧通过 hunk → 全文唯一 → 跨文件迁移三级定位，行定位准确率 96.8%；结合三级去重降低重复评论。
+· 反思与评测：增加 Agent 反思、跨任务仓库记忆及 LLM 故障降级；构建 34 PR/49 条弱标签评测集，标签召回由 21.7% 提升至 32.6%，产出密度 3.6 vs 直读 4.8 条/PR、单条效率 14.3% ≈ 基线 14.6%；三层评测体系 —— 回归集迭代 + AACR-Bench（阿里开源 PR）黑盒外部评测与负样本误报检验 + 四级消融（分组路由使召回 19.6% → 28.3%）。
+
+【专业技能】
+· 后端开发：Java/Spring Boot/Spring Cloud/MyBatis，Python/FastAPI，熟悉 RESTful API 与 AI 应用后端开发。
+· AI 应用：LLM API/SSE/Tool Calling，RAG，LangChain/LangGraph Agent 编排与 Harness Engineering，了解 MCP/Skills/Dify。
+· 数据与中间件：MySQL、Redis、RabbitMQ；掌握索引、事务、MVCC 等核心机制。
+· 前端与工程化：Vue3/React/JavaScript，Git/Maven/Docker/Linux，具备前后端联调与全栈交付能力。`,
+    },
+  },
+
+  {
+    id: 'cyx',
+    name: '陈熠暄',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '陈',
+    meta: '2026 届已毕业 · 广东东软学院人工智能 · 昭信集团 FDE + 博物馆 AI 工程师 · Dify/OpenClaw 交付',
+    listMeta: '26 届 · FDE 经验 · 立即到岗',
+    source: '招聘平台投递（2026-10-26 新批次）',
+    analyzed: '2026-10-26',
+    recommend: 'interview',
+    recommendWhy: '唯一岗位名就叫 FDE 的候选人，且已毕业可立即按应届档到岗，建议约面（重点核查两段经历的深度与稳定性）',
+    headline: '唯一「岗位名就叫 FDE」的人 —— 类 Dify 知识库工作流交付，且可立即全职到岗',
+    score: '★★★★☆',
+    ksa: { K: 4, S: 4.5, A: 4, O: 4, total: 4.1 },
+    star: 4,
+    similarity: 82,
+    similarityBand: '高度相似',
+    consistency: { level: 'mid', label: '中高', note: '两段工作（2026.01-03、2026.04-06）与 2026 届毕业时间衔接合理；项目测试数字具体（637/179 项）；但两段经历均仅 2-3 个月，离职原因与毕业至今（约 4 个月）的空窗去向需当面核实' },
+    mbti: '偏 E / N / F / P（行为推断）',
+    belbin: '协调者（Co-ordinator）+ 执行者（Implementer）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '教练型 / 授权型之间 —— 会主动对需求，但需要带教人把控交付标准',
+    summary:
+      '五人中岗位画像最「正」的一个：昭信集团 AI 解决方案工程师（FDE），面向财务、招聘、行政、合同场景做需求梳理 → 类 Dify 平台知识库与工作流搭建 → 部署、问题定位与迭代，' +
+      '这正是本岗「把业务意图翻译成 AI 指令并把控质量」的原型动作；此前在岳阳博物馆独立部署 OpenClaw、把活动策划 SOP 封装成可复用 Skills，做过文物讲解与活动策划两类智能助手。' +
+      '自己还有两个全栈项目：Mercato AI 电商套图平台（Outbox 任务租约、幂等与对账防重复扣费，本地回归 637 项测试）与健身管理应用（179 项自动化测试）。' +
+      '2026 届已毕业、人工智能专业、广东求学背景，可立即按 8-13K 应届档全职入职，不用等毕业 —— 在「到岗速度」上是全场最优。' +
+      '主要待确认：两段经历各 2-3 个月偏短、稳定性存疑，以及毕业至今数月的空窗去向。',
+    highlights: [
+      { t: 'FDE 交付动作完整（画像最正）', d: '需求到方案（与客户部门主管梳理资料查询、文件比对、编辑需求，明确流程、文档来源与交付标准）→ 搭企业知识库与工作流（自然语言查找文件、信息提取、摘要、字段替换、改写）→ 参与部署与问题定位、迭代召回与编辑稳定性 —— 与本岗「包工头 + 质检员 + 翻译官」三合一画像几乎重合。' },
+      { t: '知识库 / Skills 实操面广', d: '类 Dify 平台 + Dify/Coze/OpenClaw 都用过；博物馆项目把活动策划 SOP 封装为可复用 Skills，结合人员职能知识库实现方案生成、人工审核与协调推进，还做过支持多轮对话、实时打断与追问的交互式讲解。' },
+      { t: '工程可靠性自驱（同龄少见）', d: 'Mercato：Outbox、任务租约、幂等与对账机制防止重复生成与扣费，「实拍主体蒙版 + AI 背景 + Sharp 合成」可控生成，版本恢复与打包导出，本地回归 637 项测试；健身应用 179 项自动化测试。' },
+      { t: '全栈独立交付', d: 'React/TypeScript/Node.js/SQLite/Taro，Zod 数据校验，模型 API 接入、异步任务、幂等与失败恢复、Jest 测试。' },
+      { t: '即战力属性', d: '2026 届已毕业、人工智能科班、广东求学（佛山），可立即按应届档 8-13K 全职入职；不用等毕业、不用试出勤。' },
+    ],
+    risks: [
+      { t: '两段经历都偏短（最要紧）', d: '2026.01-03 博物馆、2026.04-06 昭信，各 2-3 个月即离开；毕业（2026.06）至今约 4 个月在做什么要问清，离职原因与稳定性重点核查。' },
+      { t: '交付深度待验证', d: 'FDE 期间基于公司类 Dify 平台「搭工作流」，与从零开发深度不同；面试让他完整复述一个场景从需求到上线的全过程，重点听「卡壳时怎么解决、客户不满意时怎么改」。' },
+      { t: '学历与竞赛背景平淡', d: '广东东软学院民办本科、无显眼竞赛奖项；技术上限要靠项目细节与现场实测判断。' },
+      { t: '求职方向发散', d: '「AI 应用 / AI 全栈 / 智能体开发」三个方向并列，对本岗的承诺度要确认（是否会拿本岗当过渡）。' },
+      { t: 'AI 编程工具深度未明', d: 'Claude Code/Cursor 等的日常使用未明说（提到 OpenClaw/Dify/Coze），与 AI-0 模式的契合要现场实测。' },
+    ],
+    interview:
+      '① 问清 2026.07 至今在做什么、两段经历为什么都只有两三个月；' +
+      '② 让他完整复述昭信一个场景从需求到上线的全过程，重点听「客户不满意时他怎么改」；' +
+      '③ 现场用 Claude Code 做一个小任务，验证 AI-0 契合度与 Prompt 写作能力。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）（电话格式已归一化）',
+      raw: `陈熠暄
+求职方向：AI 应用工程师 / AI 全栈工程师 / 智能体开发
+电话：已脱敏 | 邮箱：（邮箱已脱敏）
+广东东软学院 | 人工智能 · 本科 | 2022-2026
+
+【专业技能】
+AI 应用：熟悉 LangChain 架构、RAG、Prompt 工程、Agent 构建、Tool/API 调用与 MCP；使用 Dify、Coze、OpenClaw 搭建知识库与业务工作流。
+应用开发：Python；React、TypeScript、Node.js、SQLite、Taro（项目实践）；Zod 数据校验、模型 API 接入、异步任务、幂等与失败恢复、Jest 测试。
+数据分析：Pandas、NumPy、Matplotlib、Scikit-learn；数据清洗、EDA 分析与自动化报告。
+
+【工作经历】
+广东昭信集团股份有限公司 | AI 解决方案工程师（FDE）　2026.04-2026.06
+· 需求到方案：面向财务、招聘、行政与合同场景，与客户部门主管梳理资料查询、文件比对及编辑需求，明确业务流程、文档来源和交付标准。
+· 工作流交付：基于公司类 Dify 平台搭建企业知识库与工作流，实现自然语言查找文件、信息提取、摘要、字段替换和改写；参与部署及问题定位，迭代召回、编辑结果与流程稳定性。
+
+岳阳市博物馆 | AI 工程师　2026.01-2026.03
+· 知识库与 Agent：独立部署配置 OpenClaw，整理文物及历史活动资料；将活动策划 SOP 封装为可复用 Skills，结合人员职能知识库，实现方案生成、人工审核与协调推进。
+· 交互式讲解：将文物资料结构化为知识库与 Skills，按所选文物触发讲解，支持多轮对话、实时打断、追问及上下文关联应答，完成两类智能助手的流程验证。
+
+【项目经历】
+Mercato | AI 电商商品套图生成与编辑平台
+React · TypeScript · Node.js · SQLite · Sharp · 大模型 API
+· 方案与流程：构建商品/SKU 资料库和结构化套图方案，支持 5-9 个图位、素材依赖校验与人工确认；冻结商品资料及方案版本，实现生成输入与结果追溯。
+· 模型与任务：补充模型统一适配与调用记录，以 Outbox、任务租约及幂等机制实现后台派发、中断恢复；对受理状态未知的请求进行对账，防止重复生成与扣费。
+· 可控生成：采用「实拍主体蒙版 + AI 背景 + Sharp 合成」保留商品外观，以固定字体渲染文案；支持单图重做、背景替换、图层编辑、版本恢复及 PNG/JPEG 打包导出。
+· 全栈与质量：使用不可变版本与乐观锁处理编辑冲突，复用权限及点数账本；本地回归 637 项测试通过，覆盖任务中断、幂等及账务一致性。
+
+健身管理应用与 AI 教练流程原型
+Taro · React · TypeScript · Zod · Jest
+· 业务与数据：实现饮食记录、搜索收藏、餐次复制及体重趋势；分离业务规则、存储与页面状态，结合 Zod、营养快照和定点精度处理，保持历史记录与数据一致性。
+· AI 交互原型：基于预设结果模拟 AI 教练，以 Reducer 管理需求、生成、检查、草案及确认采用，覆盖资料不足、拒绝和失败恢复；草案状态与正式记录隔离。
+· 可靠性验证：结合操作标识去重、交互互斥及成功写入后更新状态，处理重复提交与重试；累计 179 项自动化测试通过，完成 H5 主要流程验证及微信/H5 构建检查。`,
+    },
+  },
+
+  {
     id: 'lyz',
     name: '李友朝',
     tag: '优先推荐',
@@ -526,6 +814,7 @@ const CANDIDATES = [
     meta: '1 年经验 · 临沂大学 计算机科学与技术 · AI 应用开发工程师（云影千星）· 3 个已上线产品',
     listMeta: '1 年经验 · 计算机科学 · 3 个上线 AI 产品',
     source: '简历投递',
+    analyzed: '2026-10-13',
     recommend: 'interview',
     recommendWhy: '硬门槛全过 + 三个产品可现场打开，建议优先约面（先核验学历时间线与薪酬预期）',
     headline: '全部候选人中「AI 端到端交付」证据最硬 —— 三个产品都能现场打开',
@@ -619,6 +908,106 @@ const CANDIDATES = [
   },
 
   {
+    id: 'yzx',
+    name: '姚卓昕',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '姚',
+    meta: '2027 届 · 湖南工学院软件工程 · 弘成科技 AI 应用工程师实习 · 双个人 Agent 项目 + GitHub 作品',
+    listMeta: '2027 届 · RAG/Agent 实习 · GitHub 作品',
+    source: '招聘平台投递（2026-10-26 新批次）',
+    analyzed: '2026-10-26',
+    recommend: 'interview',
+    recommendWhy: 'RAG/Agent/微调全链路动手且 GitHub 可当场核验，建议约面（先确认来广州的意愿）',
+    headline: 'RAG → Agent → 微调全链路都动过手，GitHub 双项目可现场打开',
+    score: '★★★★☆',
+    ksa: { K: 4, S: 4, A: 4, O: 4, total: 4.0 },
+    star: 4,
+    similarity: 80,
+    similarityBand: '高度相似',
+    consistency: { level: 'mid', label: '中高', note: '实习（2026.04-07）与在校时间自洽；两个 GitHub 仓库地址可当场打开核验（核验成本低）；但成果数据（200 人次初筛、30→12 分钟、复试通过率 75%、满意度 90%）均为自述口径，湖南在读与投递广州的动机需确认' },
+    mbti: '偏 I / N / T / P（行为推断）',
+    belbin: '创新者（Plant）+ 执行者（Implementer）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '授权型带教适配高 —— 自驱项目多，给目标和验收标准即可',
+    summary:
+      '技术栈覆盖本岗所需的完整链路：弘成科技 AI 应用工程师实习 3 个月，做的是面向技术招聘场景的 AI 面试系统 —— BGE/Chroma 向量知识库 + BM25/RRF 融合检索 + Reranker 精排，' +
+      'LangGraph/ReAct 实现智能出题与动态追问，完成 200 人次面试初筛、单人筛选耗时 30→12 分钟。' +
+      '个人项目 Horizon Harness（LLM 决策与确定性工具执行解耦、统一 Tool Registry 与 Execution Boundary、Token 预算与上下文压缩、Trace 可观测）' +
+      '和 LangGraph 多 Agent 智能问数系统（NL2SQL + QLoRA 微调 Qwen3-8B + vLLM 本地部署）都在 GitHub 可当场打开。' +
+      '毕设主题即「基于大语言模型的智能体任务执行系统」。CET-6，专业前 20%，校挑战杯/金种子杯/创新大赛三个一等奖。' +
+      '主要待确认：人在湖南，能否来广州长期在岗是一票前置项；实习仅一段 3 个月；缺少客户现场交付经验。',
+    highlights: [
+      { t: 'RAG 链路完整且远超门槛线', d: 'BGE/Chroma 向量库、BM25+RRF 融合、Reranker 精排、GraphRAG 实践 —— JD 门槛是「用过 AI 工具做过完整小项目」，他已经是生产级检索链路。' },
+      { t: 'Agent 工程有体系', d: 'Horizon Harness：ReAct 闭环（LLM → ToolCall → Observation）、统一 Tool Registry / Schema / Execution Boundary、Session 持久化与恢复、Token 预算与上下文压缩、Trace/Runtime Metrics 可观测 —— 与本岗「指挥 AI 并把控质量」同构。' },
+      { t: '模型侧动过真格', d: 'QLoRA 微调 Qwen3-8B 并通过 vLLM 本地部署，做过 SFT/LoRA/QLoRA 参数高效微调实践 —— 遇到私有化部署需求不虚。' },
+      { t: 'GitHub 作品可当场打开', d: 'github.com/01ny-yzx（horizon-harness、horizon-insight 两个仓库）—— 全场核验成本最低的候选人之一，面试前 HR 就可以先看。' },
+      { t: '学业与竞赛稳定', d: '专业排名前 20%，湖南工学院挑战杯/金种子杯/创新大赛三个一等奖，CET-6，毕业设计就是大模型智能体方向。' },
+    ],
+    risks: [
+      { t: '地域（一票前置项）', d: '湖南工学院在读（郴州人），能否来广州长期实习/工作必须最先确认；若只能暑期短期来，价值大打折扣。' },
+      { t: '实习仅一段 3 个月', d: '弘成科技 2026.04-07，团队协作与真实业务打磨时间短，工程习惯与抗压性要现场验证。' },
+      { t: '偏「做 AI 系统」而非「交付 AI」', d: '经历都是自己造系统，没有到客户现场部署、陪验收、处理客户方脏数据的记录；本岗的「交付」属性需要补课。' },
+      { t: '成果数据为自述口径', d: '「复试通过率 75%、技术面试官满意度 90%」等无法从外部核验，面试要追问当时怎么统计的。' },
+      { t: 'Prompt 与文档写作未验证', d: '简历以技术罗列为主，JD 要求「良好的中文写作能力」，建议现场出一道结构化 Prompt 写作题实测。' },
+    ],
+    interview:
+      '① 先问：为什么投广州？家里什么意见？能实习到什么时候、每周几天；' +
+      '② 现场打开 horizon-insight，让他讲 NL2SQL 的安全校验与自动纠错怎么做的、微调的数据怎么准备的；' +
+      '③ 现场题：给一段公司业务材料，让他现场写一条结构化 Prompt 并用 AI 跑出结果，看拆解与验收习惯。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）',
+      raw: `姚卓昕
+AI 应用开发 / FDE
+电话：已脱敏　邮箱：（邮箱已脱敏）
+GitHub：github.com/01ny-yzx
+湖南省郴州市 · 在校大学生
+
+【教育背景】
+湖南工学院　软件工程 · 本科　2023.06-2027.06
+主修课程：Java 程序设计、数据结构、计算机网络、操作系统等
+专业排名：前 20%
+毕设主题：《基于大语言模型的智能体任务执行系统设计与实现》
+荣誉：湖南工学院第七届挑战杯大学生创业计划竞赛一等奖、第二届金种子杯大学生创业大赛一等奖、大学生创新大赛 2025 一等奖、三下乡优秀个人
+全国大学英语四级（CET4）、六级（CET6）
+校园职务：学习委员（2023.09-2024.03）、易班技术部副部长（2024.09-2025.09）
+
+【工作经验】
+弘成科技发展有限公司　AI 应用工程师　2026.04-2026.07
+参与开发面向技术岗位招聘场景的 AI 面试系统，涵盖简历解析、智能出题、动态追问与能力评估。
+· RAG 知识检索：基于 BGE、Chroma 构建向量知识库，结合 BM25、RRF 融合及 Reranker 精排，优化简历与岗位知识检索。
+· Agent 流程编排：基于 LangGraph 与 ReAct Agent 实现智能出题、动态追问及多轮对话状态管理。
+· 智能评估：结合 LangChain 实现简历结构化解析、岗位能力评分及个性化学习建议。
+· 项目成果：完成 200 人次面试初筛，单人筛选耗时由 30 分钟降至 12 分钟，推荐候选人技术复试通过率达 75%，技术面试官满意度达 90%。
+
+【项目经历】
+Horizon Harness | 独立开发 个人项目　2026.02-至今（github.com/01ny-yzx/horizon-harness）
+自主设计并实现本地优先的 AI Agent Harness，实现 LLM 决策与确定性工具执行解耦。
+技术：Python、FastAPI、Pydantic、OpenAI Compatible API、RAG、React、TypeScript
+· Agent Loop：基于 ReAct 思想实现 LLM → ToolCall → Observation → LLM 执行闭环，支持多步骤任务和 Continuation。
+· 工具执行：设计统一 Tool Registry、Schema 与 Execution Boundary，实现动态工具筛选、权限校验、安全执行和幂等保护。
+· 上下文与记忆：实现 Session 持久化与恢复、长期记忆、项目指令动态加载、Token 预算与上下文压缩。
+· 工程化保障：构建 Trace/Runtime Metrics 可观测体系及 Agent Eval、Smoke 回归测试，支持链路追踪与核心流程验证。
+
+LangGraph Multi-Agent 智能问数系统 个人项目　2026.06-至今（github.com/01ny-yzx/horizon-insight）
+基于 LangGraph 构建多 Agent 智能问数系统，支持自然语言查询、数据分析与可视化报告生成。
+技术：Python、LangGraph、MySQL、SQLGlot、Pandas、ECharts、Gradio、Qwen/Qwen3-8B、QLoRA、vLLM
+· Multi-Agent 编排：Main Agent 协调 SQL、Analysis、Visualization、Chat Agent，结合共享 State 与 SQLite Checkpoint 实现多轮交互和状态持久化。
+· NL2SQL：实现 Schema-aware SQL 生成、SQLGlot 安全校验、自动纠错和人工审核，基于 Pandas、ECharts 完成统计分析与可视化。
+· 模型微调部署：使用 QLoRA 微调 Qwen3-8B，并通过 vLLM 本地部署，优化数据分析报告的结构与业务表达。
+
+【专业技能】
+· 编程语言：熟悉 Python，具备 Java 开发基础。
+· 后端开发：了解 FastAPI、Spring Boot、MySQL、Redis，熟悉 RESTful API 开发。
+· Agent 开发：熟悉 LangChain、LangGraph，理解 ReAct、Tool Calling、Agent Loop、Memory/Context Management，具备 Agent Harness 开发实践。
+· RAG 与 LLM 应用：具备混合检索、GraphRAG 及知识库构建实践。
+· 模型微调：了解 Transformers、TRL、PEFT，具备 SFT、LoRA、QLoRA 参数高效微调与模型部署实践。
+· 工程与测试：熟悉 Git、Docker、Linux，具备 Pytest、Postman、JMeter、Selenium 等工具使用经验。`,
+    },
+  },
+
+  {
     id: 'minwei',
     name: '敏炜',
     tag: '优先推荐',
@@ -627,6 +1016,7 @@ const CANDIDATES = [
     meta: '2026 届 · 食品科学与工程 · 福州 → 广州 · 官网投递',
     listMeta: '2026 届 · 食品科学与工程',
     source: '官网投递',
+    analyzed: '2026-09-21',
     recommend: 'interview',
     recommendWhy: '唯一通过全部硬门槛，建议直接约面',
     headline: '硬门槛全过、开源与自动化测试证据最扎实的「即插即用型」候选人',
@@ -673,6 +1063,7 @@ const CANDIDATES = [
     meta: '2026 届 · 通信工程（沈阳城市建设学院）· 3 段 AI 方案实习 · 招聘系统投递',
     listMeta: '2026 届 · 通信工程 · AI 方案实习 3 段',
     source: '招聘系统投递',
+    analyzed: '2026-10-10',
     recommend: 'interview',
     recommendWhy: 'AI 应用交付证据最足，建议直接约面（重点验证动手深度）',
     headline: '「AI 交付方法论」最完整的方案型候选人，需验证是「做方案」还是「做交付」',
@@ -767,6 +1158,7 @@ const CANDIDATES = [
     meta: '2027 届 · 重庆工商大学 计算机技术硕士（在读）· 西南科技大学 软件工程 · 北京 AI 算法实习',
     listMeta: '2027 届 · 计算机技术硕士 · 两个开源项目',
     source: '简历投递',
+    analyzed: '2026-10-13',
     recommend: 'interview',
     recommendWhy: '技术底子最厚但 2027.06 才毕业 —— 先谈清到岗时间，能走实习通道就约面，否则留档至 2027 春招',
     headline: '技术深度在全部候选人中最强，但「2027 届 + 北京」是本岗的硬约束',
@@ -846,6 +1238,91 @@ github.com/ArenYegar/interview-coach-agent
   },
 
   {
+    id: 'mst',
+    name: '莫舒婷',
+    tag: '有条件推荐',
+    tier: 'amber',
+    initial: '莫',
+    meta: '2026 届已毕业 · 塔里木大学计算机科学与技术 · Python 后端 + RPA 脚本交付十余套 · 企微 SCRM 毕设',
+    listMeta: '26 届 · RPA 脚本交付 · AI 深度偏浅',
+    source: '招聘平台投递（2026-10-26 新批次）',
+    analyzed: '2026-10-26',
+    recommend: 'pool',
+    recommendWhy: '可立即到岗且脚本交付经验实用，但 AI/Agent 深度不足且求职意向偏后端，建议电话初筛后再定',
+    headline: '脚本交付与自动化能力实用，但 AI 应用深度是新五人中最浅',
+    score: '★★★☆☆',
+    ksa: { K: 3.5, S: 3.5, A: 3.5, O: 4, total: 3.6 },
+    star: 3.5,
+    similarity: 72,
+    similarityBand: '较相似',
+    consistency: { level: 'mid', label: '中', note: '时间线自洽（2022.09-2026.06 在校；实习 2025.08-2026.02 与校企合作 2026.02-06 衔接）；竞赛奖项（机器人及 AI 大赛国三、蓝桥杯省二×2）可核；但「AI 话术生成」等表述偏轻量，AI 深度与求职意向（Python 后端）需现场确认' },
+    mbti: '偏 I / S / T / J（行为推断）',
+    belbin: '执行者（Implementer）+ 团队工作者（Team Worker）',
+    fit: { level: 'amber', label: '有条件匹配' },
+    style: '指令型带教适配最高 —— 需要明确步骤与示例',
+    summary:
+      '她的强项是「把杂活自动化」：小成功数字科技实习 6 个月，交付跨境爬虫、财务开票、企微自动回复、OCR、周报汇总等十余套脚本' +
+      '（Scrapy 限速/重试/续跑、PaddleOCR 识别 + 置信度校验 + 人工复核分流、pandas 口径统一防重复计数）——「接杂活、出活、留痕」的习惯已经养成。' +
+      '毕业设计是企微 SCRM 自动化回访系统（配置化规则引擎 + AI 话术生成 + 发送状态回写），有机器人及 AI 大赛国三、蓝桥杯省二×2。' +
+      '2026 届已毕业，可按应届档 8-13K 立即全职到岗。' +
+      '但 AI 应用深度明显弱于本批其他新人：没有 RAG、Agent、Prompt 工程的系统实践，「AI」环节多数是调 API 生成话术；' +
+      '求职意向写的是「Python 后端开发工程师」而非 AI 交付，方向契合度要确认；塔里木大学在新疆，毕业后人在哪、何时能到广州必须先问。',
+    highlights: [
+      { t: '十余套自动化脚本交付', d: '跨境爬虫（Scrapy 按站点拆分、AutoThrottle 限速、JOBDIR 暂停续跑、去重更新）、PaddleOCR 识别 + 置信度校验 + 异常转人工分流、pandas 周报汇总防重复计数 —— 交付杂活的能力有量化细节。' },
+      { t: '毕设企微 SCRM 系统', d: '配置驱动多企业复用（多级 JSON 引用）、参数化周期规则引擎、AI 话术生成与发送状态回写 —— 若公司企微生态有自动化需求可直接受益。' },
+      { t: '竞赛有国家级奖', d: '中国机器人及人工智能大赛国家级三等奖、蓝桥杯省级二等奖×2；CET-4。' },
+      { t: '已毕业、到岗明确', d: '26 届可按应届档 8-13K 全职立即入职，无需等毕业。' },
+    ],
+    risks: [
+      { t: 'AI 深度不足（最主要）', d: '无 RAG、Agent、Prompt 工程的系统实践；JD 最重要门槛「AI 工具端到端项目经验」她只能算勉强达标（调 API 生成话术 + 竞赛）。' },
+      { t: '求职意向错位', d: '简历写「Python 后端开发工程师」，对本岗（指挥 AI 交付、大量写 Prompt）的意愿与长期投入要电话确认。' },
+      { t: '地域未知', d: '塔里木大学在新疆阿拉尔，毕业后人在哪个城市、何时能到广州必须先问。' },
+      { t: '客户沟通经验空白', d: '经历以独立脚本为主，无客户现场沟通、需求梳理、验收的记录；本岗「翻译官」属性要评估。' },
+      { t: '「AI 话术生成」深度存疑', d: '需现场追问 prompt 怎么设计的、效果怎么评估、失败率多少。' },
+    ],
+    interview:
+      '电话初筛三句就够：① 现在人在哪个城市，什么时候能到广州？' +
+      '② 投的是后端还是 AI 交付？如果日常工作主要是「用 AI 帮业务干活」而不是写后端服务，你接受吗？' +
+      '③ 讲一下毕设里 AI 话术生成的 prompt 怎么设计、效果怎么评估。三关都过再约面。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）（电话格式已归一化）',
+      raw: `莫舒婷
+求职意向：Python 后端开发工程师
+电话：已脱敏 | 邮箱：（邮箱已脱敏）
+
+【教育经历】
+塔里木大学 | 计算机科学与技术 本科　2022.09-2026.06
+在校荣誉：中国机器人及人工智能大赛国家级三等奖，第十五、十六届蓝桥杯省级二等奖，第十五届中国计算机设计大赛省级三等奖。
+
+【专业技能】
+后端与应用：Python、FastAPI、MySQL、MongoDB，熟悉 HTTP 协议、Linux 与服务器部署。
+工程实践：RPA 自动化、数据采集与处理、企业微信 API 对接、AI 话术生成与回写。英语 CET-4。
+
+【项目与实习经历】
+企业微信 SCRM 自动化回访系统 | 毕业设计　2026.02-2026.06
+Python / FastAPI / 配置化规则引擎 / 企业微信 API
+项目概述：面向多门店回访易遗漏、难追踪的问题，独立完成系统设计、开发与部署，贯通客户登记、规则触发、AI 话术生成和发送结果回写。
+01 配置驱动的多企业复用 | 业务配置与执行逻辑分离：拆分交互、接口、自动化、配置和触达五层，通过「开关总表 → 企业文档 → 分店配置 → 业务表」的多级 JSON 引用动态定位，以配置适配不同门店。FastAPI 校验并写入客户、员工资料。
+02 参数化周期规则引擎 | 标签匹配与时间区间共同筛选：将标签、业务日期、周期和动作配置化，以当前日期为基准，结合周期正负偏移与 begin/end 计算多个区间，再匹配客户业务日期，覆盖提前提醒与跨周期回访；按企业开关、运行时间及上次执行时间控制调度，分别处理全区通知与精准回访；按客户、员工、任务、周期检查历史记录，限制重复建任务。
+03 AI 生成与发送状态管理 | 话术结果落表，执行状态独立追踪：将提示词与客户资料写入个性化任务表，AI 列生成话术后回填任务表。仅对当日、收发方及话术非空且 msgid 为空的记录创建群发任务；以 create_time、msgid、send_userid 分别记录任务生成、群发创建与员工实发，区分接口受理和实际发送，完成周期规则、查重及状态回写链路测试。
+
+Python RPA 自动化工具集 | 实习（小成功数字科技有限公司）　2025.08-2026.02
+工程化方案：Scrapy / PaddleOCR / pandas / openpyxl
+项目概述：使用 Python 交付跨境爬虫、财务开票、企微自动回复、OCR、周报汇总等十余套脚本。
+· 跨境爬虫：基于 Scrapy 按站点拆分解析器，结合 AutoThrottle 限速、限次重试与 JOBDIR 暂停续跑，按站点和业务 ID 去重更新，记录数据来源与采集时间。
+· 识别与校验：采用 PaddleOCR 提取文本，结合识别置信度、必填字段与金额格式校验，将低置信度或字段异常的结果转人工复核，再进入开票或汇总流程。
+· 周报汇总：用 pandas 统一字段与周统计口径，校验关联键唯一性，避免多表合并重复计数。以 openpyxl 生成模板周报，附来源与异常明细，支持按周次复算核对。
+
+校企合作实习 | 数据开发　2026.02-2026.06
+负责针灸机器人穴位图像采集、清洗与规范标注，构建预处理流程并参与视觉模型调优。
+
+SSVEP 脑控小车 | 竞赛项目　2025.03-2025.08
+完成脑电采集与去噪，采用 FBCCA 识别指令并驱动小车，获机器人及人工智能大赛国家级三等奖。`,
+    },
+  },
+
+  {
     id: 'cjy',
     name: '陈俊瑜',
     tag: '优先推荐',
@@ -854,6 +1331,7 @@ github.com/ArenYegar/interview-coach-agent
     meta: '2026 届 · 悉尼科技大学（UTS）信息技术硕士（Data Analytics）· 广州 · 招聘系统投递',
     listMeta: '2026 届 · UTS 硕士 · IELTS 6.5',
     source: '招聘系统投递',
+    analyzed: '2026-10-10',
     recommend: 'interview',
     recommendWhy: '硬门槛全过、英语与本地属性加分，建议约面（重点看她学新工具的迁移速度）',
     headline: '底子最干净的应届生：AI 辅助交付有实物，英语与本地属性双加分',
@@ -951,6 +1429,7 @@ UTS Industry Project – Salesforce HR System（Salesforce / 需求分析 / 数�
     meta: '2026 届 · 昆士兰大学（QS40）商务管理（人力资源）· 本科 GPA 6/7',
     listMeta: '2026 届 · 昆士兰大学 商务管理',
     source: '招聘系统投递',
+    analyzed: '2026-09-21',
     recommend: 'interview',
     recommendWhy: '建议加 15 分钟技术摸底后再定',
     headline: '技术门槛未过，但学习速度与产品思维在候选人群中仍很突出',
@@ -1031,6 +1510,7 @@ UTS Industry Project – Salesforce HR System（Salesforce / 需求分析 / 数�
     meta: '2025 届 · 广东外语外贸大学 人力资源管理（大专）· 7 年物业客服 / 行政经验',
     listMeta: '2025 届 · 广外 人力资源管理（大专）',
     source: '招聘系统投递',
+    analyzed: '2026-09-21',
     recommend: 'pool',
     recommendWhy: '建议转推行政 / 客服主管方向，留档备用',
     headline: '不是能力差，是能力轴与岗位完全不在一条线上',
@@ -1212,6 +1692,7 @@ const CANDIDATES_OVERSEAS = [
     meta: '湖北工业大学 汉语国际教育 · 雅思 6.0 · 美区/日区/东南亚社媒运营',
     listMeta: '雅思 6.0 · 美日/东南亚社媒运营',
     source: '招聘系统投递',
+    analyzed: '2026-10-08',
     recommend: 'interview',
     recommendWhy: '四要素全中，建议优先约面并深挖稳定性',
     headline: '同时覆盖「海外 + 英语 + 达人拓展 + AI」四张牌最完整的一位',
@@ -1288,6 +1769,7 @@ const CANDIDATES_OVERSEAS = [
     meta: '本科 · 广州应用科技学院 · 英语专业八级 · 4 年海外 KOL 运营',
     listMeta: '英语专八 · 4 年海外 KOL 全流程',
     source: '招聘系统投递（2026-10-09 新增）',
+    analyzed: '2026-10-09',
     recommend: 'interview',
     recommendWhy: '英语与 KOL 全流程最扎实，面试验证「出海方向适配」与稳定性',
     headline: '英语能力最突出的 KOL 全流程熟手，方向适配与管理跨度待验证',
@@ -1376,6 +1858,7 @@ const CANDIDATES_OVERSEAS = [
     meta: '23 岁 · 2 年+ 海外达人营销 · 广外英语自考在读 · CET-4 · 期望 12-15K',
     listMeta: '2 年+ 海外达人 BD · CET-4 · 6 万达人资源',
     source: '招聘系统投递（2026-10-08 新增）',
+    analyzed: '2026-10-08',
     recommend: 'interview',
     recommendWhy: '达人拓展与海外平台最对口，先过学历与薪资两道门槛再约面',
     headline: '达人资源与海外市场覆盖最扎实的一位，学历与薪资两道门槛需先确认',
@@ -1489,6 +1972,7 @@ Creator Partnership 从 0 搭建与规模化｜团队负责人｜2025.05-至今
     meta: '10 年广告营销 · 华南理工大学广州学院 工商管理 · CET-4 · 广州 · 离职状态',
     listMeta: '10 年广告营销 · CET-4 · 有 AI 实战',
     source: '招聘系统投递（2026-10-08 补充英语与 AI 使用信息）',
+    analyzed: '2026-10-08',
     recommend: 'interview',
     recommendWhy: '英语与 AI 两块底板已确认，补完 BD 动机与空窗确认即可面',
     headline: '10 年广告营销老兵，达人投放统筹是强项，补齐英语与 AI 后短板收窄',
@@ -1582,6 +2066,7 @@ Creator Partnership 从 0 搭建与规模化｜团队负责人｜2025.05-至今
     meta: '2025 届 · 中国计量大学 广告学 · 约两年达人媒介经验',
     listMeta: '2025 届 · 广告学 · 达人媒介经验',
     source: '招聘系统投递',
+    analyzed: '2026-10-08',
     recommend: 'pool',
     recommendWhy: '达人实操真实，建议转推国内达人运营/媒介岗并留档备用',
     headline: '国内达人建联全流程熟手，但海外与英语两张硬牌缺失',
@@ -1733,6 +2218,7 @@ const CANDIDATES_FINANCE = [
     meta: '会计专硕在读（2028 届）· 本科会计学 · 事务所审计 + 企业财务双实习 · 每周 4-5 天',
     listMeta: '会计专硕 · 双财务实习 · 每周 4-5 天',
     source: '招聘平台投递（文件名显示为「张女士 28 年应届生」）',
+    analyzed: '2026-10-21',
     recommend: 'interview',
     recommendWhy: '四项核心职责全部有对应实证，建议优先约面（重点确认实习时长与出勤安排）',
     headline: '四人中唯一「审计 + 企业财务」双视角，且直接把本岗职责做过一遍',
@@ -1810,6 +2296,7 @@ const CANDIDATES_FINANCE = [
     meta: '会计学硕在读（2028 届）· 本科财务管理 · 事务所审计 + 建筑企业财务实习 · 挑战杯省一',
     listMeta: '会计学硕 · 事务所+企业财务 · 挑战杯省一',
     source: '招聘平台投递',
+    analyzed: '2026-10-21',
     recommend: 'interview',
     recommendWhy: '两段财务实习 + 证书齐全 + 建模型力强，建议约面（重点确认出勤与实习时长）',
     headline: '实操广度与数据建模能力最突出，两位可优先约面者之一',
@@ -1900,6 +2387,7 @@ const CANDIDATES_FINANCE = [
     meta: '2027 届 · 广东理工学院数智会计 · 出纳实习（付款报销审核 120+ 笔）· 初级会计 + 银行从业',
     listMeta: '2027 届 · 出纳实习实账 · 初级会计',
     source: '招聘平台投递（2026-10-26 新批次）',
+    analyzed: '2026-10-26',
     recommend: 'interview',
     recommendWhy: '本岗 50% 权重的报销单初审她已独立做过 3 个月，建议优先约面（重点确认通勤与到岗时间）',
     headline: '本批次唯一做过「付款与报销审核」实账的人 —— 本岗最重的活她已经上手',
@@ -1995,6 +2483,7 @@ const CANDIDATES_FINANCE = [
     meta: '广州大学会计专硕在读（2028 届）· 晋江市审计局 + 致同双审计实习 · 初级会计 + CET-6',
     listMeta: '会计专硕 · 双审计实习 · 在职核报销单',
     source: '招聘平台投递（2026-10-26 新批次）',
+    analyzed: '2026-10-26',
     recommend: 'interview',
     recommendWhy: '「按报销条例挑错」受过专业训练且现在仍在核报销单，建议约面（重点确认研一出勤）',
     headline: '「按报销条例挑错」受过最专业的训练 —— 两段审计实习 + 现职仍在核报销单',
@@ -2089,6 +2578,7 @@ const CANDIDATES_FINANCE = [
     meta: '广东工业大学会计学硕士在读（2029 届）· 海味商行财务助理 9 个月 + 诚安信审计 3 个月 · 初级会计 + CPA 税法',
     listMeta: '会计硕士 · 财务助理 9 个月 · 初级会计',
     source: '招聘平台投递（2026-10-26 新批次）',
+    analyzed: '2026-10-26',
     recommend: 'interview',
     recommendWhy: '单段 9 个月实账经验为全场最长，建议约面（但务必先在电话里谈清薪资预期）',
     headline: '9 个月小微企业「全盘财务助理」：对账、单据、开票、盘点、费用台账一条龙做过',
@@ -2179,6 +2669,7 @@ const CANDIDATES_FINANCE = [
     meta: '2027 届 · 广东白云学院会计学 · 两段财务实习共 8 个月 · 初级会计 + 金蝶',
     listMeta: '2027 届 · 两段财务实习 · 初级会计',
     source: '招聘平台投递（2026-10-26 新批次）',
+    analyzed: '2026-10-26',
     recommend: 'interview',
     recommendWhy: '两段实打实的财务实习 + 2027 届可长期，建议约面（重点确认出勤与真实份额）',
     headline: '两段真实财务实习覆盖「凭证录入 → 报销初审 → 开票报税」小全盘，硬条件全部达线',
@@ -2259,8 +2750,8 @@ const POSITIONS = [
     dept: '技术 · AI 交付',
     status: 'active',
     statusLabel: '分析已完成',
-    updated: '2026-10-13',
-    candidateCount: 7,
+    updated: '2026-10-26',
+    candidateCount: 12,
     jd: JD,
     candidates: CANDIDATES,
   },
@@ -2365,7 +2856,7 @@ const POSITIONS = [
   const LOG_MAX = 200; // 本机最多保留 200 条流水
   const LOG_SHOW = 30; // 决策情况页展示最近 30 条
 
-  const DOT = { green: 'g', amber: 'a', red: 'r' };
+  const DOT = { green: 'g', amber: 'a', red: 'r', gray: 'n' };
 
   let currentView = 'pos'; // 'pos' = 岗位视图 | 'decisions' = 决策情况
   let currentPosId = POSITIONS[0].id;
@@ -2685,7 +3176,9 @@ const POSITIONS = [
         const f = findCandidate(e.cid);
         const alive = !!(f && f.c);
         const name = alive ? f.c.name : e.cid;
-        const meta = alive && f.c.listMeta ? f.c.listMeta : '';
+        const meta = alive
+          ? [f.c.listMeta, f.c.analyzed ? '分析 ' + f.c.analyzed : null].filter(Boolean).join(' · ')
+          : '';
         const posName = alive ? f.pos.name : posNameOf(e.pos);
         return `<div class="drow">
           <div class="drow-main">
@@ -2694,6 +3187,7 @@ const POSITIONS = [
           </div>
           <div class="dtime">${esc(fmtTs(e.at))}</div>
           ${alive ? `<button class="viewbtn" data-goto="${esc(e.cid)}">查看详情 →</button>` : ''}
+          <button class="resetbtn" data-undo="${esc(e.cid)}" data-dec="${esc(e.dec)}" title="取消该标记，候选人将回到在招岗位列表">取消标记</button>
         </div>`;
       }).join('');
       return `<section class="dsec">
@@ -2716,7 +3210,7 @@ const POSITIONS = [
         <div class="list-title">决策情况</div>
         <div class="list-sub">共 ${total} 条决策记录${latest ? ' · 最近操作 ' + esc(fmtTsShort(latest)) : ''}</div>
       </div>
-      <div class="list-desc">汇总所有岗位的决策标记（推进面试 / 进入人才池 / 不使用）。数据保存在本机浏览器；换电脑或备份时，用下方「导出 / 导入数据」即可整体迁移。</div>
+      <div class="list-desc">汇总所有岗位的决策标记（推进面试 / 进入人才池 / 不使用 / 无法联系邀约）。标记后的候选人会自动从「在招岗位」列表移入此处；点击「取消标记」可放回列表重新评估。数据保存在本机浏览器；换电脑或备份时，用右上角「导出 / 导入数据」即可整体迁移。</div>
       <div class="list-bar">
         <span style="font-size:11.5px;color:#8A8A83">导出 / 导入在页面右上角「候选人分析」旁，对应整个工具的数据</span>
         <div style="flex:1"></div>
@@ -2734,7 +3228,7 @@ const POSITIONS = [
                 </svg>
               </div>
               <h3>还没有任何决策记录</h3>
-              <p>进入「在招岗位」，在候选人卡片上点击「推进面试 / 进入人才池 / 不使用」后，<br>决策会自动汇总到这里，并生成可回溯的操作流水。</p>
+              <p>进入「在招岗位」，在候选人卡片上点击「推进面试 / 进入人才池 / 不使用 / 无法联系邀约」后，<br>候选人会自动移入此处汇总，并生成可回溯的操作流水。</p>
             </div>`
       }
       ${
@@ -2762,6 +3256,15 @@ const POSITIONS = [
 
     $$('.viewbtn[data-goto]', list).forEach((b) =>
       b.addEventListener('click', () => gotoCandidate(b.dataset.goto))
+    );
+
+    // 取消标记 → 候选人回到在招岗位列表
+    $$('.resetbtn[data-undo]', list).forEach((b) =>
+      b.addEventListener('click', () => {
+        saveDecision(b.dataset.undo, b.dataset.dec);
+        renderRail();
+        renderList();
+      })
     );
   }
 
@@ -2822,9 +3325,11 @@ const POSITIONS = [
   function renderCandidates(p) {
     const decs = loadDecisions();
     const mats = loadMats();
-    const doneCount = p.candidates.filter((c) => decs[c.id] && decs[c.id].dec).length;
+    const isDecided = (c) => !!(decs[c.id] && decs[c.id].dec);
+    const doneCount = p.candidates.filter(isDecided).length;
+    const shown = p.candidates.filter((c) => !isDecided(c)); // 已决策候选人自动流入决策总览，不再留在本列表
 
-    const rows = p.candidates.map((c) => {
+    const rows = shown.map((c) => {
       const dObj = decs[c.id];
       const dec = dObj ? dObj.dec : null;
       const decDef = dec ? decOf(dec) : null;
@@ -2854,7 +3359,7 @@ const POSITIONS = [
               ${decDef ? `<span class="tag ${decDef.cls}">已标记 · ${esc(decDef.short)}</span>` : ''}
               ${matTag(mats[c.id], c)}
             </div>
-            <div class="row-meta">${esc(c.listMeta)} · 来源：${esc(c.source)}</div>
+            <div class="row-meta">${esc(c.listMeta)} · 来源：${esc(c.source)} · 分析 ${esc(c.analyzed || '—')}</div>
           </div>
           <div class="scores">
             <div class="sc"><div class="lbl">KSAO</div><div class="val ${c.tier}">${c.ksa.total}</div></div>
@@ -2882,7 +3387,7 @@ const POSITIONS = [
     list.innerHTML = `
       <div class="list-h">
         <div class="list-title">${esc(p.name)}</div>
-        <div class="list-sub">${esc(p.dept)} · 共 ${p.candidates.length} 位候选人 · 数据更新 ${esc(p.updated)}</div>
+        <div class="list-sub">${esc(p.dept)} · 共 ${p.candidates.length} 位候选人（已决策 ${doneCount} 位） · 数据更新 ${esc(p.updated)}</div>
       </div>
       <div class="list-desc">${esc(p.jd ? p.jd.positioning : '')} —— 分析基准：《公司智能招聘系统 AI 分析优化方案 V1.4》六维融合体系</div>
       <div class="list-bar">
@@ -2890,12 +3395,26 @@ const POSITIONS = [
         <div class="legend"><span class="ldot a"></span>有条件推荐</div>
         <div class="legend"><span class="ldot r"></span>不推荐本岗</div>
         <div style="flex:1"></div>
-        <span style="font-size:11.5px;color:#8A8A83">已标记 ${doneCount} / ${p.candidates.length}</span>
+        <span style="font-size:11.5px;color:#8A8A83">已决策 ${doneCount} / ${p.candidates.length} · 点击决策后自动移入「决策总览」</span>
         ${doneCount ? '<button class="resetbtn" id="resetDec">清除全部标记</button>' : ''}
         <button class="viewbtn" id="viewJD" style="margin-left:8px">查看岗位 JD →</button>
         <button class="viewbtn" id="viewDec" style="margin-left:8px">决策情况 →</button>
       </div>
-      <div class="rows">${rows}</div>`;
+      <div class="rows">${rows}</div>
+      ${
+        !shown.length && p.candidates.length
+          ? `<div class="pendingBox" style="margin-top:10px">
+              <div class="pi">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+                  <path d="M11 6v6M11 15.5v.5"/>
+                  <circle cx="11" cy="11" r="8.5"/>
+                </svg>
+              </div>
+              <h3>本岗位候选人均已完成决策</h3>
+              <p>全部候选人已流入「决策总览」。如需重新评估，进入决策总览点击「取消标记」即可放回本列表。</p>
+            </div>`
+          : ''
+      }`;
 
     // 决策按钮
     $$('.dbtn', list).forEach((b) =>
@@ -2961,7 +3480,7 @@ const POSITIONS = [
     openCandidateId = cid;
 
     pName.textContent = c.name;
-    pMeta.textContent = c.meta;
+    pMeta.textContent = c.meta + (c.analyzed ? ' ｜ 分析 ' + c.analyzed : '');
     pAvatar.className = 'avatar ' + c.tier;
     pAvatar.textContent = c.initial;
     pBody.innerHTML = buildCandidateDetail(c);
