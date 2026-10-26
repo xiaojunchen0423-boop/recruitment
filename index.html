@@ -282,6 +282,99 @@ a:hover{text-decoration:underline}
 .mailnote{font-size:11.5px;color:var(--ink3);line-height:1.65;margin-top:9px}
 .mailnote b{color:var(--ink2)}
 
+/* 面试材料与 AI 复核 */
+.matbar{display:flex;gap:8px;align-items:center;margin-bottom:11px;flex-wrap:wrap}
+.matcount{font-size:11.5px;color:var(--ink3)}
+.mat{border:1px solid var(--line);border-radius:var(--radius-s);padding:11px 13px;margin-bottom:9px;background:var(--card);position:relative}
+.mat .mmain{min-width:0}
+.mat .mname{font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:7px;word-break:break-all;padding-right:42px}
+.mico{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:5px;background:var(--blue-bg);color:var(--blue);font-size:11px;font-weight:600;flex-shrink:0;border:1px solid var(--blue-line)}
+.mat .mmeta{font-size:11.5px;color:var(--ink3);margin-top:3px;line-height:1.55}
+.mdel{position:absolute;right:11px;top:11px;font-size:11px;color:var(--ink3);text-decoration:underline;text-underline-offset:2px}
+.mdel:hover{color:var(--red)}
+.mabs{font-size:11px;color:var(--ink3);background:var(--bg);border:1px dashed var(--line);border-radius:6px;padding:7px 9px;margin-top:8px;line-height:1.6}
+.mimg{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:7px;margin-top:9px}
+.mimg img{width:100%;height:110px;object-fit:cover;border:1px solid var(--line);border-radius:6px;background:var(--bg)}
+.mpreview{margin-top:9px;max-height:190px;overflow:auto;background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:10px 12px}
+.mpreview pre{font-family:"SF Mono",Consolas,"Courier New",monospace;font-size:11px;line-height:1.65;color:var(--ink2);white-space:pre-wrap;word-break:break-word;margin:0}
+.matempty{font-size:12px;color:var(--ink3);background:var(--bg);border:1px dashed var(--line-strong);border-radius:var(--radius-s);padding:13px 15px;line-height:1.75}
+.matempty b{color:var(--ink2)}
+
+.aibox{margin-top:14px;border:1px solid var(--blue-line);background:#FAFCFF;border-radius:var(--radius);padding:13px 15px}
+.aihead{display:flex;align-items:center;gap:9px;margin-bottom:10px;flex-wrap:wrap}
+.aititle{font-size:12.5px;font-weight:600}
+.aistatus{font-size:11.5px;color:var(--ink3);display:flex;align-items:center;gap:5px;flex:1;min-width:120px}
+.okdot,.nodont{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.okdot{background:var(--green)}
+.nodont{background:var(--line-strong)}
+.aibtns{display:flex;gap:8px;flex-wrap:wrap}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.ainote{font-size:11.5px;color:var(--ink3);line-height:1.65;margin-top:9px}
+.ainote .warn{color:var(--amber)}
+
+.aicfg{margin-top:11px;padding-top:11px;border-top:1px dashed var(--blue-line)}
+.cfgrow{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.cfgrow label{font-size:12px;color:var(--ink3);width:62px;flex-shrink:0}
+.cfgrow select,.cfgrow input{flex:1;min-width:0;padding:6px 10px;border:1px solid var(--line-strong);border-radius:7px;font-size:12px;font-family:inherit;color:var(--ink);background:var(--card)}
+.cfgrow select:focus,.cfgrow input:focus{outline:none;border-color:var(--blue)}
+.cfgbtns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+.cfgnote{font-size:11px;color:var(--ink3);line-height:1.65;margin-top:9px}
+.cfgnote b{color:var(--ink2)}
+.cfgnote code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;background:var(--blue-soft);color:var(--blue);padding:1px 5px;border-radius:4px}
+
+.ares{margin-top:13px;padding-top:13px;border-top:1px dashed var(--blue-line)}
+.ares-h{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:9px}
+.ares-note{font-size:12px;color:var(--ink2);line-height:1.7;background:var(--bg);border-radius:7px;padding:9px 11px;margin-bottom:11px}
+.as-sec{margin-bottom:13px}
+.as-sec:last-child{margin-bottom:0}
+.as-t{font-size:11.5px;font-weight:600;color:var(--ink3);margin-bottom:7px}
+.vrow{display:flex;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line);align-items:flex-start}
+.vrow:last-child{border-bottom:none;padding-bottom:0}
+.vmain{flex:1;min-width:0}
+.vclaim{font-size:12px;font-weight:600;margin-bottom:2px}
+.vev{font-size:11.5px;color:var(--ink2);line-height:1.6}
+.vtag{flex-shrink:0;font-size:10.5px;font-weight:500;padding:2px 7px;border-radius:4px;border:1px solid;white-space:nowrap}
+.vtag.green{background:var(--green-bg);color:var(--green);border-color:var(--green-line)}
+.vtag.amber{background:var(--amber-bg);color:var(--amber);border-color:var(--amber-line)}
+.vtag.red{background:var(--red-bg);color:var(--red);border-color:var(--red-line)}
+.vtag.gray{background:var(--bg);color:var(--ink3);border-color:var(--line)}
+.drow2{display:flex;align-items:center;gap:9px;padding:6px 0;font-size:12px;flex-wrap:wrap}
+.dname2{width:96px;flex-shrink:0;color:var(--ink2)}
+.dbar{width:70px;height:5px;border-radius:3px;background:var(--line);overflow:hidden;flex-shrink:0}
+.dbar i{display:block;height:100%;background:var(--blue)}
+.dnum{font-size:11.5px;font-weight:600;color:var(--blue);width:14px;flex-shrink:0}
+
+/* ---------- 先后对比卡 ---------- */
+.cmp{margin:0 0 13px;border:1px solid var(--blue-line);border-radius:var(--radius);overflow:hidden;background:var(--card)}
+.cmp-h{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--blue-bg);font-size:12px;font-weight:500;color:var(--blue)}
+.cmp-h .cmp-sub{font-weight:400;font-size:11px;opacity:.85}
+.cmp-spacer{flex:1}
+.cmp-badge{font-size:10.5px;font-weight:500;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.75);border:1px solid var(--blue-line)}
+.cmp-badge.chg{background:#fff;border-color:var(--amber-line);color:var(--amber)}
+.cmp-verdict{display:flex;align-items:center;gap:10px;padding:10px 12px}
+.cmp-v{flex:1;min-width:0}
+.cmp-k{font-size:10.5px;color:var(--ink3);margin-bottom:3px}
+.cmp-b{font-size:12.5px;font-weight:500;color:var(--ink)}
+.cmp-b.chg{color:var(--amber)}
+.cmp-arrow{font-size:14px;color:var(--ink3);flex-shrink:0}
+.cmp-reason{padding:0 12px 10px;font-size:11px;color:var(--ink3);line-height:1.6;border-bottom:1px dashed var(--blue-line)}
+.cmp-row{display:grid;grid-template-columns:72px 40px 56px 40px 1fr;align-items:center;gap:8px;padding:6px 12px;border-top:1px solid var(--line);font-size:12px}
+.cmp-dim{font-size:11.5px;color:var(--ink2)}
+.cmp-val{text-align:center;color:var(--ink3);font-variant-numeric:tabular-nums}
+.cmp-val.strong{color:var(--ink);font-weight:600}
+.cmp-dlt{text-align:center;font-size:11px;font-weight:500;padding:1px 0;border-radius:5px;font-variant-numeric:tabular-nums}
+.cmp-dlt.up{color:var(--green);background:var(--green-bg)}
+.cmp-dlt.down{color:var(--red);background:var(--red-bg)}
+.cmp-dlt.same{color:var(--ink3);background:var(--bg)}
+.cmp-note{font-size:11px;color:var(--ink3);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cmp-stats{display:flex;flex-wrap:wrap;gap:4px 11px;padding:9px 12px;border-top:1px solid var(--line);background:#FAFCFF;font-size:11px;color:var(--ink3)}
+.cmp-stats .cmp-sum{margin-left:auto;color:var(--blue);font-weight:500}
+.dnote{flex:1;min-width:120px;font-size:11.5px;color:var(--ink3);line-height:1.55}
+.slist{font-size:12px;color:var(--ink2);line-height:1.7}
+.slist li{margin-bottom:6px;list-style:none;padding-left:14px;position:relative}
+.slist li:before{content:"";position:absolute;left:2px;top:9px;width:4px;height:4px;border-radius:50%;background:var(--amber)}
+.ares-foot{font-size:11px;color:var(--ink3);line-height:1.6;margin-top:11px;padding-top:9px;border-top:1px dashed var(--line)}
+
 .empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;text-align:center;color:var(--ink3)}
 .empty h3{font-size:14px;font-weight:600;color:var(--ink2);margin-bottom:8px}
 .empty p{font-size:12.5px;line-height:1.7;max-width:320px}
@@ -347,6 +440,7 @@ a:hover{text-decoration:underline}
      3) output/20260921-aijd-v14-analysis（V1.4 六维分析结论）
      4) 敏炜：官网投递截图解析（原图未在本机，工具内支持拖入查看）
      5) 2026-10-10 新增：陈俊瑜_广州聚客_AI交付工程师_简历_优化版.pdf、沈毅天_求职简历.pdf
+     6) 2026-10-13 新增：李友朝简历.pdf、何鑫.pdf（AI 交付工程师岗位，现共 7 位候选人）
    ============================================================ */
 
 /* ---------- 决策状态定义（顺序即按钮顺序） ---------- */
@@ -421,8 +515,109 @@ const JD = {
   },
 };
 
-/* ---------- 三候选人 ---------- */
+/* ---------- 候选人（按对理想标尺相似度降序排列） ---------- */
 const CANDIDATES = [
+  {
+    id: 'lyz',
+    name: '李友朝',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '李',
+    meta: '1 年经验 · 临沂大学 计算机科学与技术 · AI 应用开发工程师（云影千星）· 3 个已上线产品',
+    listMeta: '1 年经验 · 计算机科学 · 3 个上线 AI 产品',
+    source: '简历投递',
+    recommend: 'interview',
+    recommendWhy: '硬门槛全过 + 三个产品可现场打开，建议优先约面（先核验学历时间线与薪酬预期）',
+    headline: '全部候选人中「AI 端到端交付」证据最硬 —— 三个产品都能现场打开',
+    score: '★★★★★',
+    ksa: { K: 4.5, S: 4.5, A: 4, O: 3.5, total: 4.2 },
+    star: 4.5,
+    similarity: 81,
+    similarityBand: '高度相似（首个跨过 80% 阈值的候选人）',
+    consistency: { level: 'high', label: '高（两处硬信息待核验）', note: '三个项目均有可访问的线上地址（canvas.yyqxai.com、theirside.io、crampack.app），交付物可直接打开验证，技术栈与职责描述具体可追；但未附代码仓库，且教育时间线（2024–2026 本科）与在职时间（2025.09–2026.09）重叠，需先核验学历与工作起止' },
+    mbti: '偏 I / N / T / J（行为推断）',
+    belbin: '创新者（Plant）+ 执行者（Implementer）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '授权型领导适配最高（自驱强、链路完整，适合给目标与边界，不必给步骤）',
+    summary:
+      '计算机科学与技术本科 + 1 年 AI 应用开发经验，是目前唯一「三个产品都能打开看」的候选人：' +
+      'AI 漫剧可视化制作平台（公司项目，canvas.yyqxai.com）、TheirSide AI 角色聊天（theirside.io）、' +
+      'CramPack AI 复习卡（crampack.app）。技术栈与本岗互补度高 —— React / TypeScript / Next.js 前端，' +
+      'Node / Express 后端，PostgreSQL / Prisma 数据层，OpenAI 兼容接口与 RAG / Embedding / pgvector 混合检索，' +
+      '外加 Vitest / Playwright 测试与 GitHub Actions 部署。他不只是「用 AI 写代码」，而是把 AI 能力做成了可运行、' +
+      '有异常兜底、能交付上线的产品。两个必须先确认的点：学历时间线，以及薪酬与职级预期。',
+    highlights: [
+      { t: '端到端交付闭环（本批唯一）', d: '从需求拆解、前后端开发到部署上线全链路参与：React 画布编辑器（拖拽、节点连线、缩放、自动保存）+ Node / Express 接口 + PostgreSQL 视频任务队列与独立 Worker（任务锁、心跳续期、并发控制、刷新后续取结果）+ S3 兼容对象存储。' },
+      { t: 'AI 能力接进真实产品', d: '接入 DeepSeek / 豆包 / OpenRouter 与 OpenAI 兼容接口，处理结构化 JSON 输出、异常兜底与用户可见错误提示；用 Embedding + pgvector 做关键词／向量混合检索，实现结构化记忆提取、跨会话召回、事实更正与版本追踪。' },
+      { t: '工程规范意识强', d: 'Vitest / React Testing Library / Playwright 做单元、组件与端到端测试，GitHub Actions + Vercel 做持续集成与部署验证，ESLint 管代码规范；坚持代码审查与运行验证后再上线 —— 与 JD「Review AI 代码、能定位并修复」高度对应。' },
+      { t: '产品与文档双达标', d: 'JD 要求「写大量 Prompt 与文档」：三份产品都有完整对外说明与使用流程，简历本身条理化程度在候选人中最突出；熟悉 Coze 智能体与工作流搭建。' },
+    ],
+    risks: [
+      { t: '学历时间线需先核验（最要紧）', d: '简历写「临沂大学 计算机科学与技术 本科 2024–2026」，跨度仅 2 年，且未列出专科或前置学历；25 岁 + 2 年制本科的常见解释是专升本或成人教育。约面前请先核验毕业证／学位证与学信网信息。' },
+      { t: '在职与在校时间重叠', d: '2025.09–2026.09 全职在职，与 2024–2026 在校时间重叠。需确认是在校期间的全职或弹性工作，以及是否影响学历与工作经历的真实性判断。' },
+      { t: '岗位定位与薪酬预期错配风险', d: '本岗定位为应届 8K-15K ／ 实习 4K-6K，而他是 25 岁、已有 1 年正式 AI 开发经验、独立交付过三个产品，薪酬与职级预期大概率高于应届档，建议约面前先电话对齐。' },
+      { t: '项目归属与代码不可预检', d: '三个项目中哪个属云影千星的公司项目、哪些属个人副业产品，决定了「独立完成度」与「团队协作经验」的判断；简历未附代码仓库链接，代码无法提前查看，只能靠线上产品与面试追问核验。' },
+      { t: '缺少规范化团队流程经验', d: '所在团队规模较小，简历中未体现正式的需求评审、Code Review 等流程经验。本岗内部亦为小团队，影响有限，但需确认他能否接受流程从简、身兼多职的工作方式。' },
+    ],
+    interview:
+      '两步：先核验，再动手。核验由 HR 先行 —— 学历证书 + 学信网 + 工作起止时间 + 薪酬预期区间。' +
+      '面试现场验证一条 —— 打开 canvas.yyqxai.com 或 crampack.app，让他讲清楚异步生成任务的队列设计：任务锁与心跳续期为什么必要？生成失败怎么恢复？页面刷新后结果怎么找回来？' +
+      '再补一个迁移测试 —— 给一个公司真实的杂活（例如把一批 PDF 材料批量提取字段并出表），让他在自己电脑上用 AI 工具做到能跑，观察他拆步骤、控边界、验证结果的习惯，这正是本岗每天都要做的动作。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）',
+      raw: `李友朝　AI 应用开发工程师
+男 | 25 岁　电话：已脱敏　邮箱：（邮箱已脱敏）
+
+【教育经历】
+2024-2026　临沂大学　计算机科学与技术｜本科
+
+【工作经历】
+2025.09-2026.09　云影千星网络科技有限公司　AI 应用开发工程师
+
+· AI 漫剧可视化制作平台（项目地址：https://canvas.yyqxai.com/）
+面向 AI 漫剧制作场景的 Web 可视化制作平台，支持素材管理、节点式画面编排、AI 图片与视频生成、工作流保存及内容预览。
+技术栈：React、TypeScript、Vite、Node.js、Express、PostgreSQL、Prisma、S3 兼容对象存储。
+1. 可视化编辑开发：基于 React / TypeScript 实现素材拖拽、节点连线、画布缩放、多选与分组等交互，完善编辑器状态管理、工作流保存与自动保存功能。
+2. 后端接口与模型接入：基于 Node.js / Express 开发素材、工作流及生成任务接口，接入图片与视频生成服务，处理模型参数、参考素材、生成结果及异常响应。
+3. 异步生成任务处理：参与基于 PostgreSQL 的视频任务队列与独立 Worker 开发，通过任务锁、心跳续期和并发控制管理长耗时任务，配合前端状态轮询与结果恢复，支持页面刷新后继续获取生成结果。
+4. 数据与产品能力建设：使用 Prisma / PostgreSQL 管理用户、生成记录与用量账目，完善素材存储、个人与团队资源权限、生成失败处理等能力。
+业绩：完成核心功能交付，将素材导入、画面编排、AI 生成、结果预览和工作流复用整合到同一 Web 平台。
+
+【项目经历】
+2026.03-2026.07　TheirSide AI 角色聊天产品　AI 应用开发工程师
+项目地址：https://theirside.io/
+面向持续陪伴与角色互动场景的 AI 聊天产品，支持单角色对话、多角色群聊、会话记忆及图片生成。
+1. 核心聊天开发：实现 1v1 对话、角色资料管理、会话持久化和消息展示，打通从角色选择、发送消息到回复生成的完整流程。
+2. 上下文与记忆构建：将角色设定、历史对话、会话记忆及关系状态接入回复生成流程，为角色保持人设一致性和对话连续性提供支持。
+3. 多角色互动优化：将群聊由固定顺序轮流回复升级为动态发言机制，结合对话内容、点名对象与互动状态判断发言角色、回应对象及结束时机。
+4. 产品配套能力建设：接入图片生成与对象存储，完善用量监控、基础额度控制、健康检查和公开展示页面。
+业绩：完成覆盖角色选择、连续对话、多角色互动和图片生成的可运行版本。
+
+2026.07-2026.09　CramPack 笔记整理　AI 应用开发工程师
+项目地址：https://crampack.app/
+面向大学生期末复习场景的 AI 资料卡生成工具，支持 PDF / 文本输入、知识点整理、复习卡生成、编辑、复习和导出。
+1. 独立完成产品流程设计、前后端开发、AI 接口接入和部署验证。
+2. 基于 Next.js、React、TypeScript 构建资料输入、卡片编辑、历史记录和网页复习等核心交互。
+3. 接入 DeepSeek / OpenRouter 等大模型 API，处理结构化输出、异常兜底和用户可见错误提示。
+4. 使用 PostgreSQL、Drizzle ORM、Better Auth 实现数据保存、版本管理、登录鉴权和用量控制。
+业绩：完成可运行的 AI SaaS MVP，用户可从 PDF / 文本直接生成可编辑复习卡，并在网页端完成复习和导出。
+
+【个人优势】
+· 具备 Web、小程序开发能力及 AI 应用实践经验。参与公司 Web 可视化编辑平台建设，独立完成 AI 复习卡应用，并持续开发 AI 角色对话产品，具备从需求拆解、前后端开发到部署上线的完整项目经验。
+· 熟悉大模型与第三方 API 集成，具备 RAG（检索增强生成）、Embedding 语义检索、对话记忆及用户认证等功能的开发经验，能够结合业务需求完成数据存储、服务集成与功能迭代。
+· 熟练使用 Git 进行版本管理，使用 Codex、Cursor 辅助开发，熟悉 Coze 智能体与工作流搭建。重视代码验证、真实场景测试、异常处理及上线问题排查。
+
+【专业技能】
+· 前端开发：JavaScript、TypeScript、React、Next.js App Router，具备响应式页面、可视化画布、复杂交互与状态管理开发经验。
+· 后端与数据：Node.js / Express，PostgreSQL、SQL、Prisma，数据建模、登录鉴权、权限隔离、数据库事务、请求幂等；异步任务队列、Worker 执行与失败恢复；S3 兼容对象存储。
+· AI 应用开发：DeepSeek、豆包、OpenRouter 等模型或平台接入，OpenAI 兼容接口、提示词设计、结构化 JSON 输出、多轮对话上下文管理、图片与视频生成任务接入与状态管理。
+· RAG 与会话记忆：Embedding、pgvector、关键词／向量混合检索，结构化记忆提取、跨会话召回、事实更正与版本追踪。
+· 测试与交付：Git、GitHub Actions、Vercel、ESLint；Vitest、React Testing Library、Playwright 单元 / 组件 / 端到端测试；持续集成、部署验证与线上问题排查。
+· AI 辅助开发：使用 Codex、Cursor 辅助需求拆解、代码实现、调试与测试，并结合代码审查和运行验证检查结果；熟悉 Coze 智能体与工作流搭建。`,
+    },
+  },
+
   {
     id: 'minwei',
     name: '敏炜',
@@ -434,7 +629,7 @@ const CANDIDATES = [
     source: '官网投递',
     recommend: 'interview',
     recommendWhy: '唯一通过全部硬门槛，建议直接约面',
-    headline: '三人中唯一能「明天就上手交付」的候选人',
+    headline: '硬门槛全过、开源与自动化测试证据最扎实的「即插即用型」候选人',
     score: '★★★★☆',
     ksa: { K: 4, S: 5, A: 4.5, O: 3.5, total: 4.3 },
     star: 4.5,
@@ -480,7 +675,7 @@ const CANDIDATES = [
     source: '招聘系统投递',
     recommend: 'interview',
     recommendWhy: 'AI 应用交付证据最足，建议直接约面（重点验证动手深度）',
-    headline: '四人中「AI 应用交付」证据最完整的候选人，但需验证是「做方案」还是「做交付」',
+    headline: '「AI 交付方法论」最完整的方案型候选人，需验证是「做方案」还是「做交付」',
     score: '★★★★☆',
     ksa: { K: 4.5, S: 4.5, A: 4, O: 3.5, total: 4.1 },
     star: 4.5,
@@ -493,14 +688,14 @@ const CANDIDATES = [
     style: '教练型 / 授权型领导适配最高（自主性强，适合给边界而非给步骤）',
     summary:
       '通信工程本科背景，但三段实习全部落在 AI 解决方案赛道：商汤科技售前解决方案实习、美高域 AI 解决方案实习，' +
-      '以及个人从 0 搭建的 Dify Agent PoC。与 JD「AI-0 调度模式」的契合度在四人中最高 —— ' +
+      '以及个人从 0 搭建的 Dify Agent PoC。与 JD「AI-0 调度模式」的契合度位居前列 —— ' +
       '他不只是用 AI 工具写代码，还做过 Agent 架构设计、RAG 知识库、Function Calling 路由、JSON Schema 数据契约，' +
       '以及 30 项标准化冻结验收测试。需注意他的经历以「售前方案」为重，而本岗位是「动手交付」，两者之间要用面试验证。',
     highlights: [
       { t: 'AI 交付方法论完整', d: 'Dify 平台从 0 搭建售前 RAG Agent：双工作流 + Function Calling 动态路由；设计工具调用白名单、JSON Schema 数据契约、多层安全回退策略；完成 30 项冻结验收测试（19 项知识库对照 + 7 项 Agent 任务 + 4 项体验测试），并留存失败样本与迭代记录 —— 这正是「交付」的标准动作。' },
       { t: '大厂 AI 方案实战', d: '商汤科技售前实习参与文旅与零售电商大模型赋能项目、"民生诉求语言大模型"方案编制；美高域实习基于大模型框架搭建医疗 AI 智能体，实现 10 类骨科疾病智能初筛、分诊准确率 88%。' },
       { t: '有真实上线的交付物', d: '独立完成个人作品集网站 dayday.design（React + TypeScript）从 0 到 1 开发、域名配置与线上部署；本地记账 Agent Skill（Python/SQLite）含 SHA-256 哈希链审计日志与高风险写入人工确认 —— 不只是课程作业。' },
-      { t: '文档与方案能力五人最强', d: 'JD 明确要求「需要写大量 Prompt 与文档」。他做过政府采购标书 30+ 项目（涉金额 8000 万元+）、4 个乡镇商贸中心验收申报全流程、方案编制与合规交叉核验，结构化表达能力有实证。' },
+      { t: '文档与方案能力最突出', d: 'JD 明确要求「需要写大量 Prompt 与文档」。他做过政府采购标书 30+ 项目（涉金额 8000 万元+）、4 个乡镇商贸中心验收申报全流程、方案编制与合规交叉核验，结构化表达能力有实证。' },
     ],
     risks: [
       { t: '「售前」与「交付」的错位（最需验证）', d: '三段经历以售前方案、竞品调研、标书编制为主，而本岗位要动手调度 AI 产出代码、Review、调试、维护知识库。方案能力不等于交付能力，要看他能否独立把一个需求做到上线。' },
@@ -560,6 +755,93 @@ const CANDIDATES = [
 【个人优势】
 · 计算机能力：熟练 Office（Word/Excel/PPT）、Keil、PyCharm；熟练使用 Python、C++、MySQL；熟悉 PyTorch 框架及主流目标检测模型；掌握 Dify Agent/Workflow、RAG/知识库、工具调用、JSON Schema 契约、固定集评测、证据状态与人工复核边界。
 · 语言能力：大学英语 CET-4，可处理英文产品资料和基础书面信息。`,
+    },
+  },
+
+  {
+    id: 'hx',
+    name: '何鑫',
+    tag: '有条件推荐',
+    tier: 'amber',
+    initial: '何',
+    meta: '2027 届 · 重庆工商大学 计算机技术硕士（在读）· 西南科技大学 软件工程 · 北京 AI 算法实习',
+    listMeta: '2027 届 · 计算机技术硕士 · 两个开源项目',
+    source: '简历投递',
+    recommend: 'interview',
+    recommendWhy: '技术底子最厚但 2027.06 才毕业 —— 先谈清到岗时间，能走实习通道就约面，否则留档至 2027 春招',
+    headline: '技术深度在全部候选人中最强，但「2027 届 + 北京」是本岗的硬约束',
+    score: '★★★★☆',
+    ksa: { K: 4.5, S: 4.5, A: 4, O: 2.5, total: 3.9 },
+    star: 4.5,
+    similarity: 74,
+    similarityBand: '较相似（技术项拉高、身份项拉低）',
+    consistency: { level: 'high', label: '高', note: '提供 GitHub 公开账号（github.com/ArenYegar）与两个开源仓库，代码、评测脚本、结果文件均可外部复算；量化口径具体（492 页裁剪到抑郁相关章节、索引块 1136 → 477、故障暴露天级 → 分钟级），是本批候选人中可核验度最高的之一。缺口在于无前端／全栈交付作品，且到岗时间无法核实' },
+    mbti: '偏 I / N / T / J（行为推断）',
+    belbin: '专家（Specialist）+ 完成者（Completer Finisher）',
+    fit: { level: 'amber', label: '能力匹配，身份待定' },
+    style: '教练型领导适配最高；但需先解决到岗时间这一前置条件',
+    summary:
+      '软件工程本科 + 计算机技术硕士（在读，2027.06 毕业）。北京随视传媒 AI 算法实习期间参与跨境电商独立站广告 AI 优化系统从 0 到 1 建设：' +
+      '多模态素材判断引擎、覆盖 YouTube / TikTok / Reddit / Facebook 的达人营销 Agent、Webhook 实时告警与影子验证／漂移检测、' +
+      'LightGBM 销量与 ROAS 预测模型。两个开源项目（可信 RAG 问答、多智能体面试陪练）的工程规范程度在全部候选人中最高 —— 有评测集、有拒答闸门、有单测、有降级链。' +
+      '核心问题不在能力，而在身份：2027.06 毕业，不满足本岗「2025 / 2026 届应届」硬门槛，且人在北京、无 Web 交付作品。',
+    highlights: [
+      { t: 'AI 工程深度第一', d: 'RAG 全链路做透：BGE-M3 稠密 + BM25 稀疏双路召回 → RRF 融合 → BGE-Reranker 二次排序 → 句级支撑校验 + 拒答闸门，并自建「可答 / 应拒答」两类标注评测集，把「该拒的有没有拒」变成可测指标 —— 这是 JD 里「能判断 AI 产出对不对」的最高级形态。' },
+      { t: 'Agent 与可靠性工程', d: 'LangGraph 状态机 + Pydantic 工具输入输出契约 + 模型降级链 + 空响应判失败重试 + 落库幂等防重 + 提示注入防护 + 人工确认闸门；生产侧做过 Webhook 实时监听、健康检查与异常告警，把故障暴露时间从天级压到分钟级。' },
+      { t: '唯一「指标可复算」的候选人', d: 'GitHub 公开账号 ArenYegar 下两个项目均附评测脚本与落盘结果文件，第三方可自行复算指标 —— 诚信信号可外部验证，这在应届候选人中极罕见。' },
+      { t: '业务闭环意识强', d: '不只做模型：构建 GA4 → BigQuery 用户级样本管道，做泄漏字段清理、样本加权与量级校准抑制过拟合，参与等预算投放对照实验设计，理解 AI 输出最终要落到业务指标上。' },
+    ],
+    risks: [
+      { t: '身份不符（决定性）', d: '2027.06 毕业，不满足 JD「2025 / 2026 届应届生 · 1-2 年早期工程师」硬门槛；「在校大三大四实习」通道亦不适用（研三）。若要推进，实际路径是实习生／预录用，需 HR 与用人部门先确认名额与编制。' },
+      { t: '到岗时间与城市', d: '距离毕业还有约 8 个月，且实习在北京（随视传媒）。能否到广州长期发展、能否接受实习期安排、毕业前每周可投入几天，都需当面确认。' },
+      { t: '单一技术栈，无 Web 交付作品', d: '经历集中在 Python / 后端 / 模型侧（FastAPI、RAG、Agent、LightGBM），无前端或全栈交付作品。公司产品线（聚客 CRM：PHP → Laravel 11 + React 18、领功小程序）以 Web 交付为主，需确认他愿不愿意补这一块。' },
+      { t: '应届档薪酬与留存预期', d: '技术与实习质量明显高于应届平均线，8K-15K 的应届档薪酬能否谈拢、实习转正后的留存稳定性，建议提前对齐预期，避免流程走到最后一步再谈崩。' },
+    ],
+    interview:
+      '先谈身份与时间，再谈技术。第一轮 20 分钟先确认三件事：能否接受实习生身份与广州到岗、毕业前后各是什么安排、薪酬预期落在哪个区间。' +
+      '技术侧现场验证一条 —— 打开 github.com/ArenYegar/trustworthy-rag，让他讲清楚拒答闸门的阈值怎么定、「应拒答」评测样本怎么构造、出现过哪些假拒答，能否讲透是分辨「真做过」与「照着文档做」的关键。' +
+      '再补一个动手测试 —— 给一份中文 PDF 资料，让他用 20 分钟现场搭一个最小 RAG（工具不限），观察他如何切分文档、如何验证检索质量，这正是本岗日常动作的直接映射。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）',
+      raw: `何鑫
+电话：已脱敏 | 邮箱：（邮箱已脱敏） | GitHub：github.com/ArenYegar
+
+【教育背景】
+2024.09-2027.06　重庆工商大学　计算机技术｜工学硕士
+2020.09-2024.06　西南科技大学　软件工程｜工学学士
+
+【实习经历】
+2026.04-2026.09　北京随视传媒科技股份有限公司　AI 算法实习生
+· AI 应用系统建设：参与跨境电商独立站广告 AI 优化系统从 0 到 1 建设，负责多模态素材分析、广告投放建议及达人营销 Agent 等模块开发，打通数据接入、模型分析、建议生成与业务反馈链路。
+· 多模态素材分析：构建广告素材判断引擎，整理真实素材方向与投放规则，实现素材内容分析、广告组评分、CPA 超标预警及投放建议生成，支持日常多类投放动作，并沉淀可复用的投放规则。
+· Agent 应用开发：开发覆盖 YouTube、TikTok、Reddit、Facebook 的达人营销 Agent，围绕达人信息检索、候选筛选、结果整理及营销内容生成等任务进行流程编排。
+· 数据与运行保障：构建 Webhook 实时监听、健康检查、异常告警及自动化数据管道，将故障暴露时间由天级缩短至分钟级；通过影子验证与漂移检测持续监控 AI 判断结果，并校验其判断方向的一致性。
+· 模型与业务闭环：迭代 LightGBM 销量与 ROAS 预测模型，通过泄漏字段清理、样本加权与量级校准抑制过拟合、提升跨期泛化；构建 GA4 到 BigQuery 的用户级样本管道，并参与等预算的投放对照实验设计。
+
+【项目经验】
+基于 RAG 的心理健康知识问答系统（个人开源项目）
+github.com/ArenYegar/trustworthy-rag
+技术栈：Python、BGE-M3、BGE-Reranker、FAISS、BM25、jieba、Qwen、FastAPI、Streamlit、pypdf、NumPy
+· 数据与切分：先对每本文档量化其对目标患者问题的覆盖率，再决定留剔补 —— 据此剔除英文非对口件、把 492 页泛精神科规范裁到抑郁相关章节；再按章节与条目结构切分，每块保留来源、页码与章节元数据，替代定长硬切。索引块由 1136 精简到 477，抑郁相关内容密度翻倍；英文那本对中文问句检索命中为 0，一并剔除。
+· 检索链路：稠密向量（BGE-M3）与稀疏（BM25）双路召回经 RRF 融合，再用 BGE-Reranker 二次排序；辅以查询改写扩展与上下文压缩，减少噪音干扰。药名等专有名词靠稀疏、语义近似靠稠密，两路互补召回。
+· 可信生成：回答逐句带引用标记，生成后做句级支撑校验（被引段落是否真的支撑该句），并以检索相关度与支撑率作为拒答闸门 —— 没有依据时明确拒答，而不是让模型硬编。校验不过即拒答，宁可少答不可乱答。
+· 评测：构建可答与应拒答两类带标注评测集，分开量化检索命中、引用覆盖率与拒答正确率，把「该拒的是否拒答」变成可测指标，而非用相似度阈值自证。评测脚本一键复现，结果与引用一并落盘，指标可从结果文件复算。
+
+多智能体求职陪练 Agent 系统（个人开源项目）
+github.com/ArenYegar/interview-coach-agent
+技术栈：Python、LangGraph、FastAPI、Pydantic、SQLite、Qwen、DeepSeek、FAISS、unittest、jieba、pypdf
+· 工具编排与契约：每个工具都以 Pydantic 定义输入输出契约，并各自带确定性兜底，模型不可用时链路不中断、只显式标记降级；显式状态机与 LangGraph 两套实现共用同一段业务逻辑，逐轮编排一致由单测覆盖。
+· 可靠性与人机协同：模型侧设降级链，主模型不可用时自动切换；空响应判为失败并重试，落库幂等防重；提示注入防护把作答与岗位描述当作数据而非指令隔断；跨场次弱点画像先经人工确认闸门，驳回的要点不入库。
+· 检索与评测：检索层融合稠密向量与 BM25 并用重排模型二次排序；自建金标准题库，用评测脚本逐场复算。
+
+【专业技能】
+· 熟悉 LLM 应用开发与 Prompt Engineering，了解 Function Calling、ReAct、MCP 等 Agent 核心技术。
+· 熟悉 LangChain、LangGraph 应用框架，具备多智能体协作、工具调用与 Agent 工作流编排经验。
+· 掌握 RAG 检索增强链路：文档解析与切分、Embedding、FAISS、Milvus 向量检索、RRF 与 Reranker 重排。
+· 熟悉 FastAPI 接口开发与 SSE 流式响应，具备大模型 API 接入、结构化输出与多模态素材分析经验。
+· 熟悉 Qwen、OpenAI、DeepSeek 等大模型接入与本地部署，具备 RAG 应用与 Agent 服务线上化能力。
+· 熟悉 Python、Linux、Git、Docker，具备 Nginx、systemd 服务部署、数据管道自动化与线上监控告警经验。`,
     },
   },
 
@@ -671,7 +953,7 @@ UTS Industry Project – Salesforce HR System（Salesforce / 需求分析 / 数�
     source: '招聘系统投递',
     recommend: 'interview',
     recommendWhy: '建议加 15 分钟技术摸底后再定',
-    headline: '技术门槛未过，但学习速度与产品思维是三人中最突出的',
+    headline: '技术门槛未过，但学习速度与产品思维在候选人群中仍很突出',
     score: '★★★☆☆',
     ksa: { K: 2, S: 4, A: 4.5, O: 3.5, total: 3.6 },
     star: 4.0,
@@ -763,7 +1045,7 @@ UTS Industry Project – Salesforce HR System（Salesforce / 需求分析 / 数�
     fit: { level: 'red', label: '不符' },
     style: '与本岗位团队风格不符',
     summary:
-      'STAR 结构在三人中最规范 —— 说明表达与做事都很有条理，7 年客服 / 行政积累的沟通协调能力真实存在。' +
+      'STAR 结构在候选人中最规范 —— 说明表达与做事都很有条理，7 年客服 / 行政积累的沟通协调能力真实存在。' +
       '但她的能力全在「服务与流程」这一轴，而本岗位要的是「技术与交付」那一轴。' +
       '技术类三项（K 知识、AI 工具、编程基础）均不达标，属方向错位而非能力不足。',
     highlights: [
@@ -842,7 +1124,7 @@ const DIMENSIONS = [
     key: 'mbti',
     name: 'MBTI × Belbin 交叉',
     desc: '岗位驱动特征：高自主性、强逻辑拆解、能承受快速迭代、乐于被 Review、把 AI 视为伙伴。',
-    note: '⚠ 数据缺口：三名候选人的 MBTI 实测结果均未提供，当前为行为推断，需以实际测试结果复核。',
+    note: '⚠ 数据缺口：全部候选人的 MBTI 实测结果均未提供，当前为行为推断，需以实际测试结果复核。',
   },
   {
     key: 'consistency',
@@ -869,24 +1151,25 @@ const JD_OVERSEAS = {
   company: '广州聚客网络科技有限公司（Joincom）',
   location: '广州',
   reportsTo: '管理层（业务负责人储备岗）',
-  positioning: '帮达人出海搭桥牵线 —— 星探 + 经纪人 + 项目管家三合一',
+  positioning: '先接稳现有达人盘子，再往外拓 —— 达人管家 + 经纪人 + 星探',
   duties: [
-    { pct: '40%', name: '达人 & MCN 拓展', text: '独立完成达人挖掘、初筛与建联，维护重点达人与核心合作伙伴关系' },
+    { pct: '30%', name: '现有达人（KOL）关系维护', text: '入职首先接手现有达人资源池：跟进合作执行、保持达人活跃度与满意度，让老达人持续稳定出单' },
     { pct: '30%', name: '商业化与项目管理', text: '参与商业化合作方案设计与调研项目，整合资源并评估投入，明确节点与风险' },
-    { pct: '15%', name: '达人出海项目跟进', text: '对接海外合作资源与合规报价，推进 YouTube / TikTok / Instagram 等平台达人出海项目' },
-    { pct: '15%', name: '达人筛选与判断', text: '从内容、数据、性价比评估达人价值，建立筛选标准，关注粉丝贡献与转化' },
+    { pct: '20%', name: '达人出海项目推进', text: '对接海外合作资源与合规报价，推进 YouTube / TikTok / Instagram 等平台达人出海项目落地' },
+    { pct: '20%', name: 'MCN 拓展（筛选与判断）', text: '熟悉现有达人盘子后逐步承接：新达人挖掘、初筛与建联，从内容、数据、性价比评估达人价值，建立筛选标准' },
   ],
   mustHave: [
-    { text: '本科及以上学历', tag: '身份' },
-    { text: 'CET-4 及以上，能应对日常英文交流', tag: '最重要' },
-    { text: '2 年以上海外拓展经验（达人商务 / MCN / 广告营销 / 品牌合作等方向）', tag: '最重要' },
-    { text: '熟练商务谈判、项目管理与常用办公软件，英语可作为工作工具', tag: '基础' },
-    { text: '会用 AI 辅助数据分析、报告撰写与项目复盘（加分项，也是公司看重的底色）', tag: 'AI 加分' },
+    { text: '本科及以上学历，专业不限', tag: '身份' },
+    { text: 'CET-4 及以上，能读写英文邮件、口语可日常沟通（唯一死门槛）', tag: '最重要' },
+    { text: '能接受出差：达人拜访、项目落地等现场安排（目前均为境内出差）（不可妥协）', tag: '最重要' },
+    { text: '1 年以上商务拓展 / 达人商务 / 客户运营相关经验，有达人或重点客户关系维护、合作落地的案例（国内达人也算）——做成过 > 做过多久', tag: '最重要' },
   ],
   niceToHave: [
-    '有达人商务 / MCN / 内容营销 / 品牌合作经验',
-    '有海外生活、留学或跨境行业资源，能独立建立关系',
     '熟悉 YouTube / TikTok / Instagram 等海外平台内容生态',
+    '有海外生活、留学或跨境行业资源，能独立建立关系',
+    '商务谈判与项目管理功底扎实',
+    '会用 AI 辅助数据分析、报告撰写与项目复盘（公司报销工具订阅、入职有培训）',
+    '有 MCN 运营 / 国内达人主播商务 / 跨境运营 / 外贸客户开发经验、想转海外达人方向的，特别欢迎',
   ],
   veto: ['诚信', '学习心态', '协作精神', '对出海业务的真实兴趣与长期投入'],
   products: [
@@ -901,20 +1184,20 @@ const JD_OVERSEAS = {
     'AI 工具订阅与数字化工作方式支持',
   ],
   growth: [
-    { period: '0-6 个月', role: '海外达人合作经理', note: '跑通达人挖掘-建联-合作闭环' },
+    { period: '0-6 个月', role: '海外达人合作经理', note: '接稳现有达人维护与合作闭环，逐步承接新达人拓展' },
     { period: '6-18 个月', role: '高级达人合作经理 / 达人合作负责人', note: '带达人合作盘子' },
     { period: '18-36 个月', role: '达人商业化负责人', note: '对达人业务收入负责' },
     { period: '3 年后', role: 'Creator / 内容商业化负责人', note: '业务负责人方向' },
   ],
   plainIntro: {
-    analogy: '像「星探 + 经纪人 + 项目管家」三合一',
+    analogy: '像「达人管家 + 经纪人 + 星探」三合一 —— 先管家，后星探',
     roles: [
-      { name: '星探', desc: '在海外平台里找到有潜力的达人，判断谁值得签' },
-      { name: '经纪人', desc: '跟达人谈合作条件，把关系谈成、维护住' },
-      { name: '项目管家', desc: '把每个合作项目排期、盯进度、算清投入产出' },
+      { name: '达人管家', desc: '入职先接稳现有达人：跟合作、盯执行、让老达人持续稳定出单' },
+      { name: '经纪人', desc: '跟达人谈合作条件，把关系谈成、维护住，把项目盯到落地' },
+      { name: '星探', desc: '上手后逐步承接：在海外平台里找到有潜力的新达人' },
     ],
-    metaphor: '达人是海外的「带货网点」，你是把货铺进这些网点的人 —— 要会找人、谈价、管售后。',
-    metaphorNote: '英语是你出海的「船票」，AI 是你的「加速器」—— 两者都不要求顶尖，但不能没有。',
+    metaphor: '现有达人是已经开张的「带货网点」，你先把这些网点服务好；跑熟之后再去找新网点铺货。',
+    metaphorNote: '英语是你出海的「船票」，靠谱和关系经营是「方向盘」——工具不要求顶尖，但不能没有。',
   },
 };
 
@@ -931,7 +1214,7 @@ const CANDIDATES_OVERSEAS = [
     source: '招聘系统投递',
     recommend: 'interview',
     recommendWhy: '四要素全中，建议优先约面并深挖稳定性',
-    headline: '三人中唯一同时覆盖「海外 + 英语 + 达人拓展 + AI」四张牌的候选人',
+    headline: '同时覆盖「海外 + 英语 + 达人拓展 + AI」四张牌最完整的一位',
     score: '★★★★☆',
     ksa: { K: 4.5, S: 4.5, A: 4, O: 3, total: 4.0 },
     star: 4.0,
@@ -943,18 +1226,18 @@ const CANDIDATES_OVERSEAS = [
     fit: { level: 'green', label: '高度匹配' },
     style: '授权型 / 变革型领导适配最高',
     summary:
-      '对本岗 40% 权重的「达人 & MCN 拓展」与 15% 的「出海项目跟进」都有直接对应经验：' +
+      '对本岗的「达人拓展」与「出海项目跟进」职责都有直接对应经验：' +
       'TikTok / YouTube / Instagram 全平台实操，覆盖美区、日区、港台及东南亚；KOC 种草与资源置换获客有成体系方法。' +
-      '雅思 6.0 是三人中唯一英语硬证据；同时是深度 AI 用户（Codex、Heygen、MiniMax，能搭 workflow 批量产出视频/数字人/图文），' +
+      '雅思 6.0 是本岗位候选人中少见的英语硬证据；同时是深度 AI 用户（Codex、Heygen、MiniMax，能搭 workflow 批量产出视频/数字人/图文），' +
       '正对 JD「AI 能力半径加速」的期待。主要悬念在稳定性 —— 2023.10 以来三份工作任期 8 / 20 / 3 个月。',
     highlights: [
       { t: '海外平台全覆盖 + 多地区经验', d: 'TikTok、YouTube、Instagram、X、LinkedIn 均有实操，覆盖美区、日区、港台及东南亚，直接对齐「达人出海项目跟进」的平台与地区要求。' },
-      { t: '英语硬证据 + 内容本地化', d: '雅思 6.0（三人唯一），在矽递科技做 AI 硬件的英文文案与内容本地化，日常英文商务交流可直接上手。' },
+      { t: '英语硬证据 + 内容本地化', d: '雅思 6.0（本岗位少见的英语硬证据），在矽递科技做 AI 硬件的英文文案与内容本地化，日常英文商务交流可直接上手。' },
       { t: 'AI 工作流深度用户 + 增长实证', d: '熟练 Codex、Heygen、MiniMax 并能搭建批量内容 workflow；运营富途证券海外账号矩阵实现单账号/矩阵增粉 5w-10w，冷启动养号方法成熟。' },
     ],
     risks: [
       { t: '稳定性存疑（决定性）', d: '2023.10 起三份工作任期分别为 8 个月、20 个月、3 个月，最近一份仅 3 个月；需按时间线逐段确认离职原因与留存意愿。' },
-      { t: 'BD 闭环证据偏弱', d: '「KOL/KOC 商务拓展」多为资源置换与种草分发，缺少签约数量、合作金额等硬结果；40% 权重的主动拓展开荒能力待现场验证。' },
+      { t: 'BD 闭环证据偏弱', d: '「KOL/KOC 商务拓展」多为资源置换与种草分发，缺少签约数量、合作金额等硬结果；主动拓展开荒能力（上手后逐步承接的部分）待现场验证。' },
       { t: '从运营转商务的角色跨越', d: '背景以内容运营为主，无团队管理经验；从「把内容做好」转「把商务谈成」的动机与方法论需评估。' },
     ],
     interview:
@@ -1028,7 +1311,7 @@ const CANDIDATES_OVERSEAS = [
       '另需注意他全部经历均为专员，无带团队记录。',
     highlights: [
       { t: '英语能力全候选人最强', d: '英语专业八级 + 专业四级 + CET-6（541 分）；独立主持全英文线上会议与 260+ 名欧美 KOL 谈判合同条款，提供全程英语口译，完成 50+ 份文档中译英、70+ 条视频英译中 —— JD「英语可作为工作工具」是超额达标。' },
-      { t: 'KOL 全流程闭环最完整（含签约）', d: '从 3,400+ 潜在达人筛选、400+ 建联（回复率 12%）、260+ 轮全英文谈判到 20+ 名欧美 KOL 签约，是候选人中唯一有完整「签约落地」实证的，直接对齐 40% 权重的达人挖掘-建联-谈判链路。' },
+      { t: 'KOL 全流程闭环最完整（含签约）', d: '从 3,400+ 潜在达人筛选、400+ 建联（回复率 12%）、260+ 轮全英文谈判到 20+ 名欧美 KOL 签约，是候选人中唯一有完整「签约落地」实证的，直接对齐达人挖掘-建联-谈判链路。' },
       { t: '资源体系与爆款实证', d: '建立多维度标签体系（粉丝画像/GMV/内容风格）与刊例库，沉淀 50+ 高频复拍核心达人池；参与孵化的 Hutchinsons 好轻松一家做到抖音 74 万粉、全网破百万、单条 2000 万播放，并促成华为、比亚迪、中国银联等品牌合作 —— 内容判断力与商务资源都有实物证据。' },
       { t: '标准化 SOP 与数据复盘', d: '搭建「筛选-建联-寄样-履约-追踪-复盘」SOP 与达人数据追踪体系，用 Instagram Insights、SocialBlade、Noxinfluencer 做指标复盘，对齐 30% 权重的项目管理与 15% 的达人筛选判断。' },
     ],
@@ -1109,11 +1392,11 @@ const CANDIDATES_OVERSEAS = [
     summary:
       '海外达人营销出身，2 年+ 内走完「媒介专员 → BD 组长」：从 0 搭建海外达人合作板块与执行团队，' +
       '沉淀 60,000+ 海外 KOL/KOC 资源，覆盖美国、英国、墨西哥、马来西亚市场，统筹 5 个品牌级 Campaign、700-800 条内容、80M+ 曝光，' +
-      '电商达人渠道月均 GMV $300K+、核心合作 ROI 5+。对 40% 权重的「达人 & MCN 拓展」是候选人中证据最扎实的一位，' +
+      '电商达人渠道月均 GMV $300K+、核心合作 ROI 5+。对「达人拓展」职责是候选人中证据最扎实的一位，' +
       '英语有 CET-4 硬证据，且正在广东外语外贸大学自考英语本科。' +
       '但有两道门槛需要先拍板：① 学历 —— 专科毕业、本科自考在读，与 JD「本科及以上」冲突；② 薪资 —— 期望 12-15K（求职意向另写 15-20K），超出岗位 8-12K 预算。',
     highlights: [
-      { t: '达人资源体系与市场覆盖最扎实', d: '累计沉淀 60,000+ 海外 KOL/KOC，建立标签分层与报价库，重点积累 AI / 3C 类 KOL，市场横跨美、英、墨、马 —— 直接命中 40% 权重的「达人挖掘、初筛、建联与长期关系维护」。' },
+      { t: '达人资源体系与市场覆盖最扎实', d: '累计沉淀 60,000+ 海外 KOL/KOC，建立标签分层与报价库，重点积累 AI / 3C 类 KOL，市场横跨美、英、墨、马 —— 直接命中「达人挖掘、初筛、建联与长期关系维护」，且 60,000+ 池子的分层维护经验与本岗「先接稳现有达人」的起步职责高度契合。' },
       { t: '从 0 搭 SOP + 带团队', d: '独立搭建筛选、建联、寄样、履约、复盘全链路 SOP，带 5-8 人团队做目标拆解与日常带教；平均合作成本下降 20%，内容交付率与优质达人二次合作率各提升 15%，对齐 30% 权重的项目管理职责。' },
       { t: '数据化运营与内容矩阵', d: '用 CPM / CPE / CTR / CVR / ROI 做复盘（Excel + Google Analytics），沉淀 500+ 可复用素材、筛出 200+ 条 S/A 级内容并协同 Spark Ads 二次放大，对齐 15% 权重的达人筛选与判断。' },
     ],
@@ -1223,7 +1506,7 @@ Creator Partnership 从 0 搭建与规模化｜团队负责人｜2025.05-至今
       '职业主线是广告策划 → 客户经理 → 海外品牌经理，统筹与多方协调能力经过 10 年打磨。' +
       '最近一段主导 TikTok 店铺投流与 KOL 排期发布，联动 100+ 位达人做内容测试与素材迭代（曝光 +30%），是候选人中达人合作量级最大的一位。' +
       '2026-10-08 补充确认两块底板：英语 CET-4（满足 JD 硬性门槛）与 AI 工具日常实战（原公司 Codex / WorkBuddy，无则用豆包、DeepSeek 做营销内容与数据分析）。' +
-      '主要剩余差距是视角错位 —— 她的达人是「投放执行」视角，JD 40% 权重的是「挖掘-建联-谈判-签约」的 BD 视角，需面试确认转换意愿与能力。',
+      '主要剩余差距是视角错位 —— 她的达人是「投放执行」视角，JD 拓展职责要求的是「挖掘-建联-谈判-签约」的 BD 视角，需面试确认转换意愿与能力。',
     highlights: [
       { t: '达人合作量级最大', d: '主导 TikTok KOL 排期发布，联动 100+ 位达人做内容测试与素材迭代，品牌曝光增长 30% —— 直接对齐「达人拓展与内容合作」的核心动作。' },
       { t: '商业化项目管理成熟', d: '10 年广告全链路（策划 → 客户经理 → 品牌经理），预算管控、节点把控、跨部门推动、供应商管理都是熟手，对齐 30% 权重的项目管理职责。' },
@@ -1231,7 +1514,7 @@ Creator Partnership 从 0 搭建与规模化｜团队负责人｜2025.05-至今
     ],
     risks: [
       { t: '英语有证但缺实战证据', d: 'CET-4 已确认（达到 JD 硬性门槛），但简历中无英文工作场景、无海外客户对接记录，能否「应对日常英文交流」仍要靠现场验证。' },
-      { t: 'BD 拓展视角偏弱（核心）', d: '达人经验集中在投放排期与内容测试（甲方/代理视角），「主动挖掘新达人、谈判签约」的开拓动作证据少，与 40% 权重的拓展职责有错位。' },
+      { t: 'BD 拓展视角偏弱（核心）', d: '达人经验集中在投放排期与内容测试（甲方/代理视角），「主动挖掘新达人、谈判签约」的开拓动作证据少，与新达人拓展职责有错位；但投放执行视角对「现有达人维护与项目跟进」反而是正向经验。' },
       { t: '近期履历波动', d: '最近一份海外品牌经理仅 8 个月，且 2025.01-2026.01 存在约一年空窗，离职原因与职业规划需面谈澄清。' },
     ],
     interview:
@@ -1317,7 +1600,7 @@ Creator Partnership 从 0 搭建与规模化｜团队负责人｜2025.05-至今
       '达成阶段性 QMV 指标并把产品做到类目前三，网感与执行力是真实的。' +
       '但对照本岗两大硬门槛 —— 「能应对日常英文交流」与「海外平台经验」—— 简历均无证据（TikTok 经验为国内生态），作为出海 BD 岗的储备尚早。',
     highlights: [
-      { t: '达人建联全流程实操', d: '建联达人、跟进直播/挂车专场、监控数据、总结内容模型，达成阶段性 QMV 指标 —— 与 40% 权重的日常工作动作高度一致。' },
+      { t: '达人建联全流程实操', d: '建联达人、跟进直播/挂车专场、监控数据、总结内容模型，达成阶段性 QMV 指标 —— 与达人合作日常动作高度一致。' },
       { t: '执行体系化', d: '会做 SOP、brief、手卡，面试培训新人，用数据反推建联话术与达人类型；自运营账号有 800 万播放作品，网感与学习能力在线。' },
       { t: 'AI 与多平台工具熟练', d: 'TK 官号 AI 视频制作，运营 TikTok/小红书/抖音/视频号多平台并配合投流，对齐 JD 的 AI 加分项。' },
     ],
@@ -1367,6 +1650,607 @@ Creator Partnership 从 0 搭建与规模化｜团队负责人｜2025.05-至今
 /* ============================================================
    在招岗位（左侧列表数据源）
    ============================================================ */
+/* ============================================================
+   财务实习生 — 岗位 JD
+   来源：桌面《财务实习生JD .pdf》+《财务实习生工作职责等v2.0.docx》（2026-10-21 用户提供）
+   注：docx 第七节「内部参考（对外发布前请删除本节）」未纳入本数据
+   ============================================================ */
+const JD_FINANCE = {
+  title: '财务实习生',
+  subtitle: '100-120 元/天 · 每周 ≥4 天 · 3-6 个月',
+  company: '广州聚客网络科技有限公司（Joincom）',
+  location: '广州 · IFC 办公点',
+  reportsTo: '财务主管（指定带教人）· 业务上向财务负责人汇报',
+  positioning: '标准化财务事务的执行手脚 —— 有规则、有模板、有复核人',
+  intro:
+    '在带教人的安排与复核下，承担标准化、可核对的财务基础事务：费用审核、单据处理、往来对账与基础报表数据整理。' +
+    '强调「做中学」——不要求一来就能独立结账，但要求对数字敏感、愿意上手，把交办的事做到没有差错。' +
+    '本岗位按「实习强度」设计：只做流程和标准已经写清楚的事，所有输出经带教人复核后才入账或对外，涉及资金、税务、对外沟通的动作只观摩、不操作。',
+  boundary: [
+    '不独立完成月度 / 季度 / 年度结账，不编制对外财务报表',
+    '不对会计处理作判断 —— 科目归属、费用性质、票据合规结论均由带教人确认',
+    '不承担出纳岗的资金操作与银行事务（交收、对账、现金与票据保管）',
+    '不保管网银 U 盾、支付密码、发票专用章等资金与印章介质',
+    '不承担应收账款催收、供应商谈判等对外沟通',
+    '不承担需要独立出差、加班或夜间值守的任务',
+  ],
+  duties: [
+    { pct: '50%', name: '单据与凭证处理', text: '费用报销单初审（票据真实性、抬头税号、金额日期一致性）；发票查验、扫描与归档；记账凭证附件整理装订；会计档案编号入库' },
+    { pct: '20%', name: '数据录入与台账', text: '按模板录入凭证（科目由带教人给定）；发票台账、合同台账登记更新；固定资产标签打印与盘点清点' },
+    { pct: '20%', name: '报表与档案支持', text: '按指定口径取数并汇总进固定模板；协助科目余额核对、未达账项清理等月结准备；更新应收应付往来台账' },
+    { pct: '10%', name: '其他交办', text: '资料打印、文件寄送、会议记录等临时事务；不做跨部门独立对接；按周提交实践小结' },
+  ],
+  mustHave: [
+    { text: '本科及以上在校生（大三、大四及研究生优先），会计学 / 财务管理 / 审计学 / 税务 / 财政学等相关专业', tag: '身份' },
+    { text: '掌握基础会计原理，能看懂基础会计分录；了解发票基本要素与报销流程', tag: '最重要' },
+    { text: '熟练 Excel：录入、筛选、排序、VLOOKUP、SUMIF、数据透视表；中文录入 ≥40 字/分钟', tag: '基础' },
+    { text: '每周到岗不少于 4 天（可拆 8 个半天），可承诺一个完整实习周期（3-6 个月）', tag: '出勤' },
+    { text: '2027 届毕业生优先 —— 可长期实习至毕业', tag: '优先' },
+  ],
+  niceToHave: [
+    '已通过初级会计职称或部分科目（非硬性，不作筛选门槛）',
+    '有财务相关实习经历（代理记账、银行、事务所均可）',
+    '会计课程实训 / 沙盘、校园社团经费或班费管理、门店收银与对账',
+    '会用 AI 工具辅助整理表格、校对数据',
+    '接触过金蝶 / 用友 —— 零基础可在岗学习，入职提供 1 周带教',
+    '档案命名与归档有条理',
+  ],
+  veto: ['诚信', '保密意识', '细致耐心', '出勤稳定', '学习意愿（愿意被纠正、按反馈改进）'],
+  products: [],
+  benefits: [
+    '津贴 100-120 元/天，按实际出勤天数月结',
+    '公司另购商业意外险，覆盖整个实习期',
+    '一对一师徒带教，接触全盘账务；带教人是唯一任务派发人，避免多头指挥',
+    '真实单据与财务系统实操；月结全流程观摩',
+    '初级会计考证与求职指导；内部财务制度与 Excel 实操小课',
+    '实习期满出具实习证明；表现优异可转任「财务助理」全职岗（6-7K，五险一金及商业险）',
+  ],
+  growth: [
+    { period: '第 1 周', role: '上手', note: '财务制度与审批流、报销标准、系统录入口径、档案规则 → 能独立完成报销单初审与凭证装订' },
+    { period: '第 2-4 周', role: '跟做', note: '旁跟开票、台账登记与对账辅助，每日复盘 10 分钟 → 单据模块独立完成，差错率 ≤2%' },
+    { period: '第 2-3 月', role: '独做', note: '独立负责一个模块（台账或档案），参与月结准备 → 模块内事务无需逐笔指派' },
+    { period: '第 3-6 月', role: '拓展', note: '跟随月结、往来对账，承接部分助理岗事务 → 可承接财务助理岗约 60% 的日常事务' },
+  ],
+  plainIntro: {
+    analogy: '像「账房学徒 + 校对员」二合一',
+    roles: [
+      { name: '账房学徒', desc: '按师傅给的规则和模板处理单据：报销单、发票、凭证、台账' },
+      { name: '校对员', desc: '专挑错：抬头写错、金额对不上、日期不一致、单据缺页——挑出来交给师傅' },
+    ],
+    metaphor: '这个岗位不要求你「做判断」，但要求你「找得出错」—— 就像核对清单，规则已经写好了，你要做的是逐条对完、一处不漏。',
+    metaphorNote: '所以「细心」比「聪明」重要，「能坚持重复」比「有创意」重要。',
+  },
+};
+
+/* ---------- 财务实习生 · 六位候选人（只保留「优先推荐」，按相似度降序） ---------- */
+const CANDIDATES_FINANCE = [
+  {
+    id: 'zyh',
+    name: '张宇涵',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '张',
+    meta: '会计专硕在读（2028 届）· 本科会计学 · 事务所审计 + 企业财务双实习 · 每周 4-5 天',
+    listMeta: '会计专硕 · 双财务实习 · 每周 4-5 天',
+    source: '招聘平台投递（文件名显示为「张女士 28 年应届生」）',
+    recommend: 'interview',
+    recommendWhy: '四项核心职责全部有对应实证，建议优先约面（重点确认实习时长与出勤安排）',
+    headline: '四人中唯一「审计 + 企业财务」双视角，且直接把本岗职责做过一遍',
+    score: '★★★★★',
+    ksa: { K: 4.5, S: 4.5, A: 4, O: 4.5, total: 4.4 },
+    star: 4.5,
+    similarity: 88,
+    similarityBand: '高度相似（四人最高）',
+    consistency: { level: 'high', label: '高', note: '三段经历的时间、企业名、工作内容一一对应且细节具体（用 VLOOKUP 定位三单不符、标记缺失单据统计）；毕业时间线自洽（2024.06 本科毕业 → 2025.09 读研）；自述「每周可到岗 4-5 天、可长期实习」与在读研究生身份吻合' },
+    mbti: '偏 I / S / T / J（行为推断）',
+    belbin: '执行者（Implementer）+ 品质控制者（Monitor Evaluator）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '指令型带教适配最高 —— 给清楚规则和模板，她能自己跑通并自查',
+    summary:
+      '她的经历几乎是照着本岗 JD 长出来的：在盛航创新做财务实习生时用金蝶录凭证、整理装订、按月核对银行回单、' +
+      '用 VLOOKUP 做采购合同/送货单/发票「三单匹配」并跟进不符单据；在重庆永达会计师事务所做审计助理时用 VLOOKUP 双向核对、' +
+      'SUMIFS 按合同号汇总。这些正是本岗占 70% 的单据处理与台账工作。学历上是哈尔滨商业大学会计学本科 + 广东财经大学会计专硕在读，' +
+      '专业对口度最高，且人在广州、可长期实习。主要待确认的是：研二之后能否继续保持每周 4-5 天，以及她对这个岗位的长期期待。',
+    highlights: [
+      { t: '「三单匹配」正是本岗的核心动作', d: '采购合同、送货单、进项发票的金额与品名核对，用 VLOOKUP 快速定位不符项并跟进确认后才归档 —— 与本岗「报销单初审：票据真实性、抬头税号、金额日期一致性核对」是同一套方法。' },
+      { t: '凭证全流程上手过', d: '金蝶录入凭证 → 结账后按凭证编号整理、打印、装订成册 → 确保账证相符。本岗 50% 权重的「单据与凭证处理」几乎是她的既有熟练项。' },
+      { t: 'Excel 实操有具体用法，不是空话', d: 'VLOOKUP 双向核对、SUMIFS 按合同号汇总、数据透视表；在审计中被要求「追溯至原始合同条款与验收单据」，说明她用的是核对结果而非只是会函数。' },
+      { t: '财务双视角 + 学业证明', d: '事务所（外部视角，看交易真实性与入账期间）与企业财务（内部视角，做账务实操）都待过；获国家励志奖学金、校级三好学生、二等奖学金。' },
+      { t: '可长期实习、人在广州', d: '自述每周可到岗 4-5 天、可长期实习；广东财经大学在广州，通勤可控。' },
+    ],
+    risks: [
+      { t: '研二之后的出勤会下降（最需确认）', d: '她现在研一（2025.09 入学），研二起课业与论文压力上升，能否持续每周 4 天要提前问清。若只能做到 8-9 月，需评估交接成本。' },
+      { t: '实习时长偏短，深度待验证', d: '盛航创新仅 2 个月（2025.12-2026.01），永达事务所仅 1 个月（2022.07-2022.08），合计不足 3 个月。本岗需要 3-6 个月稳定在岗，她是「做过」还是「做熟」，要现场区分。' },
+      { t: '期望值可能高于实习生定位', d: '会计专硕 + 两段事务所与企业财务经历，可能对「装订、归档、初审」这类重复性事务的耐心有预期落差；也要确认她对 100-120 元/天与「实习协议（非劳动关系）」是否清楚接受。' },
+      { t: '接触过跨境与出口退税但未独立', d: '简历提到协助整理出口退税单证与境内多主体跨境收汇资料，但实际是「按模板分类装订归档」，独立处理能力需区分。' },
+      { t: '简历未体现 AI 工具使用', d: 'JD 将「会用 AI 工具辅助整理表格、校对数据」列为加分项，她未提及；可现场询问是否有用 AI 做表格整理或数据核对。' },
+    ],
+    interview:
+      '三个核验点：① 出勤与时长 —— 研二课表怎么排、能保证每周几天到几月，直接问具体日期；' +
+      '② 深度 —— 让她讲一次「发现单据不符」的完整过程：怎么发现的、怎么判断是不符而不是自己看错、怎么跟进、最后怎么归档；' +
+      '③ 预期 —— 明确告诉她「大量时间在做装订、归档、初审这类重复工作」，看她接受度。' +
+      '另可顺带问一句是否用 AI 做过表格整理（加分项）。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）（文件名显示为「张女士 28 年应届生」，简历内真实姓名为张宇涵）',
+      raw: `张宇涵
+求职意向：财务会计实习生
+| 硕士在读 | 每周可到岗 4-5 天，可长期实习
+
+【教育经历】
+广东财经大学　会计专硕（硕士在读）　2025.09-2028.06
+主修课程：财务会计理论与实务、RPA 财务机器人应用
+哈尔滨商业大学　会计学（本科）　2020.09-2024.06
+主修课程：高级会计、管理会计、审计学
+荣誉奖项：国家励志奖学金、校级三好学生、校级二等奖学金
+
+【实习经历】
+广州盛航创新科技有限公司　财务实习生　2025.12-2026.01
+· 账务处理与系统操作：使用金蝶财务软件完成月度会计凭证的录入与核对；结账后按凭证编号整理、打印、装订成册，确保账证相符、凭证管理规范有序。
+· 银行与付款资料管理：按月核对银行回单与付款相关原始单据的金额、日期等信息，标记缺失单据并及时反馈补全，确保月度凭证附件完整。
+· 采购单据审核与归档：根据合同登记表，对采购合同、送货单与进项发票进行三单匹配核对，运用 VLOOKUP 快速定位金额、品名不符的单据，对不符单据跟进确认后再归档，确保单据准确完整、合同履约全程可追溯。
+· 税务与跨境资金支持：协助整理出口退税单证，参照申报表与既有的单证目录模板，将报关单、发票、合同等单据按对应关系分类装订归档；协助整理境内多主体跨境收汇资料，按月核对收款金额与原始单据，保障单证与资金记录对应可查。
+
+重庆永达会计师事务所　审计助理　2022.07-2022.08
+· 合同履约细节测试：参与财务报表审计，在项目经理指导下执行合同履约相关实质性程序：通过 VLOOKUP 双向核对合同登记台账与收支凭证，检查原始单据审批与金额一致性；使用 SUMIFS 按合同号汇总发生额并与合同总额比对；对发现的台账与账面不符记录，追溯至原始合同条款与验收单据，核实交易真实性与入账期间，协助汇总审计差异及调整事项清单。
+
+【技能与证书】
+专业证书：初级会计资格证、全国计算机二级证书（MS Office 高级应用）
+办公技能：熟练使用金蝶财务软件；掌握 Excel 数据透视表、VLOOKUP、SUMIF 等函数进行数据整理与核对
+语言能力：英语六级（CET-6）574 分；全国大学生英语竞赛（C 类）三等奖`,
+    },
+  },
+
+  {
+    id: 'wxy',
+    name: '汪欣怡',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '汪',
+    meta: '会计学硕在读（2028 届）· 本科财务管理 · 事务所审计 + 建筑企业财务实习 · 挑战杯省一',
+    listMeta: '会计学硕 · 事务所+企业财务 · 挑战杯省一',
+    source: '招聘平台投递',
+    recommend: 'interview',
+    recommendWhy: '两段财务实习 + 证书齐全 + 建模型力强，建议约面（重点确认出勤与实习时长）',
+    headline: '实操广度与数据建模能力最突出，两位可优先约面者之一',
+    score: '★★★★☆',
+    ksa: { K: 4.5, S: 4, A: 4.5, O: 4, total: 4.2 },
+    star: 4.5,
+    similarity: 85,
+    similarityBand: '高度相似',
+    consistency: { level: 'high', label: '高', note: '学历、实习与获奖信息完整且可核验（挑战杯省级一等奖、大创省级结项、研究生一等学业奖学金）；实习内容描述具体（凭证抽查近 200 份、50 余份原始凭证审核），但部分表述偏「全流程」口径，需现场区分独立完成与协助完成' },
+    mbti: '偏 E / N / T / J（行为推断）',
+    belbin: '执行者（Implementer）+ 协调者（Co-ordinator）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '教练型 / 指令型带教适配最高 —— 学习速度快，喜欢有挑战的任务',
+    summary:
+      '两段财务相关实习都是实打实的账务工作：江西广正汇（建筑工程）财务实习生，独立完成 50 余份原始凭证审核与记账凭证录入，' +
+      '整理银行对账单、发票台账、核对往来款项；容诚会计师事务所审计实习生，参与 3 家企业专项审计，完成近 200 份凭证抽查与往来费用明细核验。' +
+      '学历是四川师范大学财务管理本科 + 江西财经大学会计学硕在读，研一 GPA 4.09、加权 90.92。' +
+      '另外她在挑战杯项目里搭过 30 项指标的绩效评价体系并做投入产出分析 —— 这种「建标准、做核对」的思维，正是本岗「按模板比对、挑出错」需要的。' +
+      '待确认：出勤与实习时长、以及从建筑与审计场景转到日常报销单据的适应度。',
+    highlights: [
+      { t: '原始凭证审核有量化实证', d: '「独立完成 50 余份原始凭证审核与记账凭证录入」—— 与本岗 50% 权重的报销单初审直接对应，且用了「独立」而非「协助」。' },
+      { t: '审计底稿与凭证抽查经验', d: '容诚（深圳）审计实习：3 家企业专项审计、近 200 份凭证抽查、百余张审计底稿。抽查逻辑与本岗「带教人抽核 30%」是同一套语言。' },
+      { t: '能搭标准、做核对（难得的加分）', d: '挑战杯省级一等奖项目里负责搭建 30 余项量化指标的绩效评价体系，用 Excel 做数据清洗与投入产出分析 —— 说明她不只是执行，还能理解「为什么要这样核」。' },
+      { t: '证书与学业表现突出', d: '初级会计资格证、CET-6、计算机二级 MS；研一 GPA 4.09 / 加权 90.92 / 研究生一等学业奖学金，本科专业排名前 10%。' },
+      { t: '软件覆盖用友 + 金蝶', d: '简历明确「精通用友、金蝶财务软件」，本岗只要求「按模板录入」，她的基础明显高于门槛。' },
+    ],
+    risks: [
+      { t: '实操口径偏「全套」，需拆解真实份额', d: '「协助编制月度资产负债表、利润表」「运用财务软件进行成本核算与预算执行分析」这类表述，作为实习生可能只做了数据准备部分。要问：这张表哪几个格是你填的？' },
+      { t: '经历在深圳与江西，广州需确认', d: '容诚在深圳分所、广正汇在江西；目前江西财经大学在读，来广州实习需确认住宿与通勤安排，这会直接影响出勤稳定性。' },
+      { t: '从「有挑战」转向「高频重复」的心理落差', d: '她经历以项目制、有产出的工作为主（审计项目、挑战杯、绩效体系），而本岗大量是装订、归档、初审。是否有耐心做重复事务要当面确认。' },
+      { t: '实习都是假期块状，非长期在岗', d: '2024.06-08、2026.05-06 两段都是暑期或短周期，没有超过 3 个月的持续在岗记录；本岗要求 3-6 个月稳定。' },
+      { t: '未提及 AI 工具', d: 'JD 加分项「会用 AI 工具辅助整理表格、校对数据」未体现；凭她的数据能力，可现场问一句。' },
+    ],
+    interview:
+      '重点问三件事：① 广州出勤方案 —— 住在哪、每周能来几天、能不能做满 3 个月以上；' +
+      '② 真实份额 —— 让她挑一段实习里最日常的一天讲：早上到工位先做什么、经手多少张单据、哪些要交回给带教人复核；' +
+      '③ 耐心 —— 直接说「这个岗位一半时间在装订和归档，不是做分析」，看她的反应。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）',
+      raw: `汪欣怡
+籍贯：江西省九江市庐山市 | 出生年月：2003 年 12 月 | 政治面貌：共青团员
+
+【教育背景】
+2025.09-2028.06　江西财经大学　会计 / 硕士研究生
+主修课程：财务会计理论与实务、财务管理理论与实务、管理会计理论与实务、审计理论与实务、高级财务报表分析
+学业表现：研一 GPA 4.09，加权平均成绩 90.92，获研究生一等学业奖学金
+
+2021.09-2025.06　四川师范大学　财务管理 / 本科
+主修课程：高级财务管理、高级财务会计、审计学、公司理财、税法、会计信息系统、计量经济学 stata 等
+学业表现：专业排名前 10%，GPA 3.51/4.0，获 2021-2022 学年三等奖学金
+
+【实习经历】
+2026.05-2026.06　容诚会计师事务所（深圳分所）　审计实习生
+· 参与 3 家企业专项审计项目，完成近 200 份凭证抽查、往来及费用明细核验，协助填制百余张审计工作底稿。
+· 整理归档审计资料，核对企业财务数据，协助核对往来账款、费用明细，保障审计数据真实准确。
+· 协助团队完成审计前期调研、资料收集整理工作，熟悉会计师事务所审计全流程及规范标准，具备扎实的账务核查与报表勾稽能力。
+
+2024.06-2024.08　江西广正汇建筑工程有限公司　财务实习生
+· 参与 4 项工程项目账务处理，独立完成 50 余份原始凭证审核与记账凭证录入，熟练掌握账务处理流程。
+· 整理银行对账单、发票台账等财务档案，核对往来款项，协助完成税务申报辅助工作，具备基础的税务实操认知。
+· 协助编制月度资产负债表、利润表，运用财务软件进行成本核算与预算执行分析，深入了解建筑行业财务核算特点与全流程运作。
+
+【项目经历】
+2023.01-2024.06　《双核联动、双圈互动—成渝双城经济圈协调治理体系研究调研》　"挑战杯"省级一等奖
+· 作为核心成员，负责搭建项目绩效评价体系，从经济、社会、文化、生态、行政五大维度构建 30 余项量化指标。
+· 基于评价体系对 4 个典型区域进行投入产出分析，运用 Excel 进行数据清洗与分析，撰写万字研究报告。
+· 项目获第十七届"挑战杯"四川省大学生课外学术科技作品竞赛省级一等奖，并成功完成大创项目省级结项。
+
+【校园经历】
+2021.09-2024.09　商学院艺术团　声乐组组长
+· 制定团队长期发展规划，统筹组织 20 余次日常排练与技能培训，带领团队高质量完成 8 场校级大型演出。
+· 成功指导 5 名成员在校园歌手大赛中获奖，具备较强的沟通协调能力与团队领导力。
+
+【技能证书】
+初级会计资格证书、英语六级证书、计算机二级 MS 证书、国家普通话一乙证书
+核算能力：熟练掌握全盘账务处理（原始凭证审核→记账→结账→报表），熟悉会计准则及税收法规
+软件应用：精通用友、金蝶财务软件，熟练使用 Excel（VLOOKUP、数据透视表等），可独立搭建简易财务模型`,
+    },
+  },
+
+  {
+    id: 'jjm',
+    name: '蒋家敏',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '蒋',
+    meta: '2027 届 · 广东理工学院数智会计 · 出纳实习（付款报销审核 120+ 笔）· 初级会计 + 银行从业',
+    listMeta: '2027 届 · 出纳实习实账 · 初级会计',
+    source: '招聘平台投递（2026-10-26 新批次）',
+    recommend: 'interview',
+    recommendWhy: '本岗 50% 权重的报销单初审她已独立做过 3 个月，建议优先约面（重点确认通勤与到岗时间）',
+    headline: '本批次唯一做过「付款与报销审核」实账的人 —— 本岗最重的活她已经上手',
+    score: '★★★★☆',
+    ksa: { K: 4, S: 4.5, A: 4, O: 4, total: 4.1 },
+    star: 4.5,
+    similarity: 83,
+    similarityBand: '高度相似',
+    consistency: { level: 'high', label: '高', note: '时间线自洽（2023-2027 在读，2026.06-09 企业实习与 2026.09-10 校内实训无缝衔接）；数字细节具体可核（17+4 个账户、流水超 1000 条、付款 120 余笔、报销 80 余份、资金日报 90 余份），且多处自相印证（报销台账与报销份数、日报份数与实习天数吻合）' },
+    mbti: '偏 I / S / T / J（行为推断）',
+    belbin: '执行者（Implementer）+ 品质控制者（Monitor Evaluator）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '指令型带教适配最高 —— 规则和模板给清楚，她能自己跑通并自查',
+    summary:
+      '她在广东威格玛供应链做出纳实习生 3 个月，干的正是本岗最重的活：付款与报销审核（审核单据金额、合同、发票，报批后支付并归档，累计付款 120 余笔、报销 80 余份并搭建报销台账）、' +
+      '每日资金日报上报董事长累计 90 余份、17 个对公户 + 4 张卡的流水登记超 1000 条日清月结，另协助月度入账与应收/进销存台账。' +
+      '校内 U8 数智化财务轮岗实训走完出纳、财务会计、税务、成本全流程。初级会计 + 银行从业 + CET-4，GPA 3.7（专业前 15%）。' +
+      '主要待确认：学校在肇庆、通勤方案，以及 10 月刚结束实训后的最快到岗时间。',
+    highlights: [
+      { t: '「报销初审」不是沾过，是主力干过', d: '审核单据金额、合同、发票与报销审批，授权后付款并归档；累计付款 120 余笔、报销 80 余份，还搭建了报销台账 —— 与本岗「报销单初审：票据真实性、抬头税号、金额日期一致性」高度重合。' },
+      { t: '台账全家桶都碰过', d: '费用台账（归集部门费用）、应收及进销存台账、报销台账 —— 本岗 20% 权重的「发票台账、合同台账登记更新」可直接衔接。' },
+      { t: '高频例行输出被验证过', d: '每日编制资金日报上报董事长累计 90 余份；1000 余条流水登记日清月结 —— 说明坐得住、错不起，正是本岗「找得出错、一处不漏」的气质。' },
+      { t: '证书与学业双硬', d: '初级会计职称、银行从业资格证、CET-4、C2；GPA 3.7（专业前 15%），核心专业课均分 88+。' },
+      { t: 'U8 实训走完全流程', d: '蓝洞科技轮岗实训覆盖出纳（36 项凭证审核、39 笔账簿登记、银行存款余额调节表）、财务会计（损益结转）、税务（发票审核认证、往来对账）、成本（加权平均法）四大模块。' },
+    ],
+    risks: [
+      { t: '出纳经历里有「付款」动作，需对齐边界', d: '她实习中执行过授权后支付，而本岗明确「不承担出纳岗资金操作、不碰网银 U 盾与印章」。入职第一天就要讲清：付款只观摩，她只做审核与单据；也要确认她接受这种「往后退一步」的安排。' },
+      { t: '学校在肇庆，通勤是最大变量', d: '广东理工学院在肇庆，每周 ≥4 天到 IFC 需要稳定住处方案；约面时先问住哪、怎么通勤、能否长期。' },
+      { t: '期望薪资 3K 以上 vs 津贴 100-120 元/天', d: '按月约 2.2-2.6K，存在小幅落差；她投递了本岗说明有意向，但建议电话里先对齐，避免面完流失。' },
+      { t: '到岗时间待确认', d: '2026.09-10 刚结束校内实训，大四课业安排未知；需确认最快到岗日期与可实习月数。' },
+      { t: '未提及 AI 工具', d: 'JD 加分项「会用 AI 工具辅助整理表格、校对数据」未直接体现；但她有 Excel + Python 处理近 500 条销售数据的经历，现场可顺带问一句。' },
+    ],
+    interview:
+      '三个核验点：① 通勤与到岗 —— 住哪、每周能来几天、最快哪天开始、能做到几月；' +
+      '② 深度 —— 让她讲一次报销审核中「单据有问题」的完整处理：什么问题、怎么判断、怎么跟进、最后怎么归档；' +
+      '③ 边界 —— 明确告诉她本岗不做资金操作、付款只观摩，看她是否接受。',
+    resume: {
+      type: 'text',
+      note: '以下内容由简历图片识别整理',
+      raw: `蒋家敏
+女 | 21岁 | 共青团员
+电话：已脱敏　微信：（电话已脱敏）　邮箱：（邮箱已脱敏）
+
+【求职信息】
+求职意向：会计助理 / 财务实习生　期望薪资：3K 以上　所在城市：广州
+
+【个人优势】
+1、专业技能：熟练操作金蝶、用友ERP系统；了解RPA基础概念；精通Word、Excel、PPT，掌握VLOOKUP等多种函数。
+2、语言：已通过 CET-4，普通话二甲、粤语流利。
+3、性格：待人诚恳、严谨慎细、责任心强，有良好的团队协作能力与抗压能力。
+
+【教育经历】
+广东理工学院　数智会计专业　本科　2023-2027
+1、主修：基础、中级、高级财务会计、审计、管理会计、经济法、成本会计、财务管理、会计英语、ERP、RPA、Python、计算机等核心专业课。
+2、学业成绩：平均绩点 3.7（专业前 15%），核心专业课平均 88 分+。
+3、担任职务：校青协志愿服务部干事，参与过 10+ 大型志愿活动。
+
+【实习经历】
+广东威格玛供应链国际股份有限公司　出纳实习生　2026.06-2026.09
+· 账户流水管理：每日登记 17 个对公户 + 4 张个人银行卡明细账并完成会计科目标注，累计超 1000 条，日清月结；月末独立编制银行余额调节表，一次性通过审核。
+· 付款与报销审核：审核单据金额、合同、发票，报董事长审批，授权后支付并归档。累计付款 120 余笔，搭建报销台账、报销 80 余份。
+· 资金日报与动态监控：每日编制资金日报上报董事长，累计 90 余份，实时反映账户收支动态与资金存量。
+· 会计辅助核算：归集各部门费用编制费用台账，协助会计月度入账；登记应收款及进销存台账；核对入库单据，协助成本结转。
+
+【校园经历】
+中型企业数智化财务轮岗模拟实训｜蓝洞科技公司　2026.09-2026.10
+· 出纳：在 U8 系统中完成 36 项原始凭证审核、39 笔账簿登记，做好票据台账与资金盘点，编制资金日报，测算偿债能力指标，落实日记账日结。
+· 财务会计：处理 47 份原始凭证，填制 27 笔记账凭证，完成损益结转，编制银行存款余额调节表，测算市价比率。
+· 账务处理：审核 28 份原始凭证，登记 56 笔记账凭证，排查账务异常，参与月末存货、成本模块核提，编制资产处置报表，开展现金流量分析。
+· 税务会计：完成 32 项凭证及发票业务，模拟发票审核认证、往来对账；采用账龄法计提坏账，测算并分析营业利润率变动。
+· 成本会计：处理 22 项单据编制，参与采购与应付核算；使用全月一次加权平均法核算材料出库成本。
+
+【竞赛经历】
+数智化企业经营沙盘模拟大赛　2024.03-2024.06
+· 负责 4 人团队财务预算、成本控制及现金流管理，制定 4 季度策略，完成 5 年模拟运营；动态调整融资计划，现金流波动控制在 ±10% 内，助力团队在 30 余支队伍中荣获三等奖。
+2026 勤备数智化精英挑战赛　2026.04
+· 协作完成 20 页 PPT 财务数字化转型方案，涉及数据清洗及可视化；用 Excel 及 Python 处理近 500 条销售数据，产出毛利率、费用率等关键指标报告。
+
+【资格证书】
+会计初级职称 · 银行从业资格证 · 大学英语四级 · 驾驶证 C2
+
+【荣誉奖项】
+校级三等奖学金 · 「数智化企业经营沙盘模拟赛」三等奖 · 义教志愿服务活动中被评为「优秀教师」`,
+    },
+  },
+
+  {
+    id: 'yejy',
+    name: '叶佳怡',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '叶',
+    meta: '广州大学会计专硕在读（2028 届）· 晋江市审计局 + 致同双审计实习 · 初级会计 + CET-6',
+    listMeta: '会计专硕 · 双审计实习 · 在职核报销单',
+    source: '招聘平台投递（2026-10-26 新批次）',
+    recommend: 'interview',
+    recommendWhy: '「按报销条例挑错」受过专业训练且现在仍在核报销单，建议约面（重点确认研一出勤）',
+    headline: '「按报销条例挑错」受过最专业的训练 —— 两段审计实习 + 现职仍在核报销单',
+    score: '★★★★☆',
+    ksa: { K: 4.5, S: 4, A: 4, O: 4, total: 4.1 },
+    star: 4.5,
+    similarity: 81,
+    similarityBand: '高度相似',
+    consistency: { level: 'high', label: '高', note: '三段实习时间线清晰、数字具体且可交叉核验（支出凭证 150+ 份、抽查凭证 200+ 份、开户资料 100+ 份、报销材料 100+ 份）；奖学金与「优秀实习生」荣誉可核；本科闽江学院 → 硕士广州大学的升学路径自洽' },
+    mbti: '偏 I / S / T / J（行为推断）',
+    belbin: '品质控制者（Monitor Evaluator）+ 执行者（Implementer）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '指令型带教适配最高 —— 证据链思维强，给标准就能对齐',
+    summary:
+      '她是 12 人中「挑错训练」最系统的一位：晋江市审计局按行政事业单位报销条例核查支出凭证 150+ 份，逐笔验票据合规性、审批链条完整性与账证一致性，' +
+      '识别跨期列支、附件缺失等问题凭证并登记台账；致同会计师事务所完成 4 类科目底稿、抽查凭证 200+ 份、截止性测试与函证。' +
+      '而且她现在（2025.09 至今）在广州大学 MPAcc 教育中心做办公室助理，职责就是整理核对报销材料 100+ 份、查验发票抬头、金额与审批签字 —— 本岗的活她正在做。' +
+      '初级会计 + CET-6，用友金蝶基础操作。主要待确认：研一课表与每周出勤、以及对「装订归档」类重复工作的接受度。',
+    highlights: [
+      { t: '报销凭证核查 150+ 份，与本岗同一套动作', d: '在审计局依据报销条例核验票据合规性、审批链条完整性与账证一致性，识别跨期列支、附件缺失并登记台账 —— 这正是本岗报销单初审的动作，且是在标准更严的环境里练出来的。' },
+      { t: '她现在的工作就是核报销单', d: '广州大学 MPAcc 教育中心办公室助理（2025.09 至今）：整理核对报销材料 100+ 份，按财务制度查验发票抬头、金额与审批签字，保障报销单据通过。' },
+      { t: '致同年报审计底子扎实', d: '独立完成固定资产、应付职工薪酬等 4 类科目底稿，抽查凭证 200+ 份，执行截止性测试与函证程序 —— 熟悉底稿逻辑、证据链归档与索引规范。' },
+      { t: '证书齐全 + 软件有基础', d: '初级会计资格证、CET-4/CET-6、普通话二甲；掌握用友、金蝶基础操作，熟练 Excel（VLOOKUP、数据透视表、SUMIFS）。' },
+      { t: '学业与评价稳定', d: '广州大学二等/三等学业奖学金连续两年，2025 年优秀实习生，本科多次奖学金 —— 学习能力与可靠性有连续证据。' },
+    ],
+    risks: [
+      { t: '财务实习都在福建，广州本地经历仅在校内', d: '晋江市审计局、致同福州分所均在福建；好在人已在广州大学读研，通勤可控，但要确认住宿与到岗路线。' },
+      { t: '审计视角 ≠ 企业账务，需做视角转换', d: '她习惯的是「事后挑错、留证据链」，本岗是「事中初审 + 装订归档 + 台账登记」，且科目归属等判断由带教人做 —— 这个「只执行不判断」的边界要提前讲清。' },
+      { t: '研一课业与出勤', d: '硕士 2025.09 入学，课程集中在研一；每周 ≥4 天能否保证要问课表，并确认能做到几月。' },
+      { t: '高频重复事务的耐心待确认', d: '经历偏项目制审计，本岗一半时间是装订、归档、扫描这类重复工作；面谈时直接说清工作构成，看接受度。' },
+      { t: '未提及 AI 工具', d: 'JD 加分项「会用 AI 工具辅助整理表格、校对数据」未体现；凭她的数据功底可现场问一句。' },
+    ],
+    interview:
+      '重点问三件事：① 出勤 —— 研一课表怎么排、每周能来几天、能做到几月；' +
+      '② 深度 —— 讲一次在审计局发现「问题凭证」的过程：哪不对、证据怎么留、台账怎么登记；' +
+      '③ 预期 —— 明确本岗一半时间是装订归档、判断结论由带教人确认，看她接受度。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）',
+      raw: `叶佳怡 YE JIAYI
+会计专硕（MPAcc）在读
+电话　（电话已脱敏）　邮箱　（邮箱已脱敏）
+出生年月　2002.12　籍贯　福建泉州
+
+【教育背景】
+广州大学　管理学院 · 会计专硕（MPAcc）　2025.09 – 至今
+核心课程：财务会计 94 · 智能财务分析 92 · 管理会计 90 · 财务管理 88
+闽江学院　新华都商学院 · 会计学（本科）　2021.09 – 2025.06
+核心课程：财务报表分析 95 · 管理会计 93 · 会计大数据分析 91 · 审计学 90
+
+【实习经历】
+晋江市审计局 · 审计实习生　2026.07 – 2026.08
+参与慈善总会、党校等行政事业单位审计项目，核查支出凭证 150+ 份、供应商 30+ 家。
+凭证核查：依据行政事业单位财务制度及报销条例，对差旅、会议、办公采购等支出凭证执行抽样检查 150+ 份，逐笔核验票据合规性、审批链条完整性与账证一致性，识别跨期列支、附件缺失等问题凭证并登记台账。
+专项检查：参与「三公经费」与会议费专项核查，整理预算批复数与实际执行数，按费用类别逐项比对，梳理超预算、无预算支出明细；对差异项目标注差异原因及待补资料，汇总形成差异说明和问题记录，供主审复核。
+供应商核查：梳理被审计单位供应商名录与合同台账 30+ 家，逐户比对公开工商登记信息，核查供应商股权结构、股东及主要人员关联关系；结合合同台账标记疑似关联交易事项，汇总形成关联交易核查说明，供主审复核。
+底稿与问题清单：按科目及事项分类归集检查记录、取证材料与待补资料，对照底稿模板整理核查过程、问题依据及资料来源，协助编制审计工作底稿和问题清单；按索引编号归档取证材料，标注核查轨迹，保障证据链可追溯。
+
+致同会计师事务所（福州分所） · 审计实习生　2025.01 – 2025.03
+参与企业年报审计项目，独立完成 4 类科目底稿，抽查凭证 200+ 份。
+科目底稿：独立完成固定资产、应付职工薪酬、无形资产、长期待摊费用 4 类科目底稿，完成明细表核对、本期变动分析、期末余额勾稽与审计结论填列，按索引整理归档。
+审计程序：执行折旧与摊销重算、账表核对、大额凭证抽查 200+ 份等程序，协助复核累计折旧与减值准备计提的准确性，对差异按金额与性质登记调整建议表。
+截止性测试：抽取资产负债表日前后凭证，核对发票、出库单、验收单、合同及期后收付款等资料，检查收入费用是否计入正确期间，记录跨期事项并整理测试底稿。
+函证程序：协助银行及往来询证函的发出与回收，核对函证地址、账户及余额信息，编制函证控制表；对未回函及回函不符项目协助实施替代测试。
+报表与附注：填写个别财务报表，协助编制报表附注，逐项核对表内数据与附注披露的勾稽关系，配合完成审计报告出具前的归档整理。
+
+国泰君安证券股份有限公司（晋江营业部） · 证券实习生　2023.07 – 2023.08
+负责客户开户资料与业务数据的审核、整理及归档（100+ 份），按适当性原则校验身份信息、风险测评与签署材料的完整性与合规性；协助客户完成开户、资料变更等全流程办理。
+
+【项目与校园经历】
+「正大杯」全国大学生市场调查与分析大赛 · 短视频文旅宣传议题　2023.11 – 2024.04　省级二等奖
+负责问卷设计与抽样方案，回收有效问卷并完成数据清洗与交叉分析；参与调研报告撰写，获省级二等奖。
+广州大学 MPAcc 教育中心 · 办公室助理　2025.09 – 至今
+协助教务与行政事务、资料归档及活动筹办；整理核对报销材料 100+ 份，按财务制度查验发票抬头、金额与审批签字，保障报销单据通过。
+会计研究协会 · 组织部部长　2021.09 – 2023.07
+制定社团工作计划并统筹部门日常管理，主导活动策划与执行，协助开展校级会计案例分析大赛。
+
+【技能证书与荣誉】
+证书：初级会计师资格证 | CET-4 / CET-6 | 普通话二级甲等
+技能：熟练使用 Excel（VLOOKUP、数据透视表、SUMIFS 等函数）完成账表核对与数据分析；掌握用友、金蝶等财务软件基础操作；具备审计底稿编制与凭证核查实务经验
+奖学金：广州大学 2026 学年二等学业奖学金 | 2025 学年三等学业奖学金 | 闽江学院 2023、2024 学年三等学业奖学金
+荣誉：2025 年优秀实习生 | 2023 年暑期社会实践优秀个人`,
+    },
+  },
+
+  {
+    id: 'chenjh',
+    name: '陈嘉慧',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '陈',
+    meta: '广东工业大学会计学硕士在读（2029 届）· 海味商行财务助理 9 个月 + 诚安信审计 3 个月 · 初级会计 + CPA 税法',
+    listMeta: '会计硕士 · 财务助理 9 个月 · 初级会计',
+    source: '招聘平台投递（2026-10-26 新批次）',
+    recommend: 'interview',
+    recommendWhy: '单段 9 个月实账经验为全场最长，建议约面（但务必先在电话里谈清薪资预期）',
+    headline: '9 个月小微企业「全盘财务助理」：对账、单据、开票、盘点、费用台账一条龙做过',
+    score: '★★★★☆',
+    ksa: { K: 4.5, S: 4, A: 3.5, O: 4, total: 4.0 },
+    star: 4,
+    similarity: 80,
+    similarityBand: '高度相似',
+    consistency: { level: 'mid', label: '中高', note: '两段实习时间衔接自洽（2025.07-10 诚安信 → 2025.10-2026.07 泰兴海味行），工作内容具体可核（应收应付对账、开票、月度盘点、费用明细）；但「个人优势」表述较通用，且期望薪资 5-6K 与本岗津贴存在明显落差，动机需现场确认' },
+    mbti: '偏 I / S / F / J（行为推断）',
+    belbin: '执行者（Implementer）+ 团队工作者（Team Worker）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '指令型带教适配高 —— 习惯按规矩做事，需要明确口径',
+    summary:
+      '她的单段实习时长是本批次最长：广州泰兴海味行财务助理 9 个月（2025.10-2026.07），做的是完整的小微企业账务循环 —— 客户应收、供应商应付对账并跟进往来款项，' +
+      '登记日常经营流水，整理销售、采购原始单据，协助开具发票，配合贵重存货月度盘点并维护库存台账，统计运营费用、登记费用明细。' +
+      '另有诚安信会计师事务所 3 个月审计：核对凭证、账务、报表数据一致性，抽凭与数据测算，取证资料归档。' +
+      '初级会计职称 + CPA 税法科目已考（熟悉增值税与进销项发票逻辑），Excel VLOOKUP/透视表有具体用途。本硕均在广州，硕士 2029 届，可稳定实习多年。' +
+      '最需要先解决的是薪资预期：她期望 5-6K，而本岗津贴 100-120 元/天（月约 2.2-2.6K），电话里要一次讲清。',
+    highlights: [
+      { t: '单段 9 个月，全场最长', d: '泰兴海味行财务助理：应收应付对账、往来款项跟进、经营流水登记、销售采购原始单据整理、协助开票、月度盘点与库存台账、费用明细统计 —— 本岗 50% + 20% 权重的工作她都做过，且有 9 个月的持续记录。' },
+      { t: '事务所核对训练', d: '诚安信审计 3 个月：核对凭证、账务、报表数据一致性，熟悉各类业务原始单据的审核逻辑；抽凭、数据测算、取证资料整理归档。' },
+      { t: '税法基础过硬', d: '初级会计职称；CPA 税法科目已考，熟悉增值税与进销项发票逻辑、能看懂业务单据 —— 发票要素审核是本岗初审的硬技能。' },
+      { t: 'Excel 有具体用途', d: 'VLOOKUP、数据透视表用于制作业务报价表、库存表、销售统计台账 —— 不是「熟练 Excel」的空话，是落在具体表上。' },
+      { t: '本硕均在广州，可长期稳定', d: '广东工业大学在读（2029 届毕业），通勤无忧；对 JD 的「3-6 个月完整实习周期」绰绰有余，且表现优异可转财务助理全职岗，长期培养价值高。' },
+    ],
+    risks: [
+      { t: '期望薪资 5-6K vs 津贴 100-120 元/天（最需先谈）', d: '按月约 2.2-2.6K，落差是本批次最大的。JD 写明表现优异可转财务助理全职岗（6-7K、五险一金），电话里要把「现在给多少、什么时候能转、转正给多少」一次讲清，避免面试后流失。' },
+      { t: '小微企业做账习惯需校准', d: '海味商行的账可能不规范（单据不全、口径随意都常见），她带来的习惯要与公司制度重新对齐；入职第 1 周的「按模板、按口径」要求要盯紧。' },
+      { t: '研一课业与出勤', d: '硕士 2026.09 入学，课程集中在研一；每周 ≥4 天要问课表，并确认能做到几月。' },
+      { t: '未提及财务软件实操', d: '简历只写了 Excel，未见金蝶/用友；JD 有 1 周带教兜底，但系统上手速度要现场看。' },
+      { t: '未提及 AI 工具', d: 'JD 加分项「会用 AI 工具辅助整理表格、校对数据」未体现；现场可顺带问一句。' },
+    ],
+    interview:
+      '第一件事先谈钱：直接说清津贴是 100-120 元/天、月结，问她的预期差多少、能否接受，再谈别的 —— 这一条不过，后面不用谈。' +
+      '之后两个核验：① 深度 —— 海味行 9 个月里哪一块是她独立负责的？对账对不平的时候她怎么处理？' +
+      '② 出勤 —— 研一课表、每周几天、能做到几月。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历原文提取（联系方式已脱敏）',
+      raw: `陈嘉慧
+女 | 22岁　（电话已脱敏）　（邮箱已脱敏）
+求职意向：会计 | 期望薪资：5-6K | 期望城市：广州
+
+【个人优势】
+1、工作能力：拥有扎实的财会专业基础，具备良好的逻辑分析与问题解决能力，能够主动思考并落地可行的解决方案，拥有一定的创新意识。
+2、个人特质：抗压能力较强，面对多项任务与突发挑战可以保持冷静，合理规划优先级；自律性强，擅长时间管理，能够保障工作高效推进、按时交付。
+3、工具与知识：熟练使用 Excel、PPT、PS、剪映等办公与设计软件，熟悉 Temu 平台，可独立完成商品上架操作；已完成 CPA 税法科目考试，系统学习过国内现行税收法规，具备财税视角的业务思维。
+
+【教育经历】
+广东工业大学　硕士　会计学　2026-2029
+广州华立学院　本科　财务管理　2022-2026
+专业排名：前 5%
+主修课程：财务管理、中级财务会计、经济法、基础会计、微观经济学
+
+【实习经历】
+广州市越秀区泰兴海味行　财务会计助理　2025.10-2026.07
+负责滋补品海味商行财务相关工作：完成客户应收、供应商应付对账，跟进往来款项核对；登记日常经营流水，整理销售、采购原始单据，协助开具发票；配合仓库完成贵重存货月度盘点，维护库存台账；统计门店各项运营费用，登记费用明细，协助编制基础财务表格。
+
+广东省诚安信会计师事务所　审计　2025.07-2025.10
+1. 协助审计项目开展，核对凭证、账务、报表数据一致性，熟悉各类业务原始单据的审核逻辑；
+2. 负责审计取证资料收集核对、文件整理归档，养成严谨的资料核对与台账管理习惯；
+3. 配合团队完成抽凭、数据测算，能够处理大量业务数据，具备风险核查意识。
+
+【校园经历】
+在校期间担任班级宣传委员和学习委员，有效管理班级文件传达与征文收集工作；主动组织并激励同学参与学术撰稿。每学年均获得校级奖学金、优秀学生、优秀干部、优秀团员等荣誉。
+艺术团礼模队队长　2022.09-2024.09
+负责拆解队内工作目标，制定工作计划，社团年度工作计划完成率 100%；设计跟进活动主题、物料、人员、场地，参与校内 6 个活动。
+
+【资格证书】
+会计初级职称 · 大学英语四级 · 计算机一级 · 普通话二级乙等 · 驾驶证 C2
+
+【专业技能】
+1、语言：英语 CET-4，可独立阅读产品英文资料、处理基础英文询盘与业务邮件
+2、平台操作：Temu 跨境平台，可独立完成商品上架、基础信息维护，熟悉跨境电商后台基础流程
+3、办公软件：熟练使用 Excel（Vlookup/数据透视表）、PPT，可制作业务报价表、库存表、销售统计台账
+4、财会资质：初级会计职称；CPA 税法科目已备考；熟悉国内税收法规，了解增值税、进销项发票逻辑，看懂业务单据
+5、业务能力：B 端客户询盘接待、报价制作、订单跟进、客户关系维护、业务资料归档`,
+    },
+  },
+
+  {
+    id: 'tanglc',
+    name: '唐李婵',
+    tag: '优先推荐',
+    tier: 'green',
+    initial: '唐',
+    meta: '2027 届 · 广东白云学院会计学 · 两段财务实习共 8 个月 · 初级会计 + 金蝶',
+    listMeta: '2027 届 · 两段财务实习 · 初级会计',
+    source: '招聘平台投递（2026-10-26 新批次）',
+    recommend: 'interview',
+    recommendWhy: '两段实打实的财务实习 + 2027 届可长期，建议约面（重点确认出勤与真实份额）',
+    headline: '两段真实财务实习覆盖「凭证录入 → 报销初审 → 开票报税」小全盘，硬条件全部达线',
+    score: '★★★★☆',
+    ksa: { K: 4, S: 4, A: 3.5, O: 4, total: 3.8 },
+    star: 4,
+    similarity: 78,
+    similarityBand: '较相似（贴线入选）',
+    consistency: { level: 'mid', label: '中高', note: '两段实习时间衔接合理（2024.07-12、2025.06-09），动作具体（凭证录入、报销初审、开票、台账、报税）；但均为中小机构、表述偏模板化，「所有财务信息录入 ERP」「确保账实相符」这类全称口径需现场区分真实份额' },
+    mbti: '偏 I / S / F / J（行为推断）',
+    belbin: '执行者（Implementer）+ 团队工作者（Team Worker）',
+    fit: { level: 'green', label: '高度匹配' },
+    style: '指令型带教适配高 —— 有基础流程概念，需要明确口径与复核',
+    summary:
+      '她有两段真实财务实习：广东智韵电子财务助理（2025.06-09）——整理采购、生产、销售原始凭证及合同，开具销售发票，登记应收应付账款台账并跟踪回款与付款进度，' +
+      '财务信息录入 ERP、往来账款核对，完成费用报销、款项支付的初审与账务录入，编制工资表；深圳好万家财务管理会计助理（2024.07-12，5 个月）——' +
+      '凭证录入、账目核对和结账，增值税、企业所得税等税种计算申报与发票开具。证书有初级会计职称、财务共享中级、CET-4、计算机一级，熟练金蝶等财务软件，' +
+      '备考 CPA 会计、审计、税法三科。2027 届毕业、学校在广州，可长期实习至毕业。' +
+      '主要待确认：出勤稳定性，以及实习内容里「她独立做的部分」到底占多少。',
+    highlights: [
+      { t: '报销与支付初审做过', d: '智韵电子财务助理：完成费用报销、款项支付的初审与账务录入，登记应收应付账款台账并跟踪回款与付款进度 —— 直接对应本岗 50% 权重的报销单初审与台账工作。' },
+      { t: '凭证与结账闭环', d: '好万家会计助理 5 个月：凭证录入、账目核对、结账全流程；增值税、企业所得税等税种计算申报与发票开具 —— 对发票要素与报销流程的理解有实底。' },
+      { t: '证书达标', d: '初级会计职称、财务共享中级证书、CET-4、计算机一级。' },
+      { t: '金蝶等财务软件熟练', d: '熟练使用 Excel、Word、帐无忧/金蝶等财务软件，本岗「按模板录入」上手快；JD 有 1 周带教兜底。' },
+      { t: '2027 届 + 职业锚明确', d: '大四可长期实习至毕业（JD 明确优先）；同步备考 CPA 会计、审计、税法三科，走财务路线的意愿清晰。' },
+    ],
+    risks: [
+      { t: '出勤稳定性待当面确认', d: '两段实习均为学期中时段；她大四课业少是优势，但每周 ≥4 天、连续 3-6 个月要当面确认，并问清住处与通勤。' },
+      { t: '表述偏模板化，真实份额需拆解', d: '「所有财务信息录入 ERP」「确保账实相符」这类全称口径，要问「哪几个动作是你做的、哪些是别人复核」；必要时现场给一张报销单找错。' },
+      { t: '报税属正式会计动作，本岗只观摩', d: '她做过税种申报，而本岗明确「不对会计处理作判断、涉税务动作只观摩」；需对齐边界，避免上手后心理落差。' },
+      { t: '亮点密度一般，深度靠现场测试', d: '民办本科不是问题（JD 不设院校门槛），但简历信息量有限，两段机构规模都不大，账务规范程度存疑，要靠现场案例提问验证。' },
+      { t: '未提及 AI 工具', d: 'JD 加分项「会用 AI 工具辅助整理表格、校对数据」未体现；现场可顺带问一句。' },
+    ],
+    interview:
+      '三个核验点：① 出勤 —— 住哪、每周几天、最快到岗、能做到几月；' +
+      '② 深度 —— 挑一段报销初审的真实例子：发现过什么问题单据、当时怎么处理；' +
+      '③ 边界 —— 本岗付款与报税只观摩、结论由带教人确认，看她接受度。',
+    resume: {
+      type: 'text',
+      note: '以下内容由 PDF 简历识别整理',
+      raw: `唐李婵
+籍贯：广东省　生日：2003.12.19　政治面貌：共青团员
+电话：已脱敏　邮箱：（邮箱已脱敏）
+
+【教育背景】
+大四实习生
+广东白云学院　会计学　本科
+GPA：3.5
+主修课程：财务管理、财务报表分析、中级财务会计、高级财务会计、税法、审计学、成本管理会计、税务筹划、税务代理实务、会计信息系统
+
+【实习经历】
+广东智韵电子技术有限公司　财务助理　2025.06-2025.09
+· 整理采购、生产、销售业务的原始凭证，及销售与采购合同
+· 开具销售发票，登记应收应付账款台账，跟踪回款与付款进度
+· 所有财务信息录入 ERP 系统，往来账款核对，确保账实相符
+· 完成费用报销、款项支付的初审与账务录入；编制工资表并发放工资
+
+深圳市好万家财务管理有限公司　会计助理　2024.07-2024.12
+· 负责日常账务处理：包括凭证录入、账目核对和结账工作，确保财务数据准确无误
+· 负责税务申报工作：包括增值税、企业所得税等税种计算申报及缴纳、发票开具
+
+【技能证书】
+初级会计职称证书 · 财务共享中级证书 · 大学英语四级证书 · 全国计算机一级证书
+财务工具：熟练使用 Excel、Word、帐无忧/金蝶等财务软件
+财税处理：掌握增值税、企业所得税等税种申报流程
+
+【自我评价】
+目前同步备考 CPA 会计、审计、税法三科，熟练掌握会计准则、基础审计程序、增值税与企业所得税核心知识点。做事细致严谨，具备良好数据核对能力，能配合项目完成外勤、盘点、资料归档等工作。`,
+    },
+  },
+];
+
 const POSITIONS = [
   {
     id: 'aijd',
@@ -1375,8 +2259,8 @@ const POSITIONS = [
     dept: '技术 · AI 交付',
     status: 'active',
     statusLabel: '分析已完成',
-    updated: '2026-10-10',
-    candidateCount: 5,
+    updated: '2026-10-13',
+    candidateCount: 7,
     jd: JD,
     candidates: CANDIDATES,
   },
@@ -1392,18 +2276,36 @@ const POSITIONS = [
     jd: JD_OVERSEAS,
     candidates: CANDIDATES_OVERSEAS,
   },
+  {
+    id: 'finance-intern',
+    name: '财务实习生',
+    subtitle: '广州 100-120 元/天 · 每周 ≥4 天',
+    dept: '财务部',
+    status: 'active',
+    statusLabel: '分析已完成',
+    updated: '2026-10-26',
+    candidateCount: 6,
+    jd: JD_FINANCE,
+    candidates: CANDIDATES_FINANCE,
+  },
 ];
 
 </script>
 <script>
 /* ============================================================
-   候选人分析 — 交互逻辑（V2）
+   候选人分析 — 交互逻辑（V3）
    结构：左侧（在招岗位 + 决策情况入口）→ 中间列表 → 右侧详情面板
    V2 新增：
      1) 决策数据升级：{cid: {dec, at, pos}}（带时间与岗位），旧 v1 自动迁移
      2) 操作流水：标记 / 取消 / 清除全部记录在案，决策情况页可查最近 30 条
      3) 决策情况总览：推进面试 / 人才池 / 不使用 三组分类 + 历史记录 + 跨岗位查看详情
      4) 导出 / 导入数据：JSON 备份（含决策、流水、简历截图），可迁移到其他电脑
+   V3 新增（面试材料与复核）：
+     5) 录音音频导入：登记文件名 / 时长 / 体积，会话内可播放（浏览器不做语音识别）
+     6) 逐字稿导入：txt / srt / vtt，解析时间轴与说话人，可本地关键词核对
+     7) 会议纪要导入：.docx 零依赖解析（原生 DecompressionStream 解 ZIP），含图片提取
+     8) AI 面试复核：简历六维结论 × 面试材料交叉验证，输出言行一致性与更新建议
+        密钥仅存本机浏览器，不入导出文件
    ============================================================ */
 (function () {
   'use strict';
@@ -1427,6 +2329,38 @@ const POSITIONS = [
   const LS_MAILTO = 'aijd_mailto_to'; // 收件邮箱记忆
   const MAILTO_DEFAULT = 'chenxj@planpoint.cn'; // 默认收件邮箱（可在页面上随时改）
   const MAIL_BODY_LIMIT = 1800; // mailto 正文安全长度上限（超长截断，避免邮件客户端截断）
+
+  /* V3 新增：面试材料（录音 / 逐字稿 / 会议纪要）+ AI 复核 */
+  const LS_MATS = 'aijd_interview_v1'; // {cid: {audio, transcript, minutes, analysis}}
+  const LS_AI = 'aijd_ai_cfg'; // AI 配置 {provider, apiKey, model}（仅存本机浏览器，不入导出文件）
+
+  // 仅列出已实测「支持网页直连」的服务商（有跨域响应头）；DeepSeek / 通义千问 前端无法直连
+  const AI_PROVIDERS = [
+    {
+      id: 'zhipu', name: '智谱 GLM',
+      url: 'https://open.bigmodel.cn/api/paas/v4/chat/completions',
+      model: 'glm-4.7-flash',
+      models: ['glm-4.7-flash', 'glm-4.6v-flash'],
+      tip: 'glm-4.7-flash 免费、20 万 token 上下文，读长逐字稿最合适（推荐）',
+    },
+    {
+      id: 'siliconflow', name: '硅基流动',
+      url: 'https://api.siliconflow.cn/v1/chat/completions',
+      model: 'Qwen/Qwen2.5-7B-Instruct',
+      models: ['Qwen/Qwen2.5-7B-Instruct', 'THUDM/glm-4-9b-chat', 'Qwen/Qwen2.5-72B-Instruct'],
+      tip: '注册送额度，含免费小模型',
+    },
+    {
+      id: 'moonshot', name: '月之暗面 Kimi',
+      url: 'https://api.moonshot.cn/v1/chat/completions',
+      model: 'moonshot-v1-32k',
+      models: ['moonshot-v1-8k', 'moonshot-v1-32k', 'moonshot-v1-128k'],
+      tip: '长上下文，适合一口气读完整份逐字稿',
+    },
+  ];
+
+  const TRANSCRIPT_MAX = 200000; // 单份逐字稿最多保存 20 万字符
+  const MAT_PREVIEW = 1400; // 面板内文本预览上限
 
   const LOG_MAX = 200; // 本机最多保留 200 条流水
   const LOG_SHOW = 30; // 决策情况页展示最近 30 条
@@ -1610,12 +2544,13 @@ const POSITIONS = [
   /* ---------- 导出 / 导入数据 ---------- */
   function doExport() {
     const payload = {
-      version: 2,
+      version: 3,
       exportedAt: new Date().toISOString(),
       persistent: Store.persistent,
       decisions: loadDecisions(),
       log: loadLog(),
       resumeImage: Store.get(LS_RESUME) || null,
+      interview: loadMats(), // 面试材料：录音元信息 / 逐字稿全文 / 纪要文本 / AI 复核结果
     };
     try {
       const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
@@ -1653,9 +2588,11 @@ const POSITIONS = [
       const incoming = Object.keys(obj.decisions).length;
       const current = Object.keys(loadDecisions()).length;
       const logN = Array.isArray(obj.log) ? obj.log.length : 0;
+      const matN = obj.interview && typeof obj.interview === 'object' ? countMats(obj.interview) : 0;
       const ok = window.confirm(
         '将导入 ' + incoming + ' 条决策记录' + (logN ? '（含操作流水 ' + logN + ' 条）' : '') +
-        '。\n\n注意：导入会【覆盖】当前已有的 ' + current + ' 条标记。\n是否继续？'
+        (matN ? '、' + matN + ' 份面试材料' : '') +
+        '。\n\n注意：导入会【覆盖】当前已有的 ' + current + ' 条标记' + (matN ? '及现有面试材料' : '') + '。\n是否继续？'
       );
       if (!ok) return;
       const migrated = migrateDecisions(obj.decisions);
@@ -1664,9 +2601,12 @@ const POSITIONS = [
       if (typeof obj.resumeImage === 'string' && obj.resumeImage.indexOf('data:image') === 0) {
         Store.set(LS_RESUME, obj.resumeImage);
       }
+      if (obj.interview && typeof obj.interview === 'object') {
+        Store.set(LS_MATS, JSON.stringify(obj.interview));
+      }
       renderRail();
       renderList();
-      alert('导入完成 ✓ 共 ' + Object.keys(migrated).length + ' 条决策记录。');
+      alert('导入完成 ✓ 共 ' + Object.keys(migrated).length + ' 条决策记录' + (matN ? '、' + matN + ' 份面试材料' : '') + '。');
     };
     r.readAsText(file);
   }
@@ -1881,6 +2821,7 @@ const POSITIONS = [
   /* 候选人列表 */
   function renderCandidates(p) {
     const decs = loadDecisions();
+    const mats = loadMats();
     const doneCount = p.candidates.filter((c) => decs[c.id] && decs[c.id].dec).length;
 
     const rows = p.candidates.map((c) => {
@@ -1911,6 +2852,7 @@ const POSITIONS = [
               ${esc(c.name)}
               <span class="tag ${c.tier}">${esc(c.tag)}</span>
               ${decDef ? `<span class="tag ${decDef.cls}">已标记 · ${esc(decDef.short)}</span>` : ''}
+              ${matTag(mats[c.id], c)}
             </div>
             <div class="row-meta">${esc(c.listMeta)} · 来源：${esc(c.source)}</div>
           </div>
@@ -2029,6 +2971,7 @@ const POSITIONS = [
     bindResume(c);
     bindMail(c);
     bindPanelDecision(c);
+    bindMats(c);
   }
 
   function closePanel() {
@@ -2148,6 +3091,11 @@ const POSITIONS = [
         <div class="callout blue">${esc(c.interview)}</div>
       </div>
 
+      <div class="sec" id="matSec">
+        <h3>面试材料与复核 <span class="badge">录音 · 逐字稿 · 纪要</span></h3>
+        <div id="matHost"></div>
+      </div>
+
       <div class="sec">
         <h3>推送简历至邮箱 <span class="badge">唤起本机邮件客户端</span></h3>
         <div class="mailbox">
@@ -2232,6 +3180,15 @@ const POSITIONS = [
           .join('')}
       </div>
 
+      ${
+        j.boundary && j.boundary.length
+          ? `<div class="jdsec">
+              <h4>工作边界 · 本岗位不承担</h4>
+              <ul class="simple-list">${j.boundary.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+            </div>`
+          : ''
+      }
+
       <div class="jdsec">
         <h4>加分项</h4>
         <ul class="simple-list">${j.niceToHave.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
@@ -2242,10 +3199,14 @@ const POSITIONS = [
         <ul class="simple-list">${j.veto.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
       </div>
 
-      <div class="jdsec">
-        <h4>将参与的产品线</h4>
-        <ul class="simple-list">${j.products.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
-      </div>
+      ${
+        j.products && j.products.length
+          ? `<div class="jdsec">
+              <h4>将参与的产品线</h4>
+              <ul class="simple-list">${j.products.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+            </div>`
+          : ''
+      }
 
       <div class="jdsec">
         <h4>成长路径</h4>
@@ -2447,6 +3408,1084 @@ const POSITIONS = [
       });
   }
 
+  /* ============================================================
+     面试材料模块（V3）
+       1) 录音音频导入 —— 存档 + 播放 + 时长（浏览器不做语音识别，转写需外部工具）
+       2) 录音逐字稿导入 —— txt / srt / vtt，解析时间轴与说话人
+       3) 会议纪要导入 —— .docx 零依赖解析（原生 DecompressionStream 解 ZIP），提取文字与图片
+       4) AI 复核 —— 简历六维结论 × 面试表现交叉验证，输出言行一致性与更新建议
+     ============================================================ */
+
+  const AUDIO_URLS = {}; // 本次会话内的音频播放地址（音频本体不落盘）
+  const MINUTES_IMG = {}; // 本次会话内的纪要图片地址
+
+  /* ---------- 材料存储 ---------- */
+  function loadMats() {
+    try {
+      const raw = JSON.parse(Store.get(LS_MATS) || '{}');
+      return raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
+    } catch (e) {
+      return {};
+    }
+  }
+  function saveMats(m) {
+    try {
+      return Store.set(LS_MATS, JSON.stringify(m));
+    } catch (e) {
+      return false;
+    }
+  }
+  function matOf(cid) {
+    return loadMats()[cid] || {};
+  }
+  function setMat(cid, kind, obj) {
+    const m = loadMats();
+    const one = m[cid] || {};
+    one[kind] = obj;
+    m[cid] = one;
+    return saveMats(m);
+  }
+  function delMat(cid, kind) {
+    const m = loadMats();
+    if (!m[cid]) return true;
+    delete m[cid][kind];
+    if (kind !== 'analysis') delete m[cid].analysis; // 材料变更后，原复核结果不再对应当前证据
+    if (!Object.keys(m[cid]).length) delete m[cid];
+    return saveMats(m);
+  }
+  function countMats(map) {
+    let n = 0;
+    Object.keys(map || {}).forEach((cid) => {
+      const o = map[cid] || {};
+      ['audio', 'transcript', 'minutes'].forEach((k) => { if (o[k]) n++; });
+    });
+    return n;
+  }
+  function matTag(o, c) {
+    if (!o) return '';
+    if (o.analysis) {
+      const rr = o.analysis.result || {};
+      // 面试后结论与简历阶段不一致时，列表里直接把变化顶出来
+      const chg = !!(c && rr.recommend && c.recommend && rr.recommend !== c.recommend);
+      return chg
+        ? '<span class="tag amber">AI 复核 · 结论有变化</span>'
+        : '<span class="tag green">AI 已复核</span>';
+    }
+    if (o.audio || o.transcript || o.minutes) return '<span class="tag blue">已录面试材料</span>';
+    return '';
+  }
+
+  /* ---------- 密钥清洗与错误归因 ----------
+     从网页复制密钥时极易带上首尾空格、换行、零宽字符，
+     或整段「Authorization: Bearer xxx」，这些都会让服务端判为无效。
+     这里统一清洗，并在失败时给出可自行判断的线索。 */
+  function normKey(raw) {
+    let s = String(raw == null ? '' : raw);
+    s = s.replace(/[\u200B-\u200D\uFEFF]/g, ''); // 零宽字符
+    s = s.replace(/\s+/g, ''); // 空格、换行、制表符
+    s = s.replace(/^(?:authorization\s*:\s*)?bearer/i, ''); // 误带 Bearer 前缀
+    s = s.replace(/^["'`<]+/, '').replace(/["'`>]+$/, ''); // 首尾引号/尖括号
+    s = s.replace(/[,;，；]+$/, ''); // 误带的标点
+    return s;
+  }
+  function keyLook(k) {
+    const s = String(k || '');
+    return { len: s.length, head: s.slice(0, 6), tail: s.slice(-4), dots: (s.match(/\./g) || []).length };
+  }
+  // 智谱密钥形如：32位ID.16位Secret —— 长度明显不符即可判定「没复制全」
+  function keyShapeWarn(k) {
+    const s = String(k || '');
+    if (!s) return '';
+    if (/^[0-9a-f]{32}\.[0-9a-zA-Z]{16}$/i.test(s)) return '';
+    if (/^sk-[0-9a-zA-Z_-]{20,}$/.test(s)) return '';
+    if (s.length < 30) return '密钥仅 ' + s.length + ' 位，明显短于正常长度，很可能没复制完整';
+    if (s.indexOf('.') < 0 && /^[0-9a-f]{32}$/i.test(s)) return '这段只有前半部分（点号后的 Secret 缺了），请重新复制完整密钥';
+    return '';
+  }
+  function hitNetwork(e) {
+    const m = String((e && e.message) || e || '');
+    return (e && e.name === 'TypeError') || /failed to fetch|networkerror|load failed|network request failed/i.test(m);
+  }
+  const delayAI = (ms) => new Promise((r) => setTimeout(r, ms));
+  function aiErr(status, body, model) {
+    const raw = String(body == null ? '' : body).replace(/\s+/g, ' ').slice(0, 200);
+    let msg;
+    if (status === 401) {
+      msg = '密钥未被接受（HTTP 401，原始返回：' + raw + '）。请按顺序核对三点：①上方「服务商」是否与密钥来源一致——智谱的密钥不能用在硅基流动或 Kimi 上；②密钥是否复制完整、有没有带进空格换行（本工具已自动清理一次）；③该密钥是否已被删除或停用。';
+    } else if (status === 403) {
+      msg = '服务端拒绝访问（HTTP 403，原始返回：' + raw + '）。密钥本身多半没问题，常见原因是账号未完成实名认证，或该模型还没开通调用权限——请登录 open.bigmodel.cn 控制台检查「实名认证」与模型权限。';
+    } else if (status === 429) {
+      const overload = /访问量过大|过载|繁忙|busy|overload|too many/i.test(raw);
+      msg = overload
+        ? '智谱这个模型此刻访问量过大（HTTP 429，原始返回：' + raw + '）。免费模型并发只有 1 路，高峰期很常见；工具会自动重试并尝试备用模型。若仍不行，过几分钟或换个时段再试。'
+        : '调用超出限制（HTTP 429，原始返回：' + raw + '）。可能是并发超过 1 路，或免费额度/当日调用量已用尽，可到智谱控制台查看用量；工具会自动重试，稍等即可。';
+    } else if (status >= 500) {
+      msg = '智谱服务端临时故障（HTTP ' + status + '），与你的密钥无关，稍后重试即可。原始返回：' + raw;
+    } else {
+      msg = '接口返回 HTTP ' + status + '。原始返回：' + raw;
+    }
+    const e = new Error(msg);
+    // 400/404 且提示与模型有关 → 允许自动换模型重试
+    if ((status === 400 || status === 404) && /model|模型/i.test(raw)) e.modelMiss = true;
+    // 429 过载 → 先延迟重试同一模型，再考虑换模型；5xx → 延迟重试
+    if (status === 429) e.modelBusy = true;
+    if (status >= 500) e.serverBusy = true;
+    return e;
+  }
+
+  /* ---------- AI 配置（仅存本机，不随导出文件外传） ---------- */
+  function loadAI() {
+    try {
+      const raw = JSON.parse(Store.get(LS_AI) || 'null');
+      if (raw && typeof raw === 'object') {
+        const prov = aiProvider(raw.provider || 'zhipu');
+        let model = raw.model || '';
+        // 模型名若不是当前清单内的（例如早期版本存的 glm-4-flash），自动回落到默认免费模型
+        if (model && prov.models.indexOf(model) < 0) model = prov.model;
+        return { provider: prov.id, apiKey: normKey(raw.apiKey || ''), model: model };
+      }
+    } catch (e) {}
+    return { provider: 'zhipu', apiKey: '', model: '' };
+  }
+  function saveAI(cfg) {
+    Store.set(LS_AI, JSON.stringify(cfg));
+  }
+  function aiProvider(id) {
+    return AI_PROVIDERS.find((p) => p.id === id) || AI_PROVIDERS[0];
+  }
+
+  /* ---------- 连通性测试（配好密钥后点一下即可确认） ---------- */
+  function testAI(cfg) {
+    const prov = aiProvider(cfg.provider);
+    const key = normKey(cfg.apiKey);
+    const t0 = Date.now();
+    const list = [];
+    const first = cfg.model || prov.model;
+    if (first) list.push(first);
+    prov.models.forEach((m) => { if (list.indexOf(m) < 0) list.push(m); });
+
+    function attempt(i, retried) {
+      if (i >= list.length) throw new Error('清单内所有模型都不可用，请联系我核对模型名。');
+      const model = list[i];
+      const body = {
+        model,
+        messages: [{ role: 'user', content: '只回复两个字：正常' }],
+        temperature: 0,
+        max_tokens: 64,
+        stream: false,
+      };
+      // GLM-4.5 及以上默认开启「深度思考」，思考会先消耗输出额度导致正文为空——测试类小请求直接关闭
+      if (prov.id === 'zhipu') body.thinking = { type: 'disabled' };
+      return fetch(prov.url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + key },
+        body: JSON.stringify(body),
+      })
+        .then((r) => {
+          if (!r.ok) return r.text().then((t) => { throw aiErr(r.status, t, model); });
+          return r.json();
+        })
+        .then((j) => {
+          const m = j && j.choices && j.choices[0] && j.choices[0].message ? j.choices[0].message : null;
+          const txt = m ? (m.content || m.reasoning_content || '') : '';
+          if (!txt) throw new Error('接口连通但没返回内容（模型 ' + model + '）');
+          return { ms: Date.now() - t0, reply: String(txt).trim().slice(0, 30), model };
+        })
+        .catch((e) => {
+          if (hitNetwork(e)) {
+            throw new Error('网络请求没能发出去（浏览器报 Failed to fetch）。请确认电脑能正常上网、没挂代理或 VPN；并换用最新版 Chrome / Edge 打开本工具再试。');
+          }
+          // 模型繁忙（429）/ 服务端抖动（5xx）：先等 1.2 秒重试同一模型，仍不行再换备用模型
+          if (e && (e.modelBusy || e.serverBusy)) {
+            if (!retried) return delayAI(1200).then(() => attempt(i, true));
+            if (i + 1 < list.length) return attempt(i + 1, false);
+          }
+          if (e && e.modelMiss && i + 1 < list.length) return attempt(i + 1, false);
+          throw e;
+        });
+    }
+
+    return Promise.resolve()
+      .then(() => attempt(0, false))
+      .catch((e) => {
+        const k = keyLook(key);
+        const shape = keyShapeWarn(key);
+        const diag = '［自检：密钥 ' + k.len + ' 位，' + k.head + '…' + k.tail + '，含 ' + k.dots + ' 个点' +
+          (shape ? '；' + shape : '') + (list.length > 1 ? '；候选模型 ' + list.join(' → ') : '') + '］';
+        const err = new Error(((e && e.message) || String(e)) + '　' + diag);
+        err.diag = diag;
+        err.keyLen = k.len;
+        err.keyShape = shape;
+        throw err;
+      });
+  }
+
+  /* ---------- 格式化 ---------- */
+  function fmtDur(sec) {
+    if (!sec || !isFinite(sec)) return '时长未知';
+    const s = Math.round(sec);
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    return (h ? h + ' 小时 ' : '') + (m ? m + ' 分 ' : '') + (s % 60) + ' 秒';
+  }
+  function fmtSize(b) {
+    if (!b) return '0 KB';
+    return b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB';
+  }
+
+  /* ---------- 零依赖 ZIP 解析（用于 .docx） ---------- */
+  async function inflateRaw(bytes) {
+    if (typeof DecompressionStream !== 'function') {
+      throw new Error('当前浏览器不支持解压功能，请改用最新版 Chrome 或 Edge 打开本工具。');
+    }
+    const ds = new DecompressionStream('deflate-raw');
+    const readAll = new Response(ds.readable).arrayBuffer();
+    const writer = ds.writable.getWriter();
+    writer.write(bytes).then(() => writer.close()).catch(() => {});
+    return new Uint8Array(await readAll);
+  }
+
+  async function unzip(buf) {
+    const dv = new DataView(buf);
+    const len = buf.byteLength;
+    let eocd = -1;
+    for (let i = len - 22; i >= Math.max(0, len - 66000); i--) {
+      if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+    }
+    if (eocd < 0) throw new Error('文件不是有效的 zip / docx 结构');
+    const total = dv.getUint16(eocd + 10, true);
+    let p = dv.getUint32(eocd + 16, true);
+    const dec = new TextDecoder('utf-8');
+    const map = {};
+    for (let i = 0; i < total && p + 46 <= len; i++) {
+      if (dv.getUint32(p, true) !== 0x02014b50) break;
+      const method = dv.getUint16(p + 10, true);
+      const csize = dv.getUint32(p + 20, true);
+      const fnLen = dv.getUint16(p + 28, true);
+      const exLen = dv.getUint16(p + 30, true);
+      const cmLen = dv.getUint16(p + 32, true);
+      const lho = dv.getUint32(p + 42, true);
+      const name = dec.decode(new Uint8Array(buf, p + 46, fnLen));
+      const lfnLen = dv.getUint16(lho + 26, true);
+      const lexLen = dv.getUint16(lho + 28, true);
+      const start = lho + 30 + lfnLen + lexLen;
+      const raw = new Uint8Array(buf, start, csize);
+      if (method === 0) map[name] = raw;
+      else if (method === 8) map[name] = await inflateRaw(raw);
+      p += 46 + fnLen + exLen + cmLen;
+    }
+    return map;
+  }
+
+  const NS_W = 'http://schemas.openxmlformats.org/wordprocessingml/2006/main';
+  const NS_A = 'http://schemas.openxmlformats.org/drawingml/2006/main';
+  const NS_R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships';
+
+  async function parseDocx(file) {
+    const buf = await file.arrayBuffer();
+    const zip = await unzip(buf);
+    const docXml = zip['word/document.xml'];
+    if (!docXml) {
+      throw new Error('无法读取 Word 正文。若是老版 .doc，请在 Word 中「另存为 .docx」后重试。');
+    }
+    const dec = new TextDecoder('utf-8');
+    const dom = new DOMParser().parseFromString(dec.decode(docXml), 'application/xml');
+
+    const relMap = {};
+    const relXml = zip['word/_rels/document.xml.rels'];
+    if (relXml) {
+      const rdom = new DOMParser().parseFromString(dec.decode(relXml), 'application/xml');
+      [...rdom.getElementsByTagName('Relationship')].forEach((el) => {
+        relMap[el.getAttribute('Id')] = el.getAttribute('Target');
+      });
+    }
+
+    const paras = [];
+    const targets = [];
+    [...dom.getElementsByTagNameNS(NS_W, 'p')].forEach((pEl) => {
+      const txt = [...pEl.getElementsByTagNameNS(NS_W, 't')].map((t) => t.textContent).join('');
+      if (txt.trim()) paras.push(txt.replace(/\s+/g, ' ').trim());
+      [...pEl.getElementsByTagNameNS(NS_A, 'blip')].forEach((b) => {
+        const rid = b.getAttributeNS(NS_R, 'embed');
+        const tgt = rid ? relMap[rid] : null;
+        if (tgt) targets.push(tgt);
+      });
+    });
+
+    const images = [];
+    const seen = {};
+    targets.forEach((t) => {
+      const key = 'word/' + String(t).replace(/^\/?word\//, '').replace(/^\.\.\//, '');
+      if (seen[key] || !zip[key]) return;
+      seen[key] = 1;
+      const ext = (key.split('.').pop() || 'png').toLowerCase();
+      const mime = ext === 'jpg' || ext === 'jpeg' ? 'image/jpeg'
+        : ext === 'gif' ? 'image/gif'
+        : ext === 'svg' ? 'image/svg+xml'
+        : ext === 'emf' || ext === 'wmf' ? ''
+        : 'image/png';
+      if (!mime) return; // emf/wmf 浏览器无法直接显示，跳过
+      images.push({ name: key.split('/').pop(), url: URL.createObjectURL(new Blob([zip[key]], { type: mime })) });
+    });
+
+    return { text: paras.join('\n'), images };
+  }
+
+  /* ---------- 逐字稿解析（txt / srt / vtt） ---------- */
+  const TIME_RE = /(\d{1,2}):(\d{2}):(\d{2})[,.](\d{1,3})?\s*-->\s*(\d{1,2}):(\d{2}):(\d{2})[,.](\d{1,3})?/;
+
+  function splitSpeaker(line) {
+    const m = String(line).match(/^\s*(?:\[[\d:.\s]+\]\s*)?([^：:]{1,12}?)\s*[：:]\s*(.+)$/);
+    if (!m) return { who: '', say: line };
+    const who = m[1].trim();
+    if (!who || /^\d+$/.test(who)) return { who: '', say: line };
+    return { who, say: m[2] };
+  }
+
+  function parseSubtitle(text, fileName) {
+    const src = String(text).replace(/\r/g, '');
+    const ext = (String(fileName).split('.').pop() || '').toLowerCase();
+    const cues = [];
+
+    if (TIME_RE.test(src) || ext === 'srt' || ext === 'vtt' || ext === 'ass') {
+      src.split(/\n{2,}/).forEach((block) => {
+        const m = block.match(TIME_RE);
+        if (!m) return;
+        const start = +m[1] * 3600 + +m[2] * 60 + +m[3];
+        const end = +m[5] * 3600 + +m[6] * 60 + +m[7];
+        const body = block
+          .split('\n')
+          .filter((l) => l.trim() && !TIME_RE.test(l) && !/^\d+$/.test(l.trim()) && !/^WEBVTT/i.test(l))
+          .join(' ')
+          .trim();
+        if (body) cues.push({ start, end, text: body });
+      });
+    }
+
+    let full;
+    let speakers = [];
+    if (cues.length) {
+      const all = cues.map((c) => {
+        const sp = splitSpeaker(c.text);
+        return sp.who ? sp.who + '：' + sp.say : c.text;
+      });
+      speakers = [...new Set(cues.map((c) => splitSpeaker(c.text).who).filter(Boolean))];
+      full = all.join('\n');
+    } else {
+      full = src.replace(/\n{3,}/g, '\n\n').trim();
+      speakers = [...new Set(full.split('\n').map((l) => splitSpeaker(l).who).filter(Boolean))];
+    }
+
+    return {
+      format: cues.length ? (ext === 'vtt' ? 'vtt' : 'srt') : 'txt',
+      cueCount: cues.length,
+      speakers,
+      chars: full.length,
+      truncated: full.length > TRANSCRIPT_MAX,
+      text: full.slice(0, TRANSCRIPT_MAX),
+    };
+  }
+
+  /* ---------- 音频元信息 ---------- */
+  function readAudioMeta(file) {
+    return new Promise((resolve) => {
+      const url = URL.createObjectURL(file);
+      let done = false;
+      const fin = (d) => { if (!done) { done = true; resolve({ url, duration: d }); } };
+      try {
+        const a = document.createElement('audio');
+        a.preload = 'metadata';
+        a.onloadedmetadata = () => fin(isFinite(a.duration) ? a.duration : 0);
+        a.onerror = () => fin(0);
+        a.src = url;
+        setTimeout(() => fin(isFinite(a.duration) ? a.duration : 0), 1500);
+      } catch (e) {
+        fin(0);
+      }
+    });
+  }
+
+  /* ---------- 三个导入入口 ---------- */
+  function noteMat(msg, tone) {
+    const el = $('#matNote');
+    if (!el) return;
+    el.innerHTML = '<span class="' + (tone === 'amber' ? 'warn' : 'ok') + '">' + esc(msg) + '</span>';
+  }
+
+  function importAudio(c, file) {
+    if (!/\.(mp3|m4a|wav|aac|ogg|opus|flac|wma|amr|mp4|webm|m4v)$/i.test(file.name) && !/^audio\//.test(file.type || '')) {
+      alert('请选择音频文件（mp3 / m4a / wav / aac 等）。');
+      return;
+    }
+    readAudioMeta(file).then((meta) => {
+      const saved = setMat(c.id, 'audio', {
+        name: file.name, size: file.size, duration: meta.duration, addedAt: Date.now(),
+      });
+      AUDIO_URLS[c.id] = meta.url;
+      renderMats(c);
+      noteMat(saved === false && !Store.persistent
+        ? '当前为离线单文件模式，材料仅本次会话有效。'
+        : '录音已登记。音频原文件不复制、不上传，需要回听请在展开的播放器中播放。', 'ok');
+    });
+  }
+
+  function saveTranscript(c, text, fileName, kind) {
+    let parsed;
+    try {
+      parsed = parseSubtitle(text, fileName);
+    } catch (e) {
+      alert('逐字稿解析失败：' + (e && e.message ? e.message : e));
+      return;
+    }
+    if (!parsed.text) { alert('逐字稿内容为空，请检查文件。'); return; }
+    const saved = setMat(c.id, 'transcript', {
+      name: fileName, format: kind || parsed.format, chars: parsed.chars,
+      cueCount: parsed.cueCount, speakers: parsed.speakers,
+      truncated: parsed.truncated, text: parsed.text, addedAt: Date.now(),
+    });
+    renderMats(c);
+    noteMat(saved === false
+      ? '逐字稿较长或本机存储受限，可能未完整保存；建议先导出数据进行备份。'
+      : '逐字稿已导入（' + parsed.chars + ' 字' + (parsed.cueCount ? '，' + parsed.cueCount + ' 条字幕' : '') + '）。', saved === false ? 'amber' : 'ok');
+  }
+
+  function importTranscript(c, file) {
+    const name = String(file.name || '');
+    if (/\.doc$/i.test(name)) {
+      alert('老版 .doc 无法直接解析。\n请在 Word 中「另存为」选择 .docx（或「纯文本(*.txt)」）后重试。');
+      return;
+    }
+    // Word 逐字稿：与会议纪要共用同一套零依赖解压逻辑（录音转写工具常导出 .docx）
+    if (/\.docx$/i.test(name)) {
+      parseDocx(file)
+        .then((res) => {
+          if (!res.text.trim()) {
+            alert('未能从该 Word 中提取到文字。若正文是图片截图，请改用 txt / srt 逐字稿。');
+            return;
+          }
+          saveTranscript(c, res.text, name, 'docx');
+        })
+        .catch((e) => alert('Word 逐字稿解析失败：' + (e && e.message ? e.message : e)));
+      return;
+    }
+    const r = new FileReader();
+    r.onload = (ev) => {
+      const raw = String(ev.target.result || '');
+      // 二进制文件被当成文本读会出现大量替换字符，明确告诉用户怎么转换
+      if ((raw.match(/\uFFFD/g) || []).length > 20) {
+        alert('这个文件不是纯文本，无法直接读取。\n请在 Word 中「另存为」选择「纯文本(*.txt)」，或直接上传 .docx 文件。');
+        return;
+      }
+      saveTranscript(c, raw, name, '');
+    };
+    r.onerror = () => alert('文件读取失败，请重试。');
+    r.readAsText(file, 'utf-8');
+  }
+
+  function importMinutes(c, file) {
+    if (!/\.docx$/i.test(file.name)) {
+      alert('目前只支持 .docx 格式的 Word 文件。\n若是老版 .doc，请在 Word 中「另存为」选择 .docx 后重试。');
+      return;
+    }
+    parseDocx(file)
+      .then((res) => {
+        if (!res.text.trim() && !res.images.length) {
+          alert('未能从该 Word 中提取到文字或图片，请确认文件内容。');
+          return;
+        }
+        const saved = setMat(c.id, 'minutes', {
+          name: file.name, chars: res.text.length, imageCount: res.images.length,
+          text: res.text.slice(0, TRANSCRIPT_MAX), addedAt: Date.now(),
+        });
+        MINUTES_IMG[c.id] = res.images;
+        renderMats(c);
+        noteMat('会议纪要已导入：' + res.text.length + ' 字' + (res.images.length ? '、' + res.images.length + ' 张图片' : '') + '。' + (saved === false ? '（存储受限，可能未持久化）' : ''), saved === false ? 'amber' : 'ok');
+      })
+      .catch((e) => alert('Word 解析失败：' + (e && e.message ? e.message : e)));
+  }
+
+  /* ---------- AI 复核 ---------- */
+  function buildAIRequest(c, p, o) {
+    const L = [];
+    const kk = c.ksa || {};
+    L.push('你是资深招聘面试评估专家。请把「简历阶段的六维分析」与「面试环节的真实表现」做交叉复核，结论必须客观、可追溯到具体证据。');
+    L.push('');
+    L.push('【岗位】' + p.name + (p.jd ? '（' + p.jd.positioning + '）' : ''));
+    L.push('【候选人】' + c.name + '｜' + c.meta);
+    L.push('【简历阶段结论】' + c.tag + '；KSAO 综合 ' + kk.total + '/5；STAR 行为面试 ' + c.star + '/5；相似度 ' + c.similarity + '%；言行一致性（简历阶段）' + c.consistency.label);
+    L.push('【简历阶段各维度原始分 —— 最后一节的 post 字段必须逐项对齐这些维度】K 知识 ' + kk.K + '｜S 技能 ' + kk.S + '｜A 能力 ' + kk.A + '｜O 特质 ' + kk.O + '（均为 0-5 分）；相似度 ' + c.similarity + '（0-100 整数）');
+    L.push('');
+    L.push('【简历声称的亮点】');
+    c.highlights.forEach((h, i) => L.push((i + 1) + '. ' + h.t + '：' + h.d));
+    L.push('');
+    L.push('【简历阶段存疑点 —— 请逐条判定是否在面试中被证实 / 部分证实 / 存疑 / 推翻】');
+    c.risks.forEach((r, i) => L.push((i + 1) + '. ' + r.t + '：' + r.d));
+    L.push('');
+    L.push('【面试建议中要求重点考察的问题】');
+    L.push(c.interview);
+
+    if (o.transcript) {
+      L.push('');
+      L.push('【面试逐字稿】' + (o.transcript.speakers && o.transcript.speakers.length ? '（说话人：' + o.transcript.speakers.join('、') + '）' : ''));
+      L.push(o.transcript.text);
+    }
+    if (o.minutes) {
+      L.push('');
+      L.push('【面试会议纪要】');
+      L.push(o.minutes.text);
+    }
+    if (o.audio) {
+      L.push('');
+      L.push('【补充】现场录音文件：' + o.audio.name + '，时长 ' + fmtDur(o.audio.duration) + '（音频内容未提供文字，请勿臆测录音中的原话）。');
+    }
+
+    L.push('');
+    L.push('请只输出一个 JSON 对象，不要任何解释文字、不要代码块标记。结构如下：');
+    L.push('{');
+    L.push('  "consistency": {"level":"high|mid|low","label":"高|中高|中|偏低","note":"一句话判断依据，须引用面试中的具体表现"},');
+    L.push('  "verified": [{"claim":"简历中的某项声称","evidence":"面试中对应的证据；若缺失就写未观察到","verdict":"证实|部分证实|存疑|推翻"}],');
+    L.push('  "unresolved": ["简历疑点中面试仍未澄清的条目"],');
+    L.push('  "newFindings": [{"t":"面试新发现（亮点或问题）","d":"说明"}],');
+    L.push('  "dimensions": [{"name":"面试现场观察到的新增能力点","score":4,"note":"依据"}],');
+    L.push('  "post": {"K":{"score":4.2,"note":"相对简历升高/降低的原因，须引用面试中的具体证据"},"S":{"score":4.5,"note":""},"A":{"score":4.3,"note":""},"O":{"score":3.5,"note":""},"star":{"score":4.5,"note":""},"similarity":88},');
+    L.push('  "summary": "面试后的综合判断，150-250 字",');
+    L.push('  "recommend": "interview|pool|reject",');
+    L.push('  "recommendWhy": "一句话结论建议"');
+    L.push('}');
+    L.push('');
+    L.push('关于 "post"（用于生成「简历阶段 × 面试复核后」对比卡，必须完整给出）：');
+    L.push('1. 它是你在面试证据基础上，对**简历阶段同一套维度**给出的修正分：K/S/A/O/star 为 0-5（可带一位小数），similarity 为 0-100 整数。');
+    L.push('2. 五个维度一个都不能少；note 必须写清「为什么升 / 为什么降」，并引用面试中的具体表现，禁止照抄简历原文。');
+    L.push('3. 若某维度在面试中没有获得新信息，就沿用简历分数，并在 note 里写明「无新增证据」。');
+    L.push('4. 修正分的升降幅度要有节制：只有出现明确证据时才调整，单次调整通常不超过 1.0 分。');
+    return L.join('\n');
+  }
+
+  function parseAIJSON(txt) {
+    let s = String(txt).trim();
+    s = s.replace(/^```(?:json)?/i, '').replace(/```$/, '').trim();
+    const a = s.indexOf('{');
+    const b = s.lastIndexOf('}');
+    if (a >= 0 && b > a) s = s.slice(a, b + 1);
+    return JSON.parse(s);
+  }
+
+  function callAI(cfg, prompt, retried) {
+    const prov = aiProvider(cfg.provider);
+    const key = normKey(cfg.apiKey);
+    const model = cfg.model || prov.model;
+    const body = {
+      model,
+      messages: [
+        { role: 'system', content: '你是严谨的招聘面试评估专家，只输出符合要求的 JSON，不输出任何额外文字。' },
+        { role: 'user', content: prompt },
+      ],
+      temperature: 0.3,
+      stream: false,
+    };
+    // 智谱 GLM-4.5+ 默认深度思考：分析任务保留思考（质量更好），输出额度给足由服务端默认上限兜底
+    if (prov.id === 'zhipu') body.thinking = { type: 'enabled' };
+    return fetch(prov.url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + key },
+      body: JSON.stringify(body),
+    }).then((r) => {
+      if (!r.ok) return r.text().then((t) => { throw aiErr(r.status, t, model); });
+      return r.json();
+    }).then((j) => {
+      const m = j && j.choices && j.choices[0] && j.choices[0].message ? j.choices[0].message : null;
+      let txt = m ? (m.content || '') : '';
+      if (!txt && m && m.reasoning_content) txt = m.reasoning_content; // 深度思考模式下从思考内容中兜底提取 JSON
+      if (!txt) throw new Error('接口未返回有效内容（可能是额度、模型名或内容过长）。稍等几分钟再点一次「重新分析」。');
+      try {
+        return parseAIJSON(txt);
+      } catch (e) {
+        throw new Error('模型这次没按 JSON 格式返回（内容已丢弃）。可再点一次「重新分析」，或换用 glm-4.7-flash 这类更强的模型。');
+      }
+    }).catch((e) => {
+      if (hitNetwork(e)) {
+        throw new Error('网络请求没能发出去（浏览器报 Failed to fetch）：请确认能正常上网、没挂代理或 VPN，并换用最新版 Chrome / Edge 打开本工具。');
+      }
+      // 高峰期模型繁忙 / 服务端抖动：等 3 秒自动重试一次，不让用户白等一场
+      if (e && (e.modelBusy || e.serverBusy) && !retried) {
+        return delayAI(3000).then(() => callAI(cfg, prompt, true));
+      }
+      throw e;
+    });
+  }
+
+  function runAIAnalysis(c) {
+    const cfg = loadAI();
+    const o = matOf(c.id);
+    if (!cfg.apiKey) {
+      noteMat('尚未配置 API Key —— 请先点「AI 设置」填入密钥，或改用「生成分析请求」。', 'amber');
+      return;
+    }
+    if (!o.transcript && !o.minutes) {
+      noteMat('请先导入逐字稿或会议纪要：只有录音文件无法进行分析。', 'amber');
+      return;
+    }
+    const p = posOf(currentPosId);
+    const btn = $('#btnAIRun');
+    if (btn) { btn.disabled = true; btn.textContent = 'AI 分析中…'; }
+    noteMat('正在请求 ' + aiProvider(cfg.provider).name + '（' + (cfg.model || aiProvider(cfg.provider).model) + '），逐字稿较长时可能需要 20-60 秒；若遇模型繁忙会自动重试，请勿关闭页面…', 'ok');
+
+    callAI(cfg, buildAIRequest(c, p, o))
+      .then((result) => {
+        setMat(c.id, 'analysis', {
+          at: Date.now(),
+          provider: cfg.provider,
+          model: cfg.model || aiProvider(cfg.provider).model,
+          basis: { transcript: !!o.transcript, minutes: !!o.minutes, audio: !!o.audio },
+          result,
+        });
+        renderMats(c);
+        renderList();
+        noteMat('AI 复核完成 ✓ 结果已保存在本机。', 'ok');
+      })
+      .catch((e) => {
+        if (btn) { btn.disabled = false; btn.textContent = '重新分析'; }
+        noteMat('AI 分析失败：' + (e && e.message ? e.message : e) + '（可改用「生成分析请求」复制到任意 AI 中执行）', 'amber');
+      });
+  }
+
+  function copyAIRequest(c) {
+    const o = matOf(c.id);
+    if (!o.transcript && !o.minutes) { noteMat('请先导入逐字稿或会议纪要。', 'amber'); return; }
+    const text = buildAIRequest(c, posOf(currentPosId), o);
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    ta.remove();
+    noteMat(ok
+      ? '分析请求已复制（' + text.length + ' 字）。粘贴到任意 AI 对话框发送，得到 JSON 结果后再粘回工具即可。'
+      : '复制失败，请手动选中复制。', ok ? 'ok' : 'amber');
+  }
+
+  /* ---------- 结果渲染 ---------- */
+  function verdictCls(v) {
+    const s = String(v || '');
+    if (s.indexOf('推翻') >= 0) return 'red';
+    if (s.indexOf('证实') >= 0) return s.indexOf('部分') >= 0 ? 'amber' : 'green';
+    if (s.indexOf('存疑') >= 0) return 'amber';
+    return 'gray';
+  }
+
+  /* ---------- 先后对比卡：简历阶段 → 面试复核后 ---------- */
+  function dltCls(d, up, down) {
+    if (d >= up) return 'up';
+    if (d <= -down) return 'down';
+    return 'same';
+  }
+  function renderCompare(c, a) {
+    const r = a.result || {};
+    const post = r.post;
+    if (!post || typeof post !== 'object') return ''; // 旧版结果没有 post 字段，不渲染
+    const k = c.ksa || {};
+    const pairs = [
+      ['K 知识', k.K, post.K],
+      ['S 技能', k.S, post.S],
+      ['A 能力', k.A, post.A],
+      ['O 特质', k.O, post.O],
+      ['STAR 行为面试', c.star, post.star],
+    ];
+    const rows = [];
+    let up = 0;
+    let down = 0;
+    pairs.forEach((it) => {
+      const base = it[1];
+      const raw = it[2];
+      const nv = raw && typeof raw === 'object' ? raw.score : raw;
+      if (base == null || nv == null || !isFinite(+nv)) return;
+      const d = Math.round(((+nv) - (+base)) * 10) / 10;
+      const dir = dltCls(d, 0.25, 0.25);
+      if (dir === 'up') up++;
+      else if (dir === 'down') down++;
+      rows.push(`<div class="cmp-row">
+        <span class="cmp-dim">${esc(it[0])}</span>
+        <span class="cmp-val">${esc(String(base))}</span>
+        <span class="cmp-dlt ${dir}">${dir === 'up' ? '↑' : dir === 'down' ? '↓' : '→'}${d === 0 ? '' : (d > 0 ? '+' : '') + d.toFixed(1)}</span>
+        <span class="cmp-val strong">${esc(String(nv))}</span>
+        <span class="cmp-note" title="${esc((raw && raw.note) || '')}">${esc((raw && raw.note) || '')}</span>
+      </div>`);
+    });
+    if (post.similarity != null && isFinite(+post.similarity) && c.similarity != null) {
+      const ps = Math.round(+post.similarity);
+      const d = ps - (+c.similarity);
+      const dir = dltCls(d, 3, 3);
+      if (dir === 'up') up++;
+      else if (dir === 'down') down++;
+      rows.push(`<div class="cmp-row">
+        <span class="cmp-dim">岗位相似度</span>
+        <span class="cmp-val">${esc(String(c.similarity))}%</span>
+        <span class="cmp-dlt ${dir}">${dir === 'up' ? '↑' : dir === 'down' ? '↓' : '→'}${d === 0 ? '' : (d > 0 ? '+' : '') + d}pt</span>
+        <span class="cmp-val strong">${ps}%</span>
+        <span class="cmp-note" title="面试证据对「与岗位匹配度」的重新判断">${d === 0 ? '与简历阶段判断一致' : d > 0 ? '面试证据支持上调岗位匹配度' : '面试证据显示匹配度应下调'}</span>
+      </div>`);
+    }
+    if (!rows.length) return '';
+
+    const ver = Array.isArray(r.verified) ? r.verified : [];
+    const full = ver.filter((v) => String(v.verdict || '').trim() === '证实').length;
+    const part = ver.filter((v) => String(v.verdict || '').indexOf('部分') >= 0).length;
+    const neg = ver.filter((v) => /推翻|存疑/.test(String(v.verdict || ''))).length;
+    const nf = Array.isArray(r.newFindings) ? r.newFindings.length : 0;
+
+    const recA = decOf(r.recommend);
+    const changed = !!(r.recommend && c.recommend && r.recommend !== c.recommend);
+    const recTxt = recA ? recA.label : (r.recommend || '—');
+    const oldTxt = c.recommendWhy || c.tag || '—';
+
+    return `<div class="cmp">
+      <div class="cmp-h"><span>先后对比</span><span class="cmp-sub">简历阶段 → 面试复核后</span><span class="cmp-spacer"></span><span class="cmp-badge ${changed ? 'chg' : ''}">${changed ? '结论有变化' : '结论延续'}</span></div>
+      <div class="cmp-verdict">
+        <div class="cmp-v"><div class="cmp-k">简历阶段</div><div class="cmp-b">${esc(c.tag || '—')}</div></div>
+        <div class="cmp-arrow">→</div>
+        <div class="cmp-v"><div class="cmp-k">面试复核后</div><div class="cmp-b${changed ? ' chg' : ''}">${esc(recTxt)}</div></div>
+      </div>
+      <div class="cmp-reason">简历阶段理由：${esc(oldTxt)}${r.recommendWhy ? '<br>面试复核理由：' + esc(r.recommendWhy) : ''}</div>
+      ${rows.join('')}
+      <div class="cmp-stats">
+        <span>证实 ${full} 项</span><span>部分证实 ${part} 项</span><span>推翻或存疑 ${neg} 项</span><span>面试新发现 ${nf} 条</span>
+        <span class="cmp-sum">维度上调 ${up} · 下调 ${down}</span>
+      </div>
+    </div>`;
+  }
+
+  function renderAResult(a, c) {
+    const r = a.result || {};
+    const cons = r.consistency || {};
+    const cls = cons.level === 'high' ? 'green' : cons.level === 'low' ? 'red' : 'amber';
+    const rec = decOf(r.recommend);
+    const ver = Array.isArray(r.verified) ? r.verified : [];
+    const un = Array.isArray(r.unresolved) ? r.unresolved : [];
+    const nf = Array.isArray(r.newFindings) ? r.newFindings : [];
+    const dims = Array.isArray(r.dimensions) ? r.dimensions : [];
+    const basis = a.basis || {};
+    const basisTxt = [basis.transcript ? '逐字稿' : '', basis.minutes ? '会议纪要' : '', basis.audio ? '录音' : ''].filter(Boolean).join(' + ');
+
+    return `<div class="ares">
+      <div class="ares-h">
+        <span class="tag ${cls}">言行一致性 · ${esc(cons.label || '—')}</span>
+        ${rec ? '<span class="tag ' + rec.cls + '">建议：' + esc(rec.label) + '</span>' : ''}
+        <span class="tag gray">${esc(a.model || '')} · ${esc(fmtTs(a.at))}</span>
+      </div>
+      ${c ? renderCompare(c, a) : ''}
+      ${cons.note ? '<p class="ares-note">' + esc(cons.note) + '</p>' : ''}
+      ${
+        ver.length
+          ? '<div class="as-sec"><div class="as-t">简历声称 × 面试证据</div>' +
+            ver.map((v) => `<div class="vrow">
+              <div class="vmain">
+                <div class="vclaim">${esc(v.claim)}</div>
+                <div class="vev">${esc(v.evidence)}</div>
+              </div>
+              <span class="vtag ${verdictCls(v.verdict)}">${esc(v.verdict)}</span>
+            </div>`).join('') + '</div>'
+          : ''
+      }
+      ${
+        dims.length
+          ? '<div class="as-sec"><div class="as-t">面试表现评估</div>' +
+            dims.map((d) => `<div class="drow2">
+              <span class="dname2">${esc(d.name)}</span>
+              <span class="dbar"><i style="width:${Math.max(0, Math.min(5, +d.score || 0)) * 20}%"></i></span>
+              <span class="dnum">${esc(String(d.score))}</span>
+              <span class="dnote">${esc(d.note)}</span>
+            </div>`).join('') + '</div>'
+          : ''
+      }
+      ${
+        un.length
+          ? '<div class="as-sec"><div class="as-t">仍未澄清的疑点</div><ul class="slist">' +
+            un.map((t) => '<li>' + esc(t) + '</li>').join('') + '</ul></div>'
+          : ''
+      }
+      ${
+        nf.length
+          ? '<div class="as-sec"><div class="as-t">面试新发现</div>' +
+            nf.map((n) => `<div class="item"><div class="it"><span class="dot a"></span>${esc(n.t)}</div><div class="id" style="padding-left:14px">${esc(n.d)}</div></div>`).join('') + '</div>'
+          : ''
+      }
+      ${r.summary ? '<div class="as-sec"><div class="as-t">面试后综合判断</div><div class="callout blue">' + esc(r.summary) + '</div></div>' : ''}
+      ${r.recommendWhy ? '<div class="as-sec"><div class="as-t">结论建议</div><div class="callout ' + (rec ? (rec.cls === 'green' ? 'green' : rec.cls === 'red' ? 'amber' : 'amber') : 'blue') + '">' + esc(r.recommendWhy) + '</div></div>' : ''}
+      <div class="ares-foot">复核依据：${esc(basisTxt || '—')}　·　原简历六维评分保持不变，面试后的修正分单列在上方对比卡中，便于追溯对比</div>
+    </div>`;
+  }
+
+  /* ---------- 材料板块渲染 ---------- */
+  function aiCfgHTML(cfg) {
+    const prov = aiProvider(cfg.provider);
+    return `<div class="aicfg" id="aiCfgBox" style="display:none">
+      <div class="cfgrow"><label for="aiProv">服务商</label>
+        <select id="aiProv">${AI_PROVIDERS.map((p) => '<option value="' + p.id + '"' + (p.id === cfg.provider ? ' selected' : '') + '>' + esc(p.name) + ' — ' + esc(p.tip) + '</option>').join('')}</select>
+      </div>
+      <div class="cfgrow"><label for="aiModel">模型</label>
+        <select id="aiModel">${prov.models.map((m) => '<option value="' + esc(m) + '"' + ((cfg.model || prov.model) === m ? ' selected' : '') + '>' + esc(m) + '</option>').join('')}</select>
+      </div>
+      <div class="cfgrow"><label for="aiKey">API Key</label>
+        <input type="password" id="aiKey" value="${esc(cfg.apiKey)}" placeholder="粘贴你的 API Key" spellcheck="false">
+      </div>
+      <div class="cfgbtns">
+        <button class="btn primary" id="aiSave">保存到本机</button>
+        <button class="btn" id="aiTest">测试连接</button>
+        <button class="btn" id="aiClear">清除密钥</button>
+      </div>
+      <div class="cfgnote">
+        密钥只保存在你本机浏览器，不会写入文件、不会上传，导出数据时也不会带出。<br>
+        <b>去哪拿密钥：</b>登录 open.bigmodel.cn → 右上角头像 →「API Keys」→ 新建密钥，然后点密钥右侧的「复制」按钮（不要手动拖选，容易漏字符），粘贴到上方输入框。<br>
+        <b>密钥长什么样：</b>完整密钥形如一串 32 位字符 + <code>.</code> + 一串 16 位字符，中间有一个小数点。工具会自动去掉粘贴时带进来的空格、换行和 <code>Bearer</code> 前缀；若点「测试连接」失败，提示里会附带密钥位数自检，一眼能看出是不是没复制全。<br>
+        <b>关于费用：</b>下面两款 Flash 模型均为免费模型，无需充值；新注册另赠 2000 万 Tokens。<br>
+        <b>模型说明：</b>glm-4.7-flash 是主力（20 万 token 上下文，读长逐字稿最合适）；glm-4.6v-flash 为备用。旧名 glm-4.5-flash 已于 2026 年 1 月下线，请勿使用。<br>
+        <b>为什么只有这三家：</b>DeepSeek / 通义千问 的接口不支持网页直连（浏览器会拦截跨域请求），不在这份清单里。
+      </div>
+    </div>`;
+  }
+
+  function renderMats(c) {
+    const host = $('#matHost');
+    if (!host) return;
+    const o = matOf(c.id);
+    const cfg = loadAI();
+    const prov = aiProvider(cfg.provider);
+    const hasKey = !!cfg.apiKey;
+    const rows = [];
+
+    rows.push(`<div class="matbar">
+      <button class="btn" data-imp="audio">＋ 导入录音</button>
+      <button class="btn" data-imp="transcript">＋ 导入逐字稿</button>
+      <button class="btn" data-imp="minutes">＋ 导入会议纪要</button>
+      <div style="flex:1"></div>
+      <span class="matcount">已录 ${['audio', 'transcript', 'minutes'].filter((k) => o[k]).length} / 3 类</span>
+    </div>`);
+
+    if (o.audio) {
+      const url = AUDIO_URLS[c.id];
+      rows.push(`<div class="mat">
+        <div class="mmain">
+          <div class="mname"><span class="mico">♪</span>${esc(o.audio.name)}</div>
+          <div class="mmeta">${esc(fmtDur(o.audio.duration))} · ${esc(fmtSize(o.audio.size))} · 导入于 ${esc(fmtTsShort(o.audio.addedAt))}</div>
+          ${url
+            ? '<audio controls preload="none" src="' + url + '" style="width:100%;margin-top:9px;height:32px"></audio>'
+            : '<div class="mabs">音频原文件不会被复制或保存，重新打开工具后需重新选择文件才能试听（已登记的文件名与时长不受影响）。</div>'}
+        </div>
+        <button class="mdel" data-del="audio" title="移除">移除</button>
+      </div>`);
+    }
+
+    if (o.transcript) {
+      rows.push(`<div class="mat">
+        <div class="mmain">
+          <div class="mname"><span class="mico">文</span>${esc(o.transcript.name)}</div>
+          <div class="mmeta">${esc(String(o.transcript.format).toUpperCase())} · ${o.transcript.chars} 字${o.transcript.cueCount ? ' · ' + o.transcript.cueCount + ' 条字幕' : ''}${o.transcript.speakers && o.transcript.speakers.length ? ' · 说话人：' + esc(o.transcript.speakers.slice(0, 5).join('、')) : ''} · 导入于 ${esc(fmtTsShort(o.transcript.addedAt))}</div>
+          <div class="mpreview"><pre>${esc(o.transcript.text.slice(0, MAT_PREVIEW))}${o.transcript.text.length > MAT_PREVIEW ? '\n\n……（此处仅预览前 ' + MAT_PREVIEW + ' 字，AI 复核会使用完整内容）' : ''}</pre></div>
+        </div>
+        <button class="mdel" data-del="transcript" title="移除">移除</button>
+      </div>`);
+    }
+
+    if (o.minutes) {
+      const imgs = MINUTES_IMG[c.id] || [];
+      rows.push(`<div class="mat">
+        <div class="mmain">
+          <div class="mname"><span class="mico">件</span>${esc(o.minutes.name)}</div>
+          <div class="mmeta">Word 会议纪要 · ${o.minutes.chars} 字${o.minutes.imageCount ? ' · ' + o.minutes.imageCount + ' 张图片' : ''} · 导入于 ${esc(fmtTsShort(o.minutes.addedAt))}</div>
+          ${imgs.length ? '<div class="mimg">' + imgs.slice(0, 6).map((im) => '<img src="' + im.url + '" alt="' + esc(im.name) + '">').join('') + '</div>' : ''}
+          ${!imgs.length && o.minutes.imageCount ? '<div class="mabs">纪要中的 ' + o.minutes.imageCount + ' 张图片未持久化保存，重新打开工具后重新导入该 Word 即可查看。</div>' : ''}
+          <div class="mpreview"><pre>${esc(o.minutes.text.slice(0, MAT_PREVIEW))}${o.minutes.text.length > MAT_PREVIEW ? '\n\n……（仅预览前 ' + MAT_PREVIEW + ' 字）' : ''}</pre></div>
+        </div>
+        <button class="mdel" data-del="minutes" title="移除">移除</button>
+      </div>`);
+    }
+
+    if (!o.audio && !o.transcript && !o.minutes) {
+      rows.push(`<div class="matempty">还没有面试材料。建议顺序：先导入录音留档 → 用剪映 / 讯飞听见等工具把录音转成文字 → 把逐字稿导入 → 有会议纪要一并导入 → 点「开始 AI 复核」。<br><b>说明：</b>浏览器不能把音频转成文字，转写需要在外部工具完成；逐字稿支持 <b>.docx / .txt / .srt / .vtt</b>（转写工具导出 Word 也能直接上传）；会议纪要支持 .docx（含图片）。</div>`);
+    }
+
+    const canRun = !!(o.transcript || o.minutes);
+    rows.push(`<div class="aibox">
+      <div class="aihead">
+        <span class="aititle">AI 面试复核</span>
+        <span class="aistatus">${hasKey
+          ? '<span class="okdot"></span>已配置 ' + esc(prov.name) + ' · ' + esc(cfg.model || prov.model)
+          : '<span class="nodont"></span>未配置密钥'}</span>
+        <button class="btn" id="btnAICfg">AI 设置</button>
+      </div>
+      <div class="aibtns">
+        <button class="btn primary" id="btnAIRun"${canRun ? '' : ' disabled'}>${o.analysis ? '重新分析' : '开始 AI 复核'}</button>
+        <button class="btn" id="btnAICopy">生成分析请求（复制到其他 AI）</button>
+      </div>
+      <div class="ainote" id="matNote">${canRun
+        ? (hasKey
+            ? '将把简历阶段的六维结论、简历疑点与本次面试材料一起送交 AI 复核；结果只保存在本机，原简历评估分数不变。'
+            : '面试材料已就绪。请先点右上角「AI 设置」填入 API Key，再点「开始 AI 复核」。')
+        : '请先导入逐字稿或会议纪要 —— 只有录音文件无法分析（浏览器不能读取音频内容）。'}</div>
+      ${o.analysis ? renderAResult(o.analysis, c) : ''}
+      ${aiCfgHTML(cfg)}
+    </div>`);
+
+    host.innerHTML = rows.join('');
+    bindMatsUI(c);
+  }
+
+  function bindMatsUI(c) {
+    const host = $('#matHost');
+    if (!host) return;
+    const pick = (accept, cb) => {
+      const inp = document.createElement('input');
+      inp.type = 'file';
+      inp.accept = accept;
+      inp.style.display = 'none';
+      inp.addEventListener('change', (e) => {
+        const f = e.target.files && e.target.files[0];
+        if (f) cb(f);
+      });
+      document.body.appendChild(inp);
+      inp.click();
+      setTimeout(() => inp.remove(), 60000);
+    };
+
+    $$('[data-imp]', host).forEach((b) =>
+      b.addEventListener('click', () => {
+        const kind = b.dataset.imp;
+        if (kind === 'audio') pick('audio/*,.m4a,.mp3,.wav,.aac,.amr', (f) => importAudio(c, f));
+        else if (kind === 'transcript') pick('.docx,.txt,.srt,.vtt,.md,text/plain', (f) => importTranscript(c, f));
+        else pick('.docx', (f) => importMinutes(c, f));
+      })
+    );
+
+    $$('.mdel', host).forEach((b) =>
+      b.addEventListener('click', () => {
+        const kind = b.dataset.del;
+        const label = kind === 'audio' ? '录音记录' : kind === 'transcript' ? '逐字稿' : '会议纪要';
+        if (!window.confirm('确定移除该候选人的' + label + '吗？\n（已有的 AI 复核结果会一并清除，需重新分析）')) return;
+        if (kind === 'audio') delete AUDIO_URLS[c.id];
+        if (kind === 'minutes') delete MINUTES_IMG[c.id];
+        delMat(c.id, kind);
+        renderMats(c);
+        renderList();
+      })
+    );
+
+    const btnCfg = $('#btnAICfg');
+    const cfgBox = $('#aiCfgBox');
+    if (btnCfg && cfgBox) {
+      btnCfg.addEventListener('click', () => {
+        cfgBox.style.display = cfgBox.style.display === 'none' ? 'block' : 'none';
+      });
+    }
+
+    const selProv = $('#aiProv');
+    if (selProv) {
+      selProv.addEventListener('change', () => {
+        const cfg = loadAI();
+        cfg.provider = selProv.value;
+        cfg.model = aiProvider(cfg.provider).model;
+        saveAI(cfg);
+        renderMats(c);
+        const box = $('#aiCfgBox');
+        if (box) box.style.display = 'block';
+      });
+    }
+
+    const btnSave = $('#aiSave');
+    if (btnSave) {
+      btnSave.addEventListener('click', () => {
+        const p = $('#aiProv');
+        const m = $('#aiModel');
+        const k = $('#aiKey');
+        const kv = normKey(k ? k.value : '');
+        if (k) k.value = kv; // 回写清洗后的密钥，便于肉眼确认有没有带进多余字符
+        if (!kv) { noteMat('请先粘贴密钥，再点「保存到本机」。', 'amber'); return; }
+        saveAI({ provider: p ? p.value : 'zhipu', model: m ? m.value : '', apiKey: kv });
+        renderMats(c);
+        const box = $('#aiCfgBox');
+        if (box) box.style.display = 'block';
+        const shape = keyShapeWarn(kv);
+        noteMat('AI 设置已保存到本机 ✓' + (shape ? '　但请注意：' + shape + '。' : ''), shape ? 'amber' : 'ok');
+      });
+    }
+
+    const btnClearKey = $('#aiClear');
+    if (btnClearKey) {
+      btnClearKey.addEventListener('click', () => {
+        const cfg = loadAI();
+        cfg.apiKey = '';
+        saveAI(cfg);
+        renderMats(c);
+        noteMat('已清除本机保存的密钥。', 'ok');
+      });
+    }
+
+    // 测试连接：一键确认密钥 / 模型名 / 网络是否都通
+    const btnTest = $('#aiTest');
+    if (btnTest) {
+      btnTest.addEventListener('click', () => {
+        const p = $('#aiProv');
+        const m = $('#aiModel');
+        const k = $('#aiKey');
+        const kv = normKey(k ? k.value : '');
+        if (k) k.value = kv;
+        const cfg = {
+          provider: p ? p.value : 'zhipu',
+          model: m ? m.value : '',
+          apiKey: kv,
+        };
+        if (!cfg.apiKey) {
+          noteMat('请先在「API Key」栏粘贴密钥，再点「测试连接」。', 'amber');
+          return;
+        }
+        const shape0 = keyShapeWarn(kv);
+        if (shape0) noteMat('先提醒一下：' + shape0 + '。确认无误后直接重试，或重新复制一次密钥。', 'amber');
+        saveAI(cfg); // 顺手保存，避免测通了却没存上
+        btnTest.disabled = true;
+        btnTest.textContent = '测试中…';
+        noteMat('正在连接 ' + aiProvider(cfg.provider).name + '（' + (cfg.model || aiProvider(cfg.provider).model) + '）…', 'ok');
+        testAI(cfg)
+          .then((r) => {
+            const used = r.model || cfg.model || aiProvider(cfg.provider).model;
+            const swapped = r.model && cfg.model && r.model !== cfg.model;
+            if (swapped) {
+              // 默认模型繁忙或不可用时自动改用可用的那一个，用户无需手动折腾
+              saveAI({ provider: cfg.provider, model: r.model, apiKey: cfg.apiKey });
+            }
+            renderMats(c);
+            const box = $('#aiCfgBox');
+            if (box) box.style.display = 'block';
+            noteMat(
+              '连接成功 ✓ ' + aiProvider(cfg.provider).name + ' · ' + used +
+              '，响应 ' + r.ms + ' 毫秒（模型回复「' + r.reply + '」）。' +
+              (swapped ? '原模型 ' + cfg.model + ' 当时被限流，已自动改用 ' + r.model + '，后续复核会用它。' : '') +
+              '接下来导入逐字稿或会议纪要，即可点「开始 AI 复核」。',
+              'ok'
+            );
+          })
+          .catch((e) => {
+            btnTest.disabled = false;
+            btnTest.textContent = '测试连接';
+            const box = $('#aiCfgBox');
+            if (box) box.style.display = 'block';
+            noteMat('连接失败 ✗ ' + (e && e.message ? e.message : e) + '　（这行字可整段复制发我，我帮你定位原因）', 'amber');
+          });
+      });
+    }
+
+    const btnRun = $('#btnAIRun');
+    if (btnRun) btnRun.addEventListener('click', () => runAIAnalysis(c));
+
+    const btnCopyAI = $('#btnAICopy');
+    if (btnCopyAI) btnCopyAI.addEventListener('click', () => copyAIRequest(c));
+  }
+
+  function bindMats(c) {
+    renderMats(c);
+  }
+
   /* ---------- 事件 ---------- */
   // 顶栏：导出 / 导入 —— 对应整个工具的数据（决策 + 流水 + 简历截图），任何页面都可用
   const topExport = $('#btnExport');
@@ -2471,6 +4510,12 @@ const POSITIONS = [
       renderList();
     }
   });
+
+  /* ---------- 对外钩子（自动化测试 / 将来接入其他数据源） ---------- */
+  window.__aijd = {
+    parseSubtitle, parseDocx, buildAIRequest, loadMats, setMat, delMat, renderMats, matOf, aiProvider,
+    normKey, keyShapeWarn, testAI, matTag,
+  };
 
   /* ---------- 启动 ---------- */
   renderRail();
